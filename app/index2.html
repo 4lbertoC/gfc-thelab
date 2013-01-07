@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Game created by Alberto Congiu -->
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+	<title>JS Bugs Lab 2.0</title>
+	<link rel="stylesheet" type="text/css" href="jquery/css/custom-theme/jquery-ui-1.9.2.custom.css"/>
+	<link rel="stylesheet" type="text/css" href="jquery/css/jquery.terminal.css"/>
+	<link rel="stylesheet" type="text/css" href="jquery/css/jquery.mCustomScrollbar.css"/>
+	<link rel="stylesheet" type="text/css" href="bugkiller.css"/>
+	<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="codemirror/theme/ambiance.css">
+</head>
+<body>
+	<table width="100%" align="center" valign="middle">
+	<tr>
+		<td id="container">
+			<div id="desk">
+				<div id="fieldContainer" class="innerContainer"></div>
+				<div id="flaskContainer" class="innerContainer"></div>
+			</div>
+			<div id="glass"></div>
+			<div id="darkness"></div>
+		</td>
+	</tr>
+	</table>
+	<div class="bugsTerminal" style="display: none;">
+		<div class="code"></div>
+	</div>
+	<div class="terminalToggle" style="display: none;"></div>
+	<div class="dialog msgDialog dialogHidden"></div>
+	<div class="dialog jsEditor dialogHidden">
+		<div id="myCodeMirror"></div>
+	</div>
+	<div class="titleOverlay" style="display: none;">JS Bugs Lab 2.0</div>
+	<div id="faqContent" style="display:none;">
+		<p>
+		<div class="anAccordion">
+			<h3>Where can I find some help on JavaScript and the DOM?</h3>
+		    <div>
+		        <p>Take a look at the <span onclick="window.open('https://developer.mozilla.org/')"
+				target="_blank" class="helpButton">documentation</span>
+				<p>Suggested topics:<p>
+					<span onclick="window.open('https://developer.mozilla.org/docs/JavaScript')"
+						target="_blank" class="helpButton">JavaScript</span>
+					<span onclick="window.open('https://developer.mozilla.org/docs/DOM')"
+						target="_blank" class="helpButton">DOM</span>
+					<span onclick="window.open('https://developer.mozilla.org/docs/DOM/document')"
+						target="_blank" class="helpButton">document</span>
+					<span onclick="window.open('https://developer.mozilla.org/docs/DOM/Node')"
+						target="_blank" class="helpButton">Node</span>
+					<span class="helpButton" onclick="window.open('https://developer.mozilla.org/docs/JavaScript/Reference/Operators/this')"
+						target="_blank">this</span>
+		        </p>
+		        <p>You can also practice JavaScript on <span onclick="window.open('http://www.codecademy.com/')"
+						target="_blank" class="link">Codecademy</span>, that has an interface similar to the one used by this game's terminal.
+		    </div>
+		    <h3>How do I manipulate HTML Elements?</h3>
+		    <div>
+		        <p>Here is some useful reference:
+		        <p><span class="codeStr helpButton" onclick="window.open('https://developer.mozilla.org/docs/DOM/document.getElementById')"
+							target="_blank">document.getElementById(id)</span></p>
+		        <p><span class="codeStr helpButton" onclick="window.open('https://developer.mozilla.org/docs/DOM/Node.appendChild')"
+							target="_blank">Node.appendChild(otherNode)</span></p>
+		        <p><span class="codeStr helpButton" onclick="window.open('https://developer.mozilla.org/docs/DOM/Node.removeChild')"
+							target="_blank">Node.removeChild(otherNode)</span></p>
+		        <p><span class="codeStr helpButton" onclick="window.open('https://developer.mozilla.org/docs/DOM/Node.parentElement')"
+							target="_blank">Node.parentElement</span></p>
+		    </div>
+		    <h3>Can I solve the game with the Developer Tools?</h3>
+		    <div>
+		        <p>
+		        The first version of the game required to use the browser's <span class="link" onclick="window.open('https://developers.google.com/chrome-developer-tools/docs/overview')" target="_blank">Developer Tools</span> or <span class="link" onclick="window.open('http://getfirebug.com/')" target="_blank">FireBug</span> in order to solve it. This still can be done, but come on... would you really do that after all the time I spent on the UI?
+		        </p>
+		    </div>
+		    <h3>How do I log into the terminal?</h3>
+		    <div>
+		        <p>
+		        Oh, sorry. Login is <i>bugmaster</i>, password is <i>123star</i>.<br>You can also resize the terminal if it's too small for you.
+		        </p>
+		    </div>
+		    <h3>Settings</h3>
+		    <div>
+		        <p>
+		        <div id="musicToggle"></div>
+		        <div id="soundToggle"></div>
+		        </p>
+		    </div>
+		    <h3>Credits</h3>
+		    <div>
+		        <p>
+		        JS Bugs Lab 2.0 uses jQuery, jQuery UI, jQuery Terminal Plugin, Malihu Custum Scrollbar jQuery Plugin, CodeMirror and Buzz.</p>
+		        <p>Written by <span class="link" onclick="window.open('https://github.com/4lbertoC')" target="_blank">Alberto Congiu</span></p>
+		        <p>Music by <span class="link" onclick="window.open('http://www.incompetech.com')" target="_blank">Kevin MacLeod</span><p>
+		        <p>Keyboard sounds by <span class="link" onclick="window.open('http://www.freesound.org/people/ballana/')" target="_blank">ballana</span>
+	        	<br>button-on by <span class="link" onclick="window.open('http://www.freesound.org/people/florian_reinke/')" target="_blank">florian_reinke</span>
+        		<br>button-9 by <span class="link" onclick="window.open('http://www.freesound.org/people/DJ%20Chronos/')" target="_blank">DJ Chronos</span>
+        		<br>exit-sound and swosh by <span class="link" onclick="window.open('http://www.freesound.org/people/qubodup/')" target="_blank">qubodup</span><br>sliding sounds by <span class="link" onclick="window.open('http://www.freesound.org/people/LG/')" target="_blank">LG</span>
+        		<br>bird-1-a by <span class="link" onclick="window.open('http://www.freesound.org/people/esperar/')" target="_blank">esperar</span>
+        		<br>button-12 by <span class="link" onclick="window.open('http://www.freesound.org/people/adcbicycle/')" target="_blank">adcbicycle</span>
+        		<br>success-1 by <span class="link" onclick="window.open('http://www.freesound.org/people/fins/')" target="_blank">fins</span>
+		        <br>tom by <span class="link" onclick="window.open('http://www.freesound.org/people/Suicidity/')" target="_blank">Suicidity</span>
+		        <br>cartoon-bing-low by <span class="link" onclick="window.open('http://www.freesound.org/people/kantouth/')" target="_blank">kantouth</span>
+		        </p>
+		    </div>
+			<h3 class="spoiler">I AM STUCK! (SPOILER -10pts)</h3>
+			<div id="iAmStuck"></div>
+		</div>
+	</div>
+
+	<script src="jquery/jquery-1.8.3.js"></script>
+	<script src="jquery/jquery-ui-1.9.2.custom.js"></script>
+	<script src="jquery/jquery.terminal-0.4.22.js"></script>
+	<script src="jquery/jquery.mousewheel-min.js"></script>
+	<script src="jquery/jquery.mCustomScrollbar.js"></script>
+	<script src="jquery/jquery.tinypubsub-0.7.js"></script>
+	<script src="codemirror/lib/codemirror.js"></script>
+	<script src="codemirror/mode/javascript/javascript.js"></script>
+	<script src="codemirror/formatting.js"></script>
+	<script src="buzz/buzz.js"></script>
+	<script src="strings_pre.js"></script>
+	<script src="bugkiller_pre.js"></script>
+	<script src="constants.js"></script>
+	<script src="pubsub.js"></script>
+	<script src="terminal.js"></script>
+	<script src="codeeditor.js"></script>
+	<script src="achievementmanager.js"></script>
+	<script src="audiomanager.js"></script>
+	<script src="uimanager.js"></script>
+	<script src="gamemanager.js"></script>
+	<script type="text/javascript">
+		game.run();
+	</script>
+</body>
+</html>
