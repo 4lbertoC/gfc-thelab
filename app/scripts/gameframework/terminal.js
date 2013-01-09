@@ -7,16 +7,31 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
     var _isShown = false;
     var _scope = null;
 
+    var _evaluateJs = function(command, onSuccess, onError) {
+        var result;
+        try {
+            result = (new Function('return ' + command))();
+        } catch(e) {
+            try {
+                result = (new Function(command))();
+            } catch (e) {
+                if(typeof onError === 'function') {
+                    onError(e.message);
+                }
+            }
+        }
+        if(result && typeof onSuccess === 'function') {
+            onSuccess(result);
+        }
+    };
+
     var _jsInterpreter = {
         interpreter: function(command, term) {
-            try {
-                var result = window.eval(command);
-                if (result !== undefined) {
-                    term.echo(new String(result));
-                }
-            } catch (e) {
-                term.error(new String(e));
-            }
+            _evaluateJs(command, function(result) {
+                term.echo(new String(result));
+            }, function(error) {
+                term.error(new String('Error: ' + error));
+            });
         },
         params: {
             name: 'js',
@@ -76,10 +91,12 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
 
         function(newObj) {
             if (newObj) {
-                var ret = Function('return ' + newObj)();
-                if (ret) {
+                _evaluateJs(newObj, function(ret) {
                     window['result'] = ret;
-                }
+                },
+                function(error) {
+                    _instance.error('Error: ' + error);
+                });
             }
         }]);
         pubSub.publish('Terminal/disable', []);

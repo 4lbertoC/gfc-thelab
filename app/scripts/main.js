@@ -20,20 +20,20 @@ require.config({
     },
     'jquery-tinyPubSub': {
         deps: ['jquery']
-    },
+    }
   },
 
   paths: {
     'jquery': 'vendor/jquery.min',
-    'jquery-ui': "jquery/jquery-ui-1.9.2.custom",
-    'jquery-terminal': "jquery/jquery.terminal-0.4.22",
-    'jquery-mousewheel': "jquery/jquery.mousewheel-min",
-    'jquery-customScrollbar': "jquery/jquery.mCustomScrollbar",
-    'jquery-tinyPubSub': "jquery/jquery.tinypubsub-0.7",
-    'codeMirror': "codemirror/lib/codemirror",
-    'codeMirror-js': "codemirror/mode/javascript/javascript",
-    'codeMirror-formatting': "codemirror/formatting",
-    'buzz': "buzz/buzz"
+    'jquery-ui': 'jquery/jquery-ui-1.9.2.custom',
+    'jquery-terminal': 'jquery/jquery.terminal-0.4.22',
+    'jquery-mousewheel': 'jquery/jquery.mousewheel-min',
+    'jquery-customScrollbar': 'jquery/jquery.mCustomScrollbar',
+    'jquery-tinyPubSub': 'jquery/jquery.tinypubsub-0.7',
+    'codeMirror': 'codemirror/lib/codemirror',
+    'codeMirror-js': 'codemirror/mode/javascript/javascript',
+    'codeMirror-formatting': 'codemirror/formatting',
+    'buzz': 'buzz/buzz'
   }
 });
  
