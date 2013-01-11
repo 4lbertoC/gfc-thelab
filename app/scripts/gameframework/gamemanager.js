@@ -1,6 +1,6 @@
-define(['jquery', './achievementmanager', './audiomanager', './codeeditor', './constants', './pubsub', './terminal', './uimanager'],
+define(['jquery', './achievementmanager', './audiomanager', './codeeditor', './constants', './pubsub', './terminal', './uimanager', './mutationobserver'],
 
-function($, achievementManager, audioManager, codeEditor, constants, pubSub, terminal, uiManager) {
+function($, achievementManager, audioManager, codeEditor, constants, pubSub, terminal, uiManager, mutationObserver) {
     'use strict';
 
     /* Constants */
@@ -25,11 +25,11 @@ function($, achievementManager, audioManager, codeEditor, constants, pubSub, ter
 
     var _showStartDialog = function() {
         var showUI = function() {
-            constants.JQ_TITLE_OVERLAY.toggle('fade', 2000);
             constants.JQ_TERMINAL_TOGGLE.toggle('fade', 2000);
+            constants.JQ_MENU_BUTTON.toggle('fade', 2000);
         };
         pubSub.publish('Dialog/open');
-        uiManager.showDialog('Welcome', constants.Text.TUTORIAL_INTRO, [{
+        uiManager.showDialog('Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [{
             text: 'Normal',
             click: function() {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
@@ -48,17 +48,25 @@ function($, achievementManager, audioManager, codeEditor, constants, pubSub, ter
                 pubSub.publish('Dialog/close');
                 showUI();
                 if (_showHints) {
-                    _showTerminalTooltip();
+                    _showFirstTooltip();
                 }
             }
         });
     };
 
-    var _showTerminalTooltip = function() {
+    var _showFirstTooltip = function() {
         constants.JQ_TERMINAL_TOGGLE.tooltip({
-            content: 'Open/Close terminal.'
+            content: 'Open/Close terminal'
+        });
+        constants.JQ_MENU_BUTTON.tooltip({
+            content: 'Menu'
         });
         constants.JQ_TERMINAL_TOGGLE.tooltip('open');
+        constants.JQ_MENU_BUTTON.tooltip('open');
+        setTimeout(function() {
+            constants.JQ_TERMINAL_TOGGLE.tooltip('close');
+            constants.JQ_MENU_BUTTON.tooltip('close');
+        }, 2000);
     };
 
     /* PubSub */
@@ -80,11 +88,12 @@ function($, achievementManager, audioManager, codeEditor, constants, pubSub, ter
             terminal.init(window['gameScope']);
             uiManager.init();
             audioManager.init();
+            mutationObserver.init();
 
             constants.JQ_TERMINAL_TOGGLE.click(function() {
                 terminal.toggleShow.apply(terminal, arguments);
             });
-            constants.JQ_TITLE_OVERLAY.click(_prepareAndShowTitleInfo);
+            constants.JQ_MENU_BUTTON.click(_prepareAndShowTitleInfo);
             constants.JQ_SOUND_TOGGLE.click(function() {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
                 audioManager.toggleSound();

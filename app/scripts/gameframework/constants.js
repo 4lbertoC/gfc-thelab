@@ -3,6 +3,8 @@ define([], function() {
 
 	var constants = {};
 
+	constants.APP_NAME = 'JS Bugs Lab 2.0';
+
 	constants.CODEMIRROR_ELEMENT = document.getElementById('myCodeMirror');
 
 	constants.getJQ_HELP_BUTTONS = function() {
@@ -23,7 +25,7 @@ define([], function() {
 
 	constants.JQ_DARKNESS = $('#darkness');
 
-	constants.JQ_FAQ_CONTENT = $('#faqContent');
+	constants.JQ_MENU = $('.menu');
 
 	constants.JQ_I_AM_STUCK = $('#iAmStuck');
 
@@ -37,7 +39,7 @@ define([], function() {
 
 	constants.JQ_SOUND_TOGGLE = $('#soundToggle');
 
-	constants.JQ_TITLE_OVERLAY = $('.titleOverlay');
+	constants.JQ_MENU_BUTTON = $('.menuButton');
 
 	constants.Achievement = {};
 
@@ -65,7 +67,7 @@ define([], function() {
 
 	constants.Text.LIGHTS_BROKEN = '[[g;#f00;transparent]ERROR: light() function seems to be broken. Please use Javascript interpreter to fix it.]';
 
-	constants.Text.GREETINGS = '[ JS Bugs Lab v2.0 ]\nType [[g;#0ff;transparent]help] for commands.\n';
+	constants.Text.GREETINGS = '[ ' + constants.APP_NAME + ' ]\nType [[g;#0ff;transparent]help] for commands.\n';
 
 	constants.Text.HELP = 'Available commands:\n' +
 		'[[g;#0ff;transparent]help]: display this page.\n' +
@@ -79,8 +81,7 @@ define([], function() {
 
 	constants.Text.HINT_JSTERMINAL = '<p>You just entered the JavaScript terminal. You can see the available commands ' +
 		'listed above the prompt, or type <span class="funcStr">printCommands()</span> to show them again.' +
-		'<p>All these commands are in fact JavaScript functions, so if you write their name without the ending parenthesis you will see their body ' +
-		'(some of them have documentation too).' +
+		'<p>All these commands are in fact JavaScript functions, so if you write their name without the ending parenthesis you will see their body.' +
 		'<p>The <span class="funcStr">editCode()</span> function is a tool you can use to compose new functions and objects more easily.' +
 		'<p>Use <span class="funcStr">addCommand()</span> and <span class="funcStr">removeCommand()</span> to create your custom commands ' +
 		'(and again, type without parenthesis to see how to use them).' +
@@ -93,7 +94,7 @@ define([], function() {
 		'You can then type <span class="funcStr">addCommand("sayHello", result)</span> to save the result into the commands.' +
 		'</div></div><p>';
 
-	constants.Text.TUTORIAL_INTRO = '<p>Welcome to JS Bugs Lab 2.0!<p style="color: red;">WARNING: This is not a common videogame: ' +
+	constants.Text.TUTORIAL_INTRO = '<p>Welcome to ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
 		'you will have to code in JavaScript and manipulate the DOM to solve it.</p>' +
 		'<p><i>Normal</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
 		'Choose this mode also if you don\'t like situations in which you have no idea what to do: JavaScript has a lot of functions and rules, ' +

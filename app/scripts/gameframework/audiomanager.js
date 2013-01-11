@@ -2,11 +2,11 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
     'use strict';
 
     /* Constants */
-    var MUSIC_DIR = '../music/';
-    var SOUND_DIR = '../sound/';
+    var MUSIC_DIR = 'music/';
+    var SOUND_DIR = 'sound/';
 
     /* Private variables */
-    var _isEnabledMusic = false;
+    var _isEnabledMusic = true;
     var _isEnabledSound = true;
 
     var _musicLoop = new buzz.group([

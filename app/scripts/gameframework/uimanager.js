@@ -22,8 +22,14 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
                 },
                 text: false
             });
+            constants.JQ_MENU_BUTTON.button({
+                icons: {
+                    primary: 'ui-icon-gear'
+                },
+                text: false
+            });
             constants.JQ_BUGS_TERMINAL.hide();
-            constants.JQ_FAQ_CONTENT.mCustomScrollbar();
+            constants.JQ_MENU.mCustomScrollbar();
         },
 
         showDialog: function(title, text, buttons, optParams) {
@@ -59,8 +65,8 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
         showTitleInfo: function() {
             var thisUiManager = this;
             pubSub.publish("Dialog/open");
-            constants.JQ_FAQ_CONTENT.dialog({
-                title: '"Couldn\'t you add a clue to find this dialog?!?" "No."',
+            constants.JQ_MENU   .dialog({
+                title: 'Menu',
                 width: Math.min(500, window.innerWidth - 20),
                 height: Math.min(450, window.innerHeight - 20),
                 maxWidth: window.innerWidth - 20,

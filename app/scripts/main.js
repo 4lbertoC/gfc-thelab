@@ -20,6 +20,9 @@ require.config({
     },
     'jquery-tinyPubSub': {
         deps: ['jquery']
+    },
+    'jquery-mutationSummary': {
+        deps: ['jquery', 'mutationSummary']
     }
   },
 
@@ -30,18 +33,19 @@ require.config({
     'jquery-mousewheel': 'jquery/jquery.mousewheel-min',
     'jquery-customScrollbar': 'jquery/jquery.mCustomScrollbar',
     'jquery-tinyPubSub': 'jquery/jquery.tinypubsub-0.7',
+    'jquery-mutationSummary': 'jquery/jquery.mutation-summary',
     'codeMirror': 'codemirror/lib/codemirror',
     'codeMirror-js': 'codemirror/mode/javascript/javascript',
     'codeMirror-formatting': 'codemirror/formatting',
-    'buzz': 'buzz/buzz'
+    'buzz': 'buzz/buzz',
+    'mutationSummary': 'mutation_summary/mutation_summary'
   }
 });
  
-require(['app', 'jsbugslab', 'gamestrings',
+require(['app', 'gamestrings',
     'jquery', 'jquery-ui', 'jquery-terminal', 'jquery-mousewheel', 'jquery-customScrollbar',
-    'jquery-tinyPubSub', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz'],
+    'jquery-tinyPubSub', 'jquery-mutationSummary', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz', 'mutationSummary'],
     function(app) {
   // use app here
-  game.run();
   app.init();
 });
