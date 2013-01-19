@@ -9,7 +9,7 @@ define(['jquery', 'jquery-tinyPubSub'], function($) {
             var newHandle = function() {
                 handle.apply(thisObj, arguments);
                 $.unsubscribe(name, newHandle);
-            }
+            };
             $.subscribe(name, newHandle);
         }
     };

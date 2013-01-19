@@ -10,8 +10,8 @@ define(['jquery', './constants', './pubsub'], function($, constants, pubsub) {
 
 	return {
 		init: function() {
-			constants.JQ_DARKNESS.parent().mutationSummary('connect', _darknessMutationObserverCallback, [{ 'element': '#darkness' }])
+			constants.JQ_DARKNESS.parent().mutationSummary('connect', _darknessMutationObserverCallback, [{ 'element': '#darkness' }]);
 		}
-	}
+	};
 
 });

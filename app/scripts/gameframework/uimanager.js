@@ -1,10 +1,10 @@
-define(['./constants', './pubsub'], function(constants, pubSub) {
+define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
     'use strict';
 
     return {
         init: function() {
             constants.JQ_BUGS_TERMINAL.resizable({
-                handles: "n, e, w, ne, nw",
+                handles: 'n, e, w, ne, nw',
                 start: function() {
                     constants.JQ_BUGS_TERMINAL.addClass('resizing');
                 },
@@ -56,15 +56,17 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
                     pubSub.publish('Dialog/close');
                 }
             };
-            if (optParams && typeof optParams === 'object') for (var p in optParams) {
-                defaultParams[p] = optParams[p];
+            if (optParams && typeof optParams === 'object') {
+                for (var p in optParams) {
+                    defaultParams[p] = optParams[p];
+                }
             }
             constants.JQ_MSGDIALOG.dialog(defaultParams).mCustomScrollbar();
         },
 
         showTitleInfo: function() {
             var thisUiManager = this;
-            pubSub.publish("Dialog/open");
+            pubSub.publish('Dialog/open');
             constants.JQ_MENU   .dialog({
                 title: 'Menu',
                 width: Math.min(500, window.innerWidth - 20),

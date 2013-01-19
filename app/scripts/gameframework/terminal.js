@@ -57,7 +57,7 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
                 } else if (command === 'help') {
                     term.echo(constants.Text.HELP);
                 } else if (command === 'light') {
-                    if (constants.JQ_DARKNESS.parent().length == 0) {
+                    if (constants.JQ_DARKNESS.parent().length === 0) {
                         term.echo('Lights already on.');
                     } else {
                         try {

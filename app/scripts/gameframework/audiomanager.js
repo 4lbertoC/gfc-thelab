@@ -1,4 +1,4 @@
-define(['./constants', './pubsub'], function(constants, pubSub) {
+define(['buzz', './constants', './pubsub'], function(buzz, constants, pubSub) {
     'use strict';
 
     /* Constants */
@@ -76,7 +76,7 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
                         primary: 'ui-icon-volume-on'
                     },
                     label: 'Music'
-                })
+                });
                 _musicLoop.play().loop();
             } else {
                 constants.JQ_MUSIC_TOGGLE.button({
@@ -84,7 +84,7 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
                         primary: 'ui-icon-volume-off'
                     },
                     label: 'Music'
-                })
+                });
                 _musicLoop.stop();
             }
         },
@@ -97,14 +97,14 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
                         primary: 'ui-icon-volume-on'
                     },
                     label: 'Sound'
-                })
+                });
             } else {
                 constants.JQ_SOUND_TOGGLE.button({
                     icons: {
                         primary: 'ui-icon-volume-off'
                     },
                     label: 'Sound'
-                })
+                });
             }
         },
 
@@ -120,5 +120,5 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
             this.enableMusic(_isEnabledMusic);
             this.enableSound(_isEnabledSound);
         }
-    }
+    };
 });

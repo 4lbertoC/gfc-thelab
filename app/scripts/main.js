@@ -1,5 +1,8 @@
 require.config({
   shim: {
+    'buzz': {
+        deps: ['buzz-wrapped']
+    },
     'codeMirror-js': {
         deps: ['codeMirror']
     },
@@ -37,7 +40,8 @@ require.config({
     'codeMirror': 'codemirror/lib/codemirror',
     'codeMirror-js': 'codemirror/mode/javascript/javascript',
     'codeMirror-formatting': 'codemirror/formatting',
-    'buzz': 'buzz/buzz',
+    'buzz': 'wrappers/buzz',
+    'buzz-wrapped': 'buzz/buzz',
     'mutationSummary': 'mutation_summary/mutation_summary'
   }
 });
@@ -46,6 +50,7 @@ require(['app', 'gamestrings',
     'jquery', 'jquery-ui', 'jquery-terminal', 'jquery-mousewheel', 'jquery-customScrollbar',
     'jquery-tinyPubSub', 'jquery-mutationSummary', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz', 'mutationSummary'],
     function(app) {
+        'use strict';
   // use app here
   app.init();
 });

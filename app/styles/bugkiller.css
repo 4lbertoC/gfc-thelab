@@ -11,7 +11,7 @@ body{
 }
 h1{
     text-align: center;
-    margin: 0px;
+    margin: 0;
     color: #333;
 }
 .bug{
@@ -61,8 +61,8 @@ h1{
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
 }
 .field{
     width: 400px;
@@ -70,7 +70,7 @@ h1{
     max-height: 100%;
     background: #000;
     text-align: center;
-    margin: 0px auto;
+    margin: 0 auto;
     position: relative;
     cursor: crosshair;
     border-width: 5px;
@@ -101,10 +101,10 @@ h1{
     width: 200px;
     height: 300px;
     background: #bdf;
-    margin: 0px auto;
+    margin: 0 auto;
     position: relative;
     cursor: crosshair;
-    border-top-width: 0px;
+    border-top-width: 0;
     border-color: #58a;
     border-style: solid;
     border-bottom-left-radius: 10px;
@@ -114,7 +114,7 @@ h1{
     box-sizing: border-box;
 }
 .submitbutton{
-    left: 0px;
+    left: 0;
 }
 .code{
     text-align: left;
@@ -137,7 +137,7 @@ h1{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#959595', endColorstr='#1b1b1b',GradientType=1 );
     /* IE6-9 fallback on horizontal gradient */
     position: relative;
-    margin: 0px auto;
+    margin: 0 auto;
     padding: 10px;
     border: #333 solid;
     border-bottom-width: 1px;
@@ -156,7 +156,7 @@ h1{
     /* Old browsers */
     background: -moz-radial-gradient(center, ellipse cover, #f0b7a1 0%, #8c3310 50%, #752201 51%, #bf6e4e 100%);
     /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f0b7a1), color-stop(50%,#8c3310), color-stop(51%,#752201), color-stop(100%,#bf6e4e));
+    background: -webkit-gradient(radial, center center, 0, center center, 100%, color-stop(0%,#f0b7a1), color-stop(50%,#8c3310), color-stop(51%,#752201), color-stop(100%,#bf6e4e));
     /* Chrome,Safari4+ */
     background: -webkit-radial-gradient(center, ellipse cover, #f0b7a1 0%,#8c3310 50%,#752201 51%,#bf6e4e 100%);
     /* Chrome10+,Safari5.1+ */
@@ -189,14 +189,14 @@ h1{
 }
 #glass{
     position: fixed;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 40;
     background: -moz-radial-gradient(center, ellipse cover, rgba(163,236,255,0.3) 1%, rgba(206,227,159,0.3) 16%, rgba(255,217,50,0.44) 33%, rgba(0,0,0,1) 100%);
     /* FF3.6+ */
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%,rgba(163,236,255,0.3)), color-stop(16%,rgba(206,227,159,0.3)), color-stop(33%,rgba(255,217,50,0.44)), color-stop(100%,rgba(0,0,0,1)));
+    background: -webkit-gradient(radial, center center, 0, center center, 100%, color-stop(1%,rgba(163,236,255,0.3)), color-stop(16%,rgba(206,227,159,0.3)), color-stop(33%,rgba(255,217,50,0.44)), color-stop(100%,rgba(0,0,0,1)));
     /* Chrome,Safari4+ */
     background: -webkit-radial-gradient(center, ellipse cover, rgba(163,236,255,0.3) 1%,rgba(206,227,159,0.3) 16%,rgba(255,217,50,0.44) 33%,rgba(0,0,0,1) 100%);
     /* Chrome10+,Safari5.1+ */
@@ -212,8 +212,8 @@ h1{
 #darkness{
     background: #000;
     position: fixed;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 50;
@@ -282,7 +282,7 @@ h1{
     height: 300px;
     width: 50%;
     float: left;
-    margin: 15px 0px;
+    margin: 15px 0;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -291,21 +291,21 @@ h1{
     .innerContainer{
         width: 100%;
         height: 46%;
-        margin: 2% 0px;
+        margin: 2% 0;
     }
     .field{
-        width: 100%;
-        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
     }
     .flask{
-        width: 50%;
-        height: 100%;
+        max-width: 50%;
+        max-height: 100%;
     }
     
 }
 @media (min-width:721px){
     .innerContainer{
-        margin: 100px 0px;
+        margin: 100px 0;
     }
     
 }

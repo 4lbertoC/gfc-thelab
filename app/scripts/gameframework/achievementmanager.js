@@ -13,14 +13,14 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
         pubSub.publish('AudioManager/playSound', [constants.Sound.SUCCESS]);
     });
 
-    pubSub.subscribe('AchievementManager/openSpoiler', function(points) {
+    pubSub.subscribe('AchievementManager/openSpoiler', function() {
         _points -= 10;
         pubSub.publish('AudioManager/playSound', [constants.Sound.FAILURE]);
     });
 
     return {
-    	init: function() {
-    		
-    	}
+        init: function() {
+
+        }
     };
 });

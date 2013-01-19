@@ -1,5 +1,5 @@
 define([], function() {
-    "use strict";
+    'use strict';
     /**
      * OLD JS BUGS LAB CODE, TO BE REFACTORED
      *
@@ -8,32 +8,32 @@ define([], function() {
        Solution:
        
        game.Lab.motherDNA.onClickBehavior = function() {
-    			this.parentNode.removeChild(this);
-    		};
-    	
+                this.parentNode.removeChild(this);
+            };
+        
        game.Lab.bugDNA.onClickBehavior = function() {
-    			var f = document.getElementsByClassName('flask')[0];
-    			this.parentNode.removeChild(this);
-    			f.appendChild(this);
-    		};
-    	
-    	game.Food.add();
-    	
-    	Remove the mother.
-    	Click on the bug.
-    	
-    	game.Lab.bugDNA.onSpawn = function() {
-    		clearInterval(this.proliferationBehavior);
-    	};
-    	
-    	game.Food.add();
-    	
-    	Move 10 more bugs to the flask.
-    	The first will come out and proliferate.
-    	As soon as it proliferates, click on it to move it back to the flask,
-    	as well as the proliferated bug.
-    	Other two bugs will come out, but won't do harm as they are inhibited.
-    	Remove the bugs that are out of the flask.
+                var f = document.getElementsByClassName('flask')[0];
+                this.parentNode.removeChild(this);
+                f.appendChild(this);
+            };
+        
+        game.Food.add();
+        
+        Remove the mother.
+        Click on the bug.
+        
+        game.Lab.bugDNA.onSpawn = function() {
+            clearInterval(this.proliferationBehavior);
+        };
+        
+        game.Food.add();
+        
+        Move 10 more bugs to the flask.
+        The first will come out and proliferate.
+        As soon as it proliferates, click on it to move it back to the flask,
+        as well as the proliferated bug.
+        Other two bugs will come out, but won't do harm as they are inhibited.
+        Remove the bugs that are out of the flask.
      */
 
     var game = game || {};
@@ -203,7 +203,7 @@ define([], function() {
 
             document.getElementById('fieldContainer').appendChild(gameDiv);
 
-            //		log('Field created.');
+            //      log('Field created.');
 
             return gameDiv;
         };
@@ -214,7 +214,7 @@ define([], function() {
 
             document.getElementById('flaskContainer').appendChild(gameDiv);
 
-            //		log('Flask created.');
+            //      log('Flask created.');
 
             return gameDiv;
         };
@@ -347,7 +347,7 @@ define([], function() {
         Parameters:
         name: sting
         func: function
-    	*/
+        */
             commands[name] = window[name] = func;
         };
 
@@ -357,7 +357,7 @@ define([], function() {
 
         Parameters:
         name: string
-    	*/
+        */
             delete commands[name];
             delete window[name];
         };
