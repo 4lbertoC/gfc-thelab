@@ -1,9 +1,8 @@
 'use strict';
-define(['gameframework/gamemanager', 'jsbugslab'], function(gameManager, jsbugslab) {
+define(['gameframework/gamemanager', 'thelab'], function(GameManager, TheLab) {
   return {
 	init: function() {
-		jsbugslab.run();
-		gameManager.init();
+		TheLab.start(new GameManager());
 	}
   };
 });

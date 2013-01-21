@@ -1,18 +1,18 @@
 define(['jquery', './achievementmanager', './audiomanager', './codeeditor', './constants', './pubsub', './terminal', './uimanager', './mutationobserver'],
 
-function($, achievementManager, audioManager, codeEditor, constants, pubSub, terminal, uiManager, mutationObserver) {
+function($, achievementManager, AudioManager, CodeEditor, constants, pubSub, Terminal, UiManager, MutationObserver) {
     'use strict';
 
-    /* Constants */
-    var DEFAULT_CLOSE_BTN = {
-        text: 'Close',
-        click: function() {
-            $(this).dialog('close');
-            pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-        }
+    /* Private variables */
+    var _gameModules = {
+        achievementManager: null,
+        audioManager: null,
+        codeEditor: null,
+        mutationObserver: null,
+        terminal: null,
+        uiManager: null
     };
 
-    /* Private variables */
     var _showHints = true;
 
     /* Private methods */
@@ -20,7 +20,7 @@ function($, achievementManager, audioManager, codeEditor, constants, pubSub, ter
         if (constants.JQ_DARKNESS.parent()) {
             constants.JQ_I_AM_STUCK.html(constants.Text.HINT_DARKNESS);
         }
-        uiManager.showTitleInfo();
+        _gameModules.uiManager.showTitleInfo();
     };
 
     var _showStartDialog = function() {
@@ -29,7 +29,7 @@ function($, achievementManager, audioManager, codeEditor, constants, pubSub, ter
             constants.JQ_MENU_BUTTON.toggle('fade', 2000);
         };
         pubSub.publish('Dialog/open');
-        uiManager.showDialog('Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [{
+        _gameModules.uiManager.showDialog('Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [{
             text: 'Normal',
             click: function() {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
@@ -72,38 +72,52 @@ function($, achievementManager, audioManager, codeEditor, constants, pubSub, ter
     /* PubSub */
     pubSub.subscribeOnce('GameManager/showLoginHint', function(evt, isLogged) {
         if (_showHints) {
-            uiManager.showDialog('Tutorial', constants.Text.HINT_LOGIN, [DEFAULT_CLOSE_BTN]);
+            _gameModules.uiManager.showDialog('Tutorial', constants.Text.HINT_LOGIN, [constants.Buttons.DEFAULT_CLOSE_BTN]);
         }
     });
 
     pubSub.subscribeOnce('GameManager/showJsTerminalHint', function(evt) {
         if (_showHints) {
-            uiManager.showDialog('Tutorial', constants.Text.HINT_JSTERMINAL, [DEFAULT_CLOSE_BTN]);
+            _gameModules.uiManager.showDialog('Tutorial', constants.Text.HINT_JSTERMINAL, [constants.Buttons.DEFAULT_CLOSE_BTN]);
         }
     });
 
-    return {
+    var GameManager = function() {};
+    GameManager.prototype = {
+        getGameModules: function() {
+            return _gameModules;
+        },
+        getTerminalScope: function() {
+            return _gameModules.terminal.getScope();
+        },
         init: function() {
-            codeEditor.init();
-            terminal.init(window['gameScope']);
-            uiManager.init();
-            audioManager.init();
-            mutationObserver.init();
+            _gameModules.codeEditor = new CodeEditor();
+            _gameModules.mutationObserver = new MutationObserver();
+            _gameModules.audioManager = new AudioManager();
+            _gameModules.terminal = new Terminal();
+            _gameModules.uiManager = new UiManager();
+
+            _gameModules.codeEditor.init();
+            _gameModules.mutationObserver.init();
+            _gameModules.audioManager.init();
+            _gameModules.uiManager.init();
+            _gameModules.terminal.init();
 
             constants.JQ_TERMINAL_TOGGLE.click(function() {
-                terminal.toggleShow.apply(terminal, arguments);
+                _gameModules.terminal.toggleShow.apply(_gameModules.terminal, arguments);
             });
             constants.JQ_MENU_BUTTON.click(_prepareAndShowTitleInfo);
             constants.JQ_SOUND_TOGGLE.click(function() {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-                audioManager.toggleSound();
+                _gameModules.audioManager.toggleSound();
             });
             constants.JQ_MUSIC_TOGGLE.click(function() {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-                audioManager.toggleMusic();
+                _gameModules.audioManager.toggleMusic();
             });
 
             _showStartDialog();
         }
     };
+    return GameManager;
 });

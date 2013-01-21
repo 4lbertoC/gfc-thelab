@@ -18,7 +18,8 @@ define(['./constants', './pubsub'], function(constants, pubsub) {
         _instance.setCursor(0, 0);
     };
 
-    return {
+    var CodeEditor = function() {};
+    CodeEditor.prototype = {
         init: function() {
             _instance = _instance || CodeMirror(constants.CODEMIRROR_ELEMENT, {
                 value: 'function myScript() {\n\treturn 100;\n}\n',
@@ -81,4 +82,5 @@ define(['./constants', './pubsub'], function(constants, pubsub) {
             });
         }
     };
+    return CodeEditor;
 });

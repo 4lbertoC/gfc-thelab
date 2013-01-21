@@ -1,4 +1,4 @@
-define(['./constants', './pubsub'], function(constants, pubSub) {
+define(['./constants', './gamescope', './pubsub'], function(constants, GameScope, pubSub) {
     'use strict';
 
     /* Private variables */
@@ -81,24 +81,31 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
     };
 
     /* Private methods */
-    var _editCode = function(obj) {
-        obj = obj || '';
-        var type = typeof obj;
-        var strObj = type === 'object' ? _objectToString(obj) : obj.toString();
-        pubSub.publish('CodeEditor/show', [
-        obj === '' ? 'Code' : type[0].toUpperCase() + type.substr(1),
-        strObj,
-
-        function(newObj) {
-            if (newObj) {
-                _evaluateJs(newObj, function(ret) {
-                    window['result'] = ret;
-                },
-                function(error) {
-                    _instance.error('Error: ' + error);
-                });
+    var _editCode = function(str) {
+        if(str && typeof str != 'string') {
+            pubSub.publish('UI/alert', [constants.Text.EDITCODE_WRONG_PARAMS]);
+        }
+        else {
+            var codeContent = '';
+            var cmd = _scope.getCommand(str);
+            if(cmd) {
+                codeContent = (typeof cmd) === 'object' ? _objectToString(cmd) : cmd.toString();
             }
-        }]);
+            pubSub.publish('CodeEditor/show', [
+                str ? str : 'Code (stored into <i>result</i>)',
+                codeContent,
+                function(newObj) {
+                    if (newObj) {
+                        _evaluateJs(newObj, function(ret) {
+                            cmd ? _scope.addCommand(str, ret) : window['result'] = ret;
+                        },
+                        function(error) {
+                            _instance.error('Error: ' + error);
+                        });
+                    }
+                }
+            ]);
+        }
         pubSub.publish('Terminal/disable', []);
     };
 
@@ -122,23 +129,23 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
             for (var p in _o) {
                 if (_o.hasOwnProperty(p)) {
                     t = _o[p];
-                    if (t && typeof t == "object") {
-                        a[a.length] = p + ":{ " + arguments.callee(t).join(", ") + "}";
+                    if (t && typeof t === 'object') {
+                        a[a.length] = p + ':{ ' + arguments.callee(t).join(', ') + '}';
                     } else {
-                        if (typeof t == "string") {
+                        if (typeof t === 'string') {
 
-                            a[a.length] = [p + ": \"" + t.toString() + "\""];
-                        } else if (typeof t == "function") {
-                            a[a.length] = [p + ": " + t.toString()];
+                            a[a.length] = [p + ': \'' + t.toString() + '\''];
+                        } else if (typeof t === 'function') {
+                            a[a.length] = [p + ': ' + t.toString()];
                         } else {
-                            a[a.length] = [p + ": " + JSON.stringify(t)];
+                            a[a.length] = [p + ': ' + JSON.stringify(t)];
                         }
                     }
                 }
             }
             return a;
-        }
-        return "{" + parse(o).join(", ") + "}";
+        };
+        return '{' + parse(o).join(', ') + '}';
     };
 
     var _printCommands = function() {
@@ -151,7 +158,8 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
         _instance.echo('[[g;#0ff;transparent]' + commandList + ']\n');
     };
 
-    return {
+    var Terminal = function() {};
+    Terminal.prototype = {
         disable: function() {
             if (_instance) {
                 _isEnabled = false;
@@ -166,8 +174,12 @@ define(['./constants', './pubsub'], function(constants, pubSub) {
             }
         },
 
-        init: function(scope) {
-            _scope = scope;
+        getScope: function() {
+            return _scope;
+        },
+
+        init: function() {
+            _scope = new GameScope();
             window['result'] = null;
             _scope.addCommand('editCode',
 
@@ -220,47 +232,50 @@ function() {
             };
             _instance = constants.JQ_CODE.terminal(_menuInterpreter.interpreter, params);
             _instance.resize();
-            constants.JQ_BUGS_TERMINAL.click(function() {
+            constants.JQ_TERMINAL.click(function() {
                 _instance.resize();
-                constants.JQ_BUGS_TERMINAL.resize();
+                constants.JQ_TERMINAL.resize();
             });
 
             /* PubSub */
             var that = this;
-            pubSub.subscribe("CodeEditor/close", function() {
+            pubSub.subscribe('CodeEditor/close', function() {
                 if (_isShown) {
                     that.enable();
                 }
             });
-            pubSub.subscribe("Dialog/open", function() {
+            pubSub.subscribe('Dialog/open', function() {
                 if (_isShown) {
                     that.disable();
                 }
             });
-            pubSub.subscribe("Dialog/close", function() {
+            pubSub.subscribe('Dialog/close', function() {
                 if (_isShown) {
                     that.enable();
                 }
             });
-            pubSub.subscribe("Terminal/disable", function() {
+            pubSub.subscribe('Terminal/disable', function() {
                 that.disable();
             });
-            pubSub.subscribe("Terminal/enable", function() {
+            pubSub.subscribe('Terminal/enable', function() {
                 that.enable();
+            });
+            pubSub.subscribe('Terminal/write', function(evt, text) {
+                _instance.echo(text);
             });
         },
 
         toggleShow: function() {
-            constants.JQ_BUGS_TERMINAL.width(Math.min(constants.JQ_BUGS_TERMINAL.width(), window.innerWidth - 50));
-            constants.JQ_BUGS_TERMINAL.height(Math.min(constants.JQ_BUGS_TERMINAL.height(), window.innerHeight - 50));
-            constants.JQ_BUGS_TERMINAL.toggle('slide', {
+            constants.JQ_TERMINAL.width(Math.min(constants.JQ_TERMINAL.width(), window.innerWidth - 50));
+            constants.JQ_TERMINAL.height(Math.min(constants.JQ_TERMINAL.height(), window.innerHeight - 50));
+            constants.JQ_TERMINAL.toggle('slide', {
                 direction: 'down',
                 easing: 'easeOutCirc',
                 complete: function() {
                     if (!_instance.login_name()) {
                         pubSub.publish('GameManager/showLoginHint');
                     }
-                    constants.JQ_BUGS_TERMINAL.resize();
+                    constants.JQ_TERMINAL.resize();
                 }
             }, 1500);
             _isShown = !_isShown;
@@ -273,4 +288,5 @@ function() {
             }
         }
     };
+    return Terminal;
 });

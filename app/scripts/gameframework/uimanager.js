@@ -1,19 +1,20 @@
 define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
     'use strict';
 
-    return {
+    var UiManager = function() {};
+    UiManager.prototype = {
         init: function() {
-            constants.JQ_BUGS_TERMINAL.resizable({
+            constants.JQ_TERMINAL.resizable({
                 handles: 'n, e, w, ne, nw',
                 start: function() {
-                    constants.JQ_BUGS_TERMINAL.addClass('resizing');
+                    constants.JQ_TERMINAL.addClass('resizing');
                 },
                 stop: function() {
-                    constants.JQ_BUGS_TERMINAL.removeClass('resizing');
-                    constants.JQ_BUGS_TERMINAL.css('top', '');
-                    constants.JQ_BUGS_TERMINAL.css('left', '');
-                    constants.JQ_BUGS_TERMINAL.css('bottom', '5px');
-                    constants.JQ_BUGS_TERMINAL.css('right', '1px');
+                    constants.JQ_TERMINAL.removeClass('resizing');
+                    constants.JQ_TERMINAL.css('top', '');
+                    constants.JQ_TERMINAL.css('left', '');
+                    constants.JQ_TERMINAL.css('bottom', '5px');
+                    constants.JQ_TERMINAL.css('right', '1px');
                 }
             });
             constants.JQ_TERMINAL_TOGGLE.button({
@@ -28,8 +29,14 @@ define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
                 },
                 text: false
             });
-            constants.JQ_BUGS_TERMINAL.hide();
+            constants.JQ_TERMINAL.hide();
             constants.JQ_MENU.mCustomScrollbar();
+
+            /* PubSub */
+            var that = this;
+            pubSub.subscribe('UI/alert', function(evt, text, optTitle) {
+                that.showDialog(optTitle || 'Notice', text, [constants.Buttons.DEFAULT_CLOSE_BTN]);
+            });
         },
 
         showDialog: function(title, text, buttons, optParams) {
@@ -122,4 +129,5 @@ define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
             });
         }
     };
+    return UiManager;
 });

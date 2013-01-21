@@ -1,9 +1,9 @@
-define(['jquery'], function($) {
+define(['jquery', './pubsub'], function($, pubSub) {
     'use strict';
 
     var constants = {};
 
-    constants.APP_NAME = 'JS Bugs Lab 2.0';
+    constants.APP_NAME = 'The Lab';
 
     constants.CODEMIRROR_ELEMENT = document.getElementById('myCodeMirror');
 
@@ -19,7 +19,7 @@ define(['jquery'], function($) {
         return $('.anAccordion');
     };
 
-    constants.JQ_BUGS_TERMINAL = $('.bugsTerminal');
+    constants.JQ_TERMINAL = $('.bugsTerminal');
 
     constants.JQ_CODE = $('.code');
 
@@ -94,8 +94,8 @@ define(['jquery'], function($) {
         'You can then type <span class="funcStr">addCommand("sayHello", result)</span> to save the result into the commands.' +
         '</div></div><p>';
 
-    constants.Text.TUTORIAL_INTRO = '<p>Welcome to ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
-        'you will have to code in JavaScript and manipulate the DOM to solve it.</p>' +
+    constants.Text.TUTORIAL_INTRO = '<p>Welcome to Games for Coders - ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
+        'you will have to code in JavaScript and manipulate the DOM to solve it.</p><p style="color: orange">WARNING2: This game is still a prototype and some features could be broken or not implemented.</p>' +
         '<p><i>Normal</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
         'Choose this mode also if you don\'t like situations in which you have no idea what to do: JavaScript has a lot of functions and rules, ' +
         'and if you are not used to them, the solution might not be very straightforward.' +
@@ -112,6 +112,18 @@ define(['jquery'], function($) {
             'JavaScript and the DOM, so if you are new to the topic you\'d better keep some ' +
             '<span onclick="window.open(\'https://developer.mozilla.org/\')"' +
             'target="_blank" class="helpButton">documentation</span> at your side.</p>';
+
+    constants.Text.EDITCODE_WRONG_PARAMS = 'You are calling editCode() with the wrong parameters. The function takes as input the name of the command that you want to edit, ' +
+            'or nothing if you want to create a new function that will be stored in the variable called <i>result</i>.';
+
+    constants.Buttons = {};
+    constants.Buttons.DEFAULT_CLOSE_BTN = {
+        text: 'Close',
+        click: function() {
+            $(this).dialog('close');
+            pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
+        }
+    };
 
     return constants;
 });

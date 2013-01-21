@@ -1,4 +1,4 @@
-define([], function() {
+define(['gameframework/constants', 'gameframework/pubsub'], function(constants, pubSub) {
     'use strict';
     /**
      * OLD JS BUGS LAB CODE, TO BE REFACTORED
@@ -54,7 +54,7 @@ define([], function() {
 
     game.Lab.motherDNA = {
         'onClickBehavior': function() {
-            alert("Grrr...");
+            alert('Grrr...');
         },
         'onHatch': null,
         'onSpawn': null
@@ -62,7 +62,7 @@ define([], function() {
 
     game.Lab.bugDNA = {
         'onClickBehavior': function() {
-            alert("Ouch!");
+            alert('Ouch!');
         },
         'onSpawn': null
     };
@@ -293,29 +293,29 @@ define([], function() {
                     }
                 }
 
-                var msg = "";
-                msg += ("You collected " + savedBugs + " bugs...");
+                var msg = '';
+                msg += ('You collected ' + savedBugs + ' bugs...');
                 if (savedBugs < 10) {
                     msg += (stringScramble(gamestrings.notenoughbugs));
                 } else if (stillInFieldBugs > 0) {
-                    msg += (" but " + stillInFieldBugs + stringScramble(gamestrings.bugsoutside));
+                    msg += (' but ' + stillInFieldBugs + stringScramble(gamestrings.bugsoutside));
                 } else {
-                    var ending = "";
+                    var ending = '';
                     if (inhibitedBugs == 0 || proliferatedBugs == 0) {
                         ending = stringScramble(gamestrings.candobetter);
                     } else {
                         ending = stringScramble(gamestrings.complete);
                     }
                     if (inhibitedBugs > 0 || proliferatedBugs > 0) {
-                        msg += ("...of which:");
-                        msg += ("\n\n");
+                        msg += ('...of which:');
+                        msg += ('\n\n');
                         msg += (normalBugs + stringScramble(gamestrings.normalbugs));
                         if (inhibitedBugs > 0) {
-                            msg += ("\n\n");
+                            msg += ('\n\n');
                             msg += (inhibitedBugs + stringScramble(gamestrings.inhibited));
                         }
                         if (proliferatedBugs > 0) {
-                            msg += ("\n\n");
+                            msg += ('\n\n');
                             msg += (proliferatedBugs + stringScramble(gamestrings.proliferated));
                         }
                     }
@@ -331,58 +331,38 @@ define([], function() {
         // log('Hello! Have a look at game object and game.goal() to get more information and game.commands() to know where to start!');
         
         // alert('Open your JS console!');
+        var _callbackId = undefined;
+        function _addLabCommands() {
+            pubSub.publish('Terminal/write', ['Lights turned on, activating lab.']);
+            window['gameScope']['addCommand']('addSeed', function() {
+                game.Food.add.apply(this, arguments);
+            });
+            window['gameScope']['addCommand']('getMotherDna', function() {
+                return game.Lab.motherDNA;
+            });
+            window['gameScope']['addCommand']('getBugDna', function() {
+                return game.Lab.bugDNA;
+            });
+            window['gameScope']['addCommand']('setMotherDna', function(dna) {
+                game.Lab.motherDNA = dna;
+            });
+            window['gameScope']['addCommand']('setBugDna', function(dna) {
+                return game.Lab.bugDNA = dna;
+            });
+
+            if(_callbackId)
+            {
+                pubSub.publish('MutationObserver/remove', [_callbackId]);
+            }
+        }
+        pubSub.publish('MutationObserver/add', [constants.JQ_DARKNESS.parent(), _addLabCommands, [{ 'element': '#darkness' }], function(id) {
+            _callbackId = id;
+        }]);
     };
 
     /*
     var cleanAll = function() { for(var i = 0; i < document.body.childElementCount; i++) {if(document.body.children[i].classList.contains('bug')) document.body.removeChild(document.body.children[i])} };
     */
-
-    window['gameScope'] = new function() {
-        var commands = {};
-
-        this.addCommand = function(name, func) {
-            /*
-        [[g;#0ff;transparent]addCommand] adds a command with the given name, that executes the given function 'func'. 
-
-        Parameters:
-        name: sting
-        func: function
-        */
-            commands[name] = window[name] = func;
-        };
-
-        this.removeCommand = function(name) {
-            /*
-        [[g;#0ff;transparent]removeCommand] Removes a command with the given name.
-
-        Parameters:
-        name: string
-        */
-            delete commands[name];
-            delete window[name];
-        };
-
-        this.getCommands = function() {
-            return commands;
-        };
-    };
-    window['gameScope']['addCommand']('addCommand', window['gameScope']['addCommand']);
-    window['gameScope']['addCommand']('removeCommand', window['gameScope']['removeCommand']);
-    window['gameScope']['addCommand']('addSeed', function() {
-        game.Food.add.apply(this, arguments);
-    });
-    window['gameScope']['addCommand']('getMotherDna', function() {
-        return game.Lab.motherDNA;
-    });
-    window['gameScope']['addCommand']('getBugDna', function() {
-        return game.Lab.bugDNA;
-    });
-    window['gameScope']['addCommand']('setMotherDna', function(dna) {
-        game.Lab.motherDNA = dna;
-    });
-    window['gameScope']['addCommand']('setBugDna', function(dna) {
-        return game.Lab.bugDNA = dna;
-    });
 
     return {
         run: run

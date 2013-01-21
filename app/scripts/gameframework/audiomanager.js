@@ -1,4 +1,4 @@
-define(['buzz', './constants', './pubsub'], function(buzz, constants, pubSub) {
+define(['module', 'buzz', './constants', './pubsub'], function(module, buzz, constants, pubSub) {
     'use strict';
 
     /* Constants */
@@ -6,8 +6,8 @@ define(['buzz', './constants', './pubsub'], function(buzz, constants, pubSub) {
     var SOUND_DIR = 'sound/';
 
     /* Private variables */
-    var _isEnabledMusic = true;
-    var _isEnabledSound = true;
+    var _isEnabledMusic = module.config().enableMusic;
+    var _isEnabledSound = module.config().enableSound;
 
     var _musicLoop = new buzz.group([
     new buzz.sound(MUSIC_DIR + 'Hidden%20Agenda.ogg'),
@@ -67,7 +67,8 @@ define(['buzz', './constants', './pubsub'], function(buzz, constants, pubSub) {
         }
     });
 
-    return {
+    var AudioManager = function() {};
+    AudioManager.prototype = {
         enableMusic: function(enable) {
             _isEnabledMusic = enable;
             if (_isEnabledMusic) {
@@ -121,4 +122,5 @@ define(['buzz', './constants', './pubsub'], function(buzz, constants, pubSub) {
             this.enableSound(_isEnabledSound);
         }
     };
+    return AudioManager;
 });
