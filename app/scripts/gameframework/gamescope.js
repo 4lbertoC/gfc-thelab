@@ -1,9 +1,9 @@
-define([], function() {
-	
-	var GameScope = function() {
+define([], function () {
+
+    var GameScope = function () {
         var commands = {};
 
-        this.addCommand = function(name, func) {
+        this.addCommand = function (name, func) {
             /*
         [[g;#0ff;transparent]addCommand] adds a command with the given name, that executes the given function 'func'.
 
@@ -14,7 +14,7 @@ define([], function() {
             commands[name] = window[name] = func;
         };
 
-        this.removeCommand = function(name) {
+        this.removeCommand = function (name) {
             /*
         [[g;#0ff;transparent]removeCommand] Removes a command with the given name.
 
@@ -25,11 +25,11 @@ define([], function() {
             delete window[name];
         };
 
-        this.getCommand = function(cmdName) {
+        this.getCommand = function (cmdName) {
             return commands[cmdName];
         };
 
-        this.getCommands = function() {
+        this.getCommands = function () {
             return commands;
         };
 

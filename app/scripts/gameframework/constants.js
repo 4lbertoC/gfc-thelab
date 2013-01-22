@@ -1,4 +1,4 @@
-define(['jquery', './pubsub'], function($, pubSub) {
+define(['jquery', './pubsub'], function ($, pubSub) {
     'use strict';
 
     var constants = {};
@@ -7,15 +7,15 @@ define(['jquery', './pubsub'], function($, pubSub) {
 
     constants.CODEMIRROR_ELEMENT = document.getElementById('myCodeMirror');
 
-    constants.getJQ_HELP_BUTTONS = function() {
+    constants.getJQ_HELP_BUTTONS = function () {
         return $('.helpButton');
     };
 
-    constants.getJQ_LINKS = function() {
+    constants.getJQ_LINKS = function () {
         return $('.link');
     };
 
-    constants.getJQ_ACCORDIONS = function() {
+    constants.getJQ_ACCORDIONS = function () {
         return $('.anAccordion');
     };
 
@@ -68,7 +68,6 @@ define(['jquery', './pubsub'], function($, pubSub) {
     constants.Text.LIGHTS_BROKEN = '[[g;#f00;transparent]ERROR: light() function seems to be broken. Please use Javascript interpreter to fix it.]';
 
     constants.Text.GREETINGS = '[ ' + constants.APP_NAME + ' ]\nType [[g;#0ff;transparent]help] for commands.\n';
-
     constants.Text.HELP = 'Available commands:\n' +
         '[[g;#0ff;transparent]help]: display this page.\n' +
         '[[g;#0ff;transparent]js]: run javascript interpreter.\n' +

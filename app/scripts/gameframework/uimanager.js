@@ -1,15 +1,15 @@
-define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
+define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     'use strict';
 
-    var UiManager = function() {};
+    var UiManager = function () {};
     UiManager.prototype = {
-        init: function() {
+        init: function () {
             constants.JQ_TERMINAL.resizable({
                 handles: 'n, e, w, ne, nw',
-                start: function() {
+                start: function () {
                     constants.JQ_TERMINAL.addClass('resizing');
                 },
-                stop: function() {
+                stop: function () {
                     constants.JQ_TERMINAL.removeClass('resizing');
                     constants.JQ_TERMINAL.css('top', '');
                     constants.JQ_TERMINAL.css('left', '');
@@ -34,12 +34,12 @@ define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
 
             /* PubSub */
             var that = this;
-            pubSub.subscribe('UI/alert', function(evt, text, optTitle) {
+            pubSub.subscribe('UI/alert', function (evt, text, optTitle) {
                 that.showDialog(optTitle || 'Notice', text, [constants.Buttons.DEFAULT_CLOSE_BTN]);
             });
         },
 
-        showDialog: function(title, text, buttons, optParams) {
+        showDialog: function (title, text, buttons, optParams) {
             var thisUiManager = this;
             pubSub.publish('Dialog/open');
             constants.JQ_MSGDIALOG.removeClass('dialogHidden');
@@ -54,27 +54,27 @@ define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
                 maxWidth: window.innerWidth - 20,
                 maxHeight: window.innerHeight - 20,
                 buttons: buttons,
-                open: function() {
+                open: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                     thisUiManager.applyCustomStyle();
                 },
-                beforeClose: function() {
+                beforeClose: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                     pubSub.publish('Dialog/close');
                 }
             };
-            if (optParams && typeof optParams === 'object') {
-                for (var p in optParams) {
+            if(optParams && typeof optParams === 'object') {
+                for(var p in optParams) {
                     defaultParams[p] = optParams[p];
                 }
             }
             constants.JQ_MSGDIALOG.dialog(defaultParams).mCustomScrollbar();
         },
 
-        showTitleInfo: function() {
+        showTitleInfo: function () {
             var thisUiManager = this;
             pubSub.publish('Dialog/open');
-            constants.JQ_MENU   .dialog({
+            constants.JQ_MENU.dialog({
                 title: 'Menu',
                 width: Math.min(500, window.innerWidth - 20),
                 height: Math.min(450, window.innerHeight - 20),
@@ -83,41 +83,41 @@ define(['jquery', './constants', './pubsub'], function($, constants, pubSub) {
                 modal: true,
                 show: 'drop',
                 hide: 'drop',
-                open: function() {
+                open: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                     thisUiManager.applyCustomStyle();
                 },
-                beforeClose: function() {
+                beforeClose: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                     pubSub.publish('Dialog/close');
                 }
             });
         },
 
-        applyCustomStyle: function() {
+        applyCustomStyle: function () {
             constants.getJQ_HELP_BUTTONS().button({
                 icons: {
                     primary: 'ui-icon-help'
                 }
-            }).click(function() {
+            }).click(function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
             });
             constants.getJQ_LINKS().button({
                 icons: {
                     primary: 'ui-icon-extlink'
                 }
-            }).click(function() {
+            }).click(function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
             });
             constants.getJQ_ACCORDIONS().accordion({
                 active: false,
-                activate: function(evt, ui) {
+                activate: function (evt, ui) {
                     $(evt.target).resize();
-                    if (ui.newHeader.hasClass('spoiler')) {
+                    if(ui.newHeader.hasClass('spoiler')) {
                         pubSub.publish('AchievementManager/openSpoiler', [10]);
                     }
                 },
-                beforeActivate: function() {
+                beforeActivate: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.ACCORDION]);
                 },
                 collapsible: true,

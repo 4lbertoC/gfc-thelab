@@ -1,11 +1,11 @@
-define(['./constants', './pubsub'], function(constants, pubsub) {
+define(['./constants', './pubsub'], function (constants, pubsub) {
     'use strict';
 
     /* Private variables */
     var _instance = null;
 
     /* Private methods */
-    var formatCode = function() {
+    var formatCode = function () {
         var totalLines = _instance.lineCount();
         var totalChars = _instance.getValue().length;
         _instance.autoFormatRange({
@@ -18,9 +18,9 @@ define(['./constants', './pubsub'], function(constants, pubsub) {
         _instance.setCursor(0, 0);
     };
 
-    var CodeEditor = function() {};
+    var CodeEditor = function () {};
     CodeEditor.prototype = {
-        init: function() {
+        init: function () {
             _instance = _instance || CodeMirror(constants.CODEMIRROR_ELEMENT, {
                 value: 'function myScript() {\n\treturn 100;\n}\n',
                 mode: {
@@ -30,16 +30,16 @@ define(['./constants', './pubsub'], function(constants, pubsub) {
                 theme: 'ambiance',
                 lineWrapping: true
             });
-            
+
             /* Pubsub */
             var that = this;
-            pubsub.subscribe('CodeEditor/show', function(evt, title, code, callback) {
+            pubsub.subscribe('CodeEditor/show', function (evt, title, code, callback) {
                 that.show(title, code, callback);
             });
         },
 
-        show: function(title, code, callback) {
-            var closeEditor = function() {
+        show: function (title, code, callback) {
+            var closeEditor = function () {
                 pubsub.publish('CodeEditor/close');
             };
             _instance.setValue(code);
@@ -52,9 +52,9 @@ define(['./constants', './pubsub'], function(constants, pubsub) {
                 width: Math.ceil(window.innerWidth * 0.8),
                 buttons: [{
                     text: 'Ok',
-                    click: function() {
+                    click: function () {
                         pubsub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-                        if (callback) {
+                        if(callback) {
                             callback(_instance.getValue());
                         }
                         $(this).dialog('close');
@@ -62,20 +62,20 @@ define(['./constants', './pubsub'], function(constants, pubsub) {
                     }
                 }, {
                     text: 'Cancel',
-                    click: function() {
+                    click: function () {
                         pubsub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
                         $(this).dialog('close');
                         closeEditor();
                     }
                 }],
-                beforeClose: function() {
+                beforeClose: function () {
                     pubsub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                 },
-                open: function() {
+                open: function () {
                     formatCode();
                     pubsub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                 },
-                focus: function() {
+                focus: function () {
                     _instance.refresh();
                     _instance.focus();
                 }
