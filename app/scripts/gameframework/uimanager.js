@@ -37,6 +37,9 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             pubSub.subscribe('UI/alert', function (evt, text, optTitle) {
                 that.showDialog(optTitle || 'Notice', text, [constants.Buttons.DEFAULT_CLOSE_BTN]);
             });
+            pubSub.subscribe('UI/dialog', function (evt, title, text, buttons, optParams) {
+                that.showDialog(title, text, buttons, optParams);
+            });
         },
 
         showDialog: function (title, text, buttons, optParams) {
@@ -71,7 +74,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             constants.JQ_MSGDIALOG.dialog(defaultParams).mCustomScrollbar();
         },
 
-        showTitleInfo: function () {
+        showMenu: function () {
             var thisUiManager = this;
             pubSub.publish('Dialog/open');
             constants.JQ_MENU.dialog({

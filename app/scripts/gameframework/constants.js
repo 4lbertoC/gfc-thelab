@@ -95,6 +95,9 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.TUTORIAL_INTRO = '<p>Welcome to Games for Coders - ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
         'you will have to code in JavaScript and manipulate the DOM to solve it.</p><p style="color: orange">WARNING2: This game is still a prototype and some features could be broken or not implemented.</p>' +
+        '<p>Select the game mode!</p>' +
+        '<p><i>Demo</i> will enable a menu option that tells you what you need to do in order to solve the next step. Choose this mode if you just want an overview of ' +
+        'what <i>Game for Coders</i> framework is about.</p>' +
         '<p><i>Normal</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
         'Choose this mode also if you don\'t like situations in which you have no idea what to do: JavaScript has a lot of functions and rules, ' +
         'and if you are not used to them, the solution might not be very straightforward.' +

@@ -1,13 +1,6 @@
 define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     'use strict';
 
-    /* Private methods */
-    var _darknessMutationObserverCallback = function (summaries) {
-        (summaries && (typeof summaries === 'object') && (typeof summaries[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && summaries[0].removed[0]['id'] === 'darkness') && pubSub.publish('GameEvent/darknessRemoved');
-        alert('Darkness removed!');
-        // TODO Also display = none or width = 0 or height = 0 would work
-    };
-
     var _mutationObserverArray = {};
 
     var MutationObserver = function () {};
@@ -26,10 +19,6 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             pubSub.subscribe('MutationObserver/removeAll', function (evt, node) {
                 that.removeAllObservers(node);
             });
-
-            this.addObserver(constants.JQ_DARKNESS.parent(), _darknessMutationObserverCallback, [{
-                'element': '#darkness'
-            }]);
         },
 
         addObserver: function (node, callback, query) {
