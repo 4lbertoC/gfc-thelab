@@ -23,19 +23,15 @@
         <script src="scripts/vendor/modernizr.min.js"></script>
     </head>
     <body>
-        <table width="100%" align="center" valign="middle">
-        <tr>
-            <td id="container">
-                <div id="desk">
-                    <div id="fieldContainer" class="innerContainer"></div>
-                    <div id="flaskContainer" class="innerContainer"></div>
-                </div>
-                <div id="glass"></div>
-                <div id="darkness"></div>
-            </td>
-        </tr>
-        </table>
-        <div class="bugsTerminal" style="display: none;">
+        <div id="gameContainer" class="fullSizeDiv">
+            <div id="desk">
+                <div id="fieldContainer" class="innerContainer"><div id="field"></div></div>
+                <div id="flaskContainer" class="innerContainer"><div id="flask"></div></div>
+            </div>
+            <div id="glass" class="fullSizeDiv"></div>
+            <div id="darkness" class="fullSizeDiv"></div>
+        </div>
+        <div class="gfcTerminal" style="display: none;">
             <div class="code"></div>
         </div>
         <div class="terminalToggle" style="display: none;"></div>

@@ -19,7 +19,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         return $('.anAccordion');
     };
 
-    constants.JQ_TERMINAL = $('.bugsTerminal');
+    constants.JQ_TERMINAL = $('.gfcTerminal');
 
     constants.JQ_CODE = $('.code');
 
