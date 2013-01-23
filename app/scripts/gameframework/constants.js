@@ -75,8 +75,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '\n' +
         'When using the Javascript interpreter, use [[g;#0ff;transparent]exit] or [[g;#ff0;transparent]CTRL+D] to go back to the menu.';
 
-    constants.Text.HINT_LOGIN = '<p>Uh-oh! It looks like you need ' +
-                        'to enter the credentials to log into the terminal.';
+    constants.Text.HINT_LOGIN = '<p>Uh-oh! It looks like you need to enter the credentials to log into the terminal.';
 
     constants.Text.HINT_JSTERMINAL = '<p>You just entered the JavaScript terminal. You can see the available commands ' +
         'listed above the prompt, or type <span class="funcStr">printCommands()</span> to show them again.' +
@@ -85,7 +84,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '<p>Use <span class="funcStr">addCommand()</span> and <span class="funcStr">removeCommand()</span> to create your custom commands ' +
         '(and again, type without parenthesis to see how to use them).' +
         '<p><span onclick="window.open(\'https://developer.mozilla.org/docs/JavaScript/Guide/Functions\')"' +
-            'target="_blank" class="helpButton">Functions</span>' +
+        'target="_blank" class="helpButton">Functions</span>' +
         '<p><div class="anAccordion"><h3>Example</h3><div>' +
         '<p>Call <span class="funcStr">editCode()</span>, and the edit window will appear. Here write the following code:<p>' +
         '<div class="code codeStr">function() { alert("hi"); }</div><p>Then press Ok. If you now call <span class="funcStr">result()</span>' +
@@ -106,26 +105,49 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '<p>So, what mode do you prefer?';
 
     constants.Text.HINT_DARKNESS = '<p>The first thing you should do in order to play is remove the <span class="divText">darkness</span>.</p>' +
-            '<p>As I said, this is not a game like others you see around, you\'ll have to CODE if you want to go on. For example,' +
-            'there is no button that turns on the lights!' +
-            '<p>When you see a name colored in red in these messages, like <span class="divText">glass</span>, we are referring to a ' +
-            '<span onclick="window.open(\'https://developer.mozilla.org/docs/DOM/HTMLElement\')"' +
-            'target="_blank" class="helpButton">HTMLElement</span> ID. You will find yourself playing with ' +
-            'JavaScript and the DOM, so if you are new to the topic you\'d better keep some ' +
-            '<span onclick="window.open(\'https://developer.mozilla.org/\')"' +
-            'target="_blank" class="helpButton">documentation</span> at your side.</p>';
+        '<p>As I said, this is not a game like others you see around, you\'ll have to CODE if you want to go on. For example,' +
+        'there is no button that turns on the lights!' +
+        '<p>When you see a name colored in red in these messages, like <span class="divText">glass</span>, we are referring to a ' +
+        '<span onclick="window.open(\'https://developer.mozilla.org/docs/DOM/HTMLElement\')"' +
+        'target="_blank" class="helpButton">HTMLElement</span> ID. You will find yourself playing with ' +
+        'JavaScript and the DOM, so if you are new to the topic you\'d better keep some ' +
+        '<span onclick="window.open(\'https://developer.mozilla.org/\')"' +
+        'target="_blank" class="helpButton">documentation</span> at your side.</p>';
 
-    constants.Text.EDITCODE_WRONG_PARAMS = 'You are calling editCode() with the wrong parameters. The function takes as input the name of the command that you want to edit, ' +
-            'or nothing if you want to create a new function that will be stored in the variable called <i>result</i>.';
+    constants.Text.EDITCODE_WRONG_PARAMS = '<p>You are calling editCode() with the wrong parameters. The function takes as input the name of the command that you want to edit, ' +
+        'or nothing if you want to create a new function that will be stored in the variable called <i>result</i>.</p>';
+
+    constants.Text.LIGHTS_ON_TERMINAL = '[[;#fff;transparent]LIGHTS TURNED ON, ACTIVATING LAB...]\n[[g;#0ff;transparent]addSpore(dna)][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]' +
+        '\n[[g;#0ff;transparent]cleanDish()][[;#fff;transparent].....] [[g;#f00;transparent]BROKEN]' +
+        '\n[[g;#0ff;transparent]getBaseDna()][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]';
+
+    constants.Text.LIGHTS_ON_ALERT = '<p>You did it! Now it\'s easier for me to explain what we have here and what we need you to do.</p>' +
+        '<p>We are in a <b>Bugterium Laboratory</b>.</p><p>Here we study <b>bugteria</b>, an interesting new form of digital microorganism that has been recently discovered. ' +
+        'The platform we have here is very powerful: we can manipulate their DNA and create custom <b>bugteria</b>! ...unfortunately someone hacked our system and ' +
+        'broke it, and we are not able to fix it!</p><p>We don\'t know anything about this javasomething stuff, but it looks like it is the only way we have now to ' +
+        'use it. Do you think you could help us?</p>' +
+        '<p>The big plate you see on the table is a ' +
+        '<span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Petri_dish\')" target="_blank">Petri dish</span>. Here is where <b>bugteria</b> should grow.</p>' +
+        '<p>The other small container is a <span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Laboratory_flask\')" target="_blank">flask</span>. ' +
+        'It\'s where bugterial specimen should be collected for analysis.</p>' +
+        '' +
+        '<p style="margin: 5px auto; text-align: center; color: red; font-size: 1.2em; font-weight: bold;">Collect 10 bugteria!</p>' +
+        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p>';
+
+    constants.Text.ISANYONETHERE_MESSAGE = '<p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
+        'I tried using the terminal but it is broken, could you give a look? Maybe you know more javasomething than me...';
 
     constants.Buttons = {};
-    constants.Buttons.DEFAULT_CLOSE_BTN = {
-        text: 'Close',
-        click: function() {
-            $(this).dialog('close');
-            pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-        }
-    };
+    constants.Buttons.getDefaultCloseButton = function() {
+        var btn = {
+            text: 'Close',
+            click: function() {
+                $(this).dialog('close');
+                pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
+            }
+        };
+        return btn;
+    }
 
     return constants;
 });

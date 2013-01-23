@@ -35,7 +35,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             /* PubSub */
             var that = this;
             pubSub.subscribe('UI/alert', function (evt, text, optTitle) {
-                that.showDialog(optTitle || 'Notice', text, [constants.Buttons.DEFAULT_CLOSE_BTN]);
+                that.showDialog(optTitle || 'Message', text, [constants.Buttons.getDefaultCloseButton()]);
             });
             pubSub.subscribe('UI/dialog', function (evt, title, text, buttons, optParams) {
                 that.showDialog(title, text, buttons, optParams);
@@ -48,7 +48,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             constants.JQ_MSGDIALOG.removeClass('dialogHidden');
             constants.JQ_MSGDIALOG.html(text);
             var defaultParams = {
-                title: title,
+                title: title || 'Message',
                 modal: true,
                 show: 'drop',
                 hide: 'drop',
@@ -56,7 +56,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
                 height: Math.min(400, window.innerHeight - 20),
                 maxWidth: window.innerWidth - 20,
                 maxHeight: window.innerHeight - 20,
-                buttons: buttons,
+                buttons: buttons || [constants.Buttons.getDefaultCloseButton()],
                 open: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                     thisUiManager.applyCustomStyle();

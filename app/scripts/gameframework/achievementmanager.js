@@ -9,7 +9,7 @@ define(['./constants', './pubsub'], function (constants, pubSub) {
     _achievements[constants.Achievement.LOGGED_IN] = false;
 
     /* PubSub */
-    pubSub.subscribeOnce('AchievementManager/achieve', function (name) {
+    pubSub.subscribe('AchievementManager/achieve', function (name) {
         _achievements[name] = true;
         pubSub.publish('AudioManager/playSound', [constants.Sound.SUCCESS]);
     });

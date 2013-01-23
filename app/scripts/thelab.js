@@ -13,20 +13,14 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         var _callbackId;
 
         function _addLabCommands() {
-            pubSub.publish('Terminal/write', ['Lights turned on, activating lab.']);
-            _gameScope.addCommand('addSeed', function () {
+            pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
+            _gameScope.addCommand('addSpore', function (dna) {
                 // TODO
             });
-            _gameScope.addCommand('getMotherDna', function () {
+            _gameScope.addCommand('cleanDish', function () {
                 // TODO
             });
-            _gameScope.addCommand('getBugDna', function () {
-                // TODO
-            });
-            _gameScope.addCommand('setMotherDna', function (dna) {
-                // TODO
-            });
-            _gameScope.addCommand('setBugDna', function (dna) {
+            _gameScope.addCommand('getBaseDna', function () {
                 // TODO
             });
 
@@ -39,7 +33,9 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             var isDarknessRemoved = (summaries && (typeof summaries === 'object') && (typeof summaries[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && summaries[0].removed[0]['id'] === 'darkness');
             if(isDarknessRemoved) {
                 _addLabCommands();
+                pubSub.publish('AchievementManager/achieve', ['darkness_removed']);
                 pubSub.publish('GameEvent/darknessRemoved');
+                pubSub.publish('UI/alert', constants.Text.LIGHTS_ON_ALERT, 'Great job!');
             }
             // TODO Also display = none or width = 0 or height = 0 would work
         }
@@ -60,10 +56,6 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     };
 
     var _showStartDialog = function () {
-        var showUI = function () {
-            constants.JQ_TERMINAL_TOGGLE.toggle('fade', 2000);
-            constants.JQ_MENU_BUTTON.toggle('fade', 2000);
-        };
         pubSub.publish('UI/dialog', ['Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [
             {
             text: 'Demo',
@@ -102,7 +94,21 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 _showHints = false;
                 $(this).dialog('close');
             }
-        }], {
+        }],
+        {
+            close: function () {
+                _showFirstMessage();
+            }
+        }]);
+    };
+
+    var _showFirstMessage = function () {
+        var showUI = function () {
+            constants.JQ_TERMINAL_TOGGLE.toggle('fade', 2000);
+            constants.JQ_MENU_BUTTON.toggle('fade', 2000);
+        };
+        pubSub.publish('UI/dialog', ['Message', constants.Text.ISANYONETHERE_MESSAGE, undefined,
+        {
             beforeClose: function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                 pubSub.publish('Dialog/close');
@@ -110,7 +116,8 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 if(_showHints) {
                     _showFirstTooltip();
                 }
-            }
+            },
+            close: function () {}
         }]);
     };
 
@@ -132,13 +139,13 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     /* PubSub */
     pubSub.subscribeOnce('GameManager/showLoginHint', function () {
         if(_showHints) {
-            pubSub.publish('UI/alert', [constants.Text.HINT_LOGIN, 'Tutorial']);
+            pubSub.publish('UI/alert', [constants.Text.HINT_LOGIN, 'Info']);
         }
     });
 
     pubSub.subscribeOnce('GameManager/showJsTerminalHint', function () {
         if(_showHints) {
-            pubSub.publish('UI/alert', [constants.Text.HINT_JSTERMINAL, 'Tutorial']);
+            pubSub.publish('UI/alert', [constants.Text.HINT_JSTERMINAL, 'Info']);
         }
     });
 
