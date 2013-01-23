@@ -1,6 +1,6 @@
 define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, constants, pubSub) {
     'use strict';
-
+    
     /* Constants */
     var MUSIC_DIR = 'music/';
     var SOUND_DIR = 'sound/';

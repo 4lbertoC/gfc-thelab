@@ -5,6 +5,8 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     var _gameManager = null;
     var _gameScope = null;
 
+    var _hintsPersonName = 'Someone in the dark';
+
     var _showHints = true;
 
     /* Private methods */
@@ -32,10 +34,11 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         function _darknessMutationObserverCallback(summaries) {
             var isDarknessRemoved = (summaries && (typeof summaries === 'object') && (typeof summaries[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && summaries[0].removed[0]['id'] === 'darkness');
             if(isDarknessRemoved) {
+                _hintsPersonName = 'Doctor Div';
                 _addLabCommands();
                 pubSub.publish('AchievementManager/achieve', ['darkness_removed']);
                 pubSub.publish('GameEvent/darknessRemoved');
-                pubSub.publish('UI/alert', constants.Text.LIGHTS_ON_ALERT, 'Great job!');
+                pubSub.publish('UI/talk', ['Great job!', _hintsPersonName, constants.Text.LIGHTS_ON_ALERT]);
             }
             // TODO Also display = none or width = 0 or height = 0 would work
         }
@@ -58,30 +61,13 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     var _showStartDialog = function () {
         pubSub.publish('UI/dialog', ['Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [
             {
-            text: 'Demo',
+            text: 'Beginner',
             click: function (evt) {
-                var btn = evt.target;
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-                if(!btn.alreadyClicked) {
-                    btn.alreadyClicked = 1;
-                    btn.textContent = 'Are you sure?';
-                } else if(btn.alreadyClicked === 1) {
-                    btn.alreadyClicked++;
-                    btn.textContent = 'Sorry, just kidding';
-                } else if(btn.alreadyClicked === 2) {
-                    btn.alreadyClicked++;
-                    btn.textContent = 'There is no demo mode';
-                } else if(btn.alreadyClicked === 3) {
-                    btn.alreadyClicked++;
-                    btn.textContent = 'Stop clicking';
-                } else if(btn.alreadyClicked === 4) {
-                    btn.alreadyClicked++;
-                    btn.textContent = '...';
-                }
             }
         },
             {
-            text: 'Normal',
+            text: 'Intermediate',
             click: function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
                 $(this).dialog('close');
@@ -107,7 +93,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             constants.JQ_TERMINAL_TOGGLE.toggle('fade', 2000);
             constants.JQ_MENU_BUTTON.toggle('fade', 2000);
         };
-        pubSub.publish('UI/dialog', ['Message', constants.Text.ISANYONETHERE_MESSAGE, undefined,
+        pubSub.publish('UI/talk', ['Message', _hintsPersonName, constants.Text.ISANYONETHERE_MESSAGE, undefined,
         {
             beforeClose: function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
@@ -139,13 +125,13 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     /* PubSub */
     pubSub.subscribeOnce('GameManager/showLoginHint', function () {
         if(_showHints) {
-            pubSub.publish('UI/alert', [constants.Text.HINT_LOGIN, 'Info']);
+            pubSub.publish('UI/talk', ['Info', _hintsPersonName, constants.Text.HINT_LOGIN]);
         }
     });
 
     pubSub.subscribeOnce('GameManager/showJsTerminalHint', function () {
         if(_showHints) {
-            pubSub.publish('UI/alert', [constants.Text.HINT_JSTERMINAL, 'Info']);
+            pubSub.publish('UI/talk', ['Info', _hintsPersonName, constants.Text.HINT_JSTERMINAL]);
         }
     });
 

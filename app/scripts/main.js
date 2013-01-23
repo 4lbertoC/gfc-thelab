@@ -1,5 +1,8 @@
 require.config({
   shim: {
+    'app': {
+        deps: ['config']
+    },
     'buzz': {
         deps: ['buzz-wrapped']
     },
@@ -46,9 +49,9 @@ require.config({
   }
 });
  
-require(['app', 'gamestrings',
+require(['app', 'config', 'gamestrings',
     'jquery', 'jquery-ui', 'jquery-terminal', 'jquery-mousewheel', 'jquery-customScrollbar',
-    'jquery-tinyPubSub', 'jquery-mutationSummary', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz', 'mutationSummary'],
+    'jquery-tinyPubSub', 'jquery-mutationSummary', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz-wrapped', 'buzz', 'mutationSummary'],
     function(app) {
         'use strict';
   // use app here

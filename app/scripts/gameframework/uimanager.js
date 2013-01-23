@@ -40,6 +40,9 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             pubSub.subscribe('UI/dialog', function (evt, title, text, buttons, optParams) {
                 that.showDialog(title, text, buttons, optParams);
             });
+            pubSub.subscribe('UI/talk', function (evt, title, personName, text, buttons, optParams) {
+                that.showPersonTalking(title, personName, text, buttons, optParams);
+            });
         },
 
         showDialog: function (title, text, buttons, optParams) {
@@ -72,6 +75,10 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
                 }
             }
             constants.JQ_MSGDIALOG.dialog(defaultParams).mCustomScrollbar();
+        },
+
+        showPersonTalking: function (title, personName, text, buttons, optParams) {
+            this.showDialog(title, '<h3 class="personTalking">' + personName + ' says:</h3><blockquote>' + text + '</blockquote>', buttons, optParams);
         },
 
         showMenu: function () {

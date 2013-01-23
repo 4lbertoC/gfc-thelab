@@ -95,9 +95,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.TUTORIAL_INTRO = '<p>Welcome to Games for Coders - ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
         'you will have to code in JavaScript and manipulate the DOM to solve it.</p><p style="color: orange">WARNING2: This game is still a prototype and some features could be broken or not implemented.</p>' +
         '<p>Select the game mode!</p>' +
-        '<p><i>Demo</i> will enable a menu option that tells you what you need to do in order to solve the next step. Choose this mode if you just want an overview of ' +
-        'what <i>Game for Coders</i> framework is about.</p>' +
-        '<p><i>Normal</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
+        '<p><i>Beginner</i> mode is not implemented yet.</p>' +
+        '<p><i>Intermediate</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
         'Choose this mode also if you don\'t like situations in which you have no idea what to do: JavaScript has a lot of functions and rules, ' +
         'and if you are not used to them, the solution might not be very straightforward.' +
         '<p><i>Difficult</i> mode won\'t display any advice at all. Choose this if you have been playing around with the browser\'s developer tools for a while, ' +
@@ -121,8 +120,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '\n[[g;#0ff;transparent]cleanDish()][[;#fff;transparent].....] [[g;#f00;transparent]BROKEN]' +
         '\n[[g;#0ff;transparent]getBaseDna()][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]';
 
-    constants.Text.LIGHTS_ON_ALERT = '<h3 class="personTalking">Doctor Div says:</h3>' +
-        '<blockquote><p>You did it! Now it\'s easier for me to explain what we have here and what we need you to do.</p>' +
+    constants.Text.LIGHTS_ON_ALERT = '<p>You did it! Now it\'s easier for me to explain what we have here and what we need you to do.</p>' +
         '<p>We are in a <b>Bugterium Laboratory</b>.</p><p>Here we study <b>bugteria</b>, an interesting new form of digital microorganism that has been recently discovered. ' +
         'The platform we have here is very powerful: we can manipulate their DNA and create custom <b>bugteria</b>! ...unfortunately someone hacked our system and ' +
         'broke it, and it cannot be fixed.</p><p>The only way to make it work is through the terminal using that javascript stuff, but we don\'t know how to use it. ' +
@@ -133,11 +131,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         'It\'s where bugterial specimen should be collected for analysis.</p>' +
         '' +
         '<p style="margin: 5px auto; text-align: center; color: red; font-size: 1.2em; font-weight: bold;">Collect 10 bugteria!</p>' +
-        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p></blockquote>';
+        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p>';
 
-    constants.Text.ISANYONETHERE_MESSAGE = '<h3 class="personTalking">Someone in the dark says:</h3>' +
-        '<blockquote><p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
-        '<p>I tried using the terminal but it is broken, could you give a look? Maybe you know more javascript than me...</p></blockquote>';
+    constants.Text.ISANYONETHERE_MESSAGE = '<p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
+        '<p>I tried using the terminal but it is broken, could you give a look? Maybe you know more javascript than me...</p>';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {
