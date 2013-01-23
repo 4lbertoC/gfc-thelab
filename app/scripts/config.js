@@ -1,7 +1,7 @@
 require.config({
 	config: {
 		'gameframework/audiomanager': {
-			'enableMusic': false,
+			'enableMusic': true,
 			'enableSound': true
 		}
 	}

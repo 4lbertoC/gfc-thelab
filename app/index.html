@@ -9,17 +9,19 @@
         <title>Games for Coders - The Lab</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-        <link rel="stylesheet" type="text/css" href="styles/jquery-ui-1.9.2.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="styles/jquery.terminal.css"/>
-        <link rel="stylesheet" type="text/css" href="styles/jquery.mCustomScrollbar.css"/>
-        <link rel="stylesheet" type="text/css" href="styles/thelab.css"/>
-        <link rel="stylesheet" href="scripts/codemirror/lib/codemirror.css">
-        <link rel="stylesheet" href="styles/codemirror-ambiance.css">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+        <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
         
         <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" type="text/css" href="styles/jquery-ui-1.9.2.custom.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/jquery.mCustomScrollbar.css"/>
+        <link rel="stylesheet" href="scripts/codemirror/lib/codemirror.css">
+        <link rel="stylesheet" href="styles/codemirror-ambiance.css">
+        <link rel="stylesheet" type="text/css" href="styles/thelab.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/jquery.terminal.css"/>
         <script src="scripts/vendor/modernizr.min.js"></script>
     </head>
     <body>
@@ -59,8 +61,6 @@
                         <span class="helpButton" onclick="window.open('https://developer.mozilla.org/docs/JavaScript/Reference/Operators/this')"
                             target="_blank">this</span>
                     </p>
-                    <p>You can also practice JavaScript on <span onclick="window.open('http://www.codecademy.com/')"
-                            target="_blank" class="link">Codecademy</span>, that has an interface similar to the one used by this game's terminal.
                 </div>
                 <h3>How do I manipulate HTML Elements?</h3>
                 <div>
@@ -129,13 +129,17 @@
         
         
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
-        <script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script> -->
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-37908292-1']);
+          _gaq.push(['_setDomainName', 'altervista.org']);
+          _gaq.push(['_trackPageview']);
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
     
     <!-- build:js scripts/amd-app.js -->
     <script data-main="scripts/main" src="scripts/vendor/require.js"></script>

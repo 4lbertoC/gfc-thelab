@@ -105,7 +105,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '<p>So, what mode do you prefer?';
 
     constants.Text.HINT_DARKNESS = '<p>The first thing you should do in order to play is remove the <span class="divText">darkness</span>.</p>' +
-        '<p>As I said, this is not a game like others you see around, you\'ll have to CODE if you want to go on. For example,' +
+        '<p>As I said, this is not a game like others you see around, you\'ll have to CODE if you want to go on. For example, ' +
         'there is no button that turns on the lights!' +
         '<p>When you see a name colored in red in these messages, like <span class="divText">glass</span>, we are referring to a ' +
         '<span onclick="window.open(\'https://developer.mozilla.org/docs/DOM/HTMLElement\')"' +
@@ -121,21 +121,23 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '\n[[g;#0ff;transparent]cleanDish()][[;#fff;transparent].....] [[g;#f00;transparent]BROKEN]' +
         '\n[[g;#0ff;transparent]getBaseDna()][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]';
 
-    constants.Text.LIGHTS_ON_ALERT = '<p>You did it! Now it\'s easier for me to explain what we have here and what we need you to do.</p>' +
+    constants.Text.LIGHTS_ON_ALERT = '<h3 class="personTalking">Doctor Div says:</h3>' +
+        '<blockquote><p>You did it! Now it\'s easier for me to explain what we have here and what we need you to do.</p>' +
         '<p>We are in a <b>Bugterium Laboratory</b>.</p><p>Here we study <b>bugteria</b>, an interesting new form of digital microorganism that has been recently discovered. ' +
         'The platform we have here is very powerful: we can manipulate their DNA and create custom <b>bugteria</b>! ...unfortunately someone hacked our system and ' +
-        'broke it, and we are not able to fix it!</p><p>We don\'t know anything about this javasomething stuff, but it looks like it is the only way we have now to ' +
-        'use it. Do you think you could help us?</p>' +
+        'broke it, and it cannot be fixed.</p><p>The only way to make it work is through the terminal using that javascript stuff, but we don\'t know how to use it. ' +
+        'Do you think you could help us?</p>' +
         '<p>The big plate you see on the table is a ' +
         '<span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Petri_dish\')" target="_blank">Petri dish</span>. Here is where <b>bugteria</b> should grow.</p>' +
         '<p>The other small container is a <span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Laboratory_flask\')" target="_blank">flask</span>. ' +
         'It\'s where bugterial specimen should be collected for analysis.</p>' +
         '' +
         '<p style="margin: 5px auto; text-align: center; color: red; font-size: 1.2em; font-weight: bold;">Collect 10 bugteria!</p>' +
-        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p>';
+        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p></blockquote>';
 
-    constants.Text.ISANYONETHERE_MESSAGE = '<p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
-        'I tried using the terminal but it is broken, could you give a look? Maybe you know more javasomething than me...';
+    constants.Text.ISANYONETHERE_MESSAGE = '<h3 class="personTalking">Someone in the dark says:</h3>' +
+        '<blockquote><p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
+        '<p>I tried using the terminal but it is broken, could you give a look? Maybe you know more javascript than me...</p></blockquote>';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {

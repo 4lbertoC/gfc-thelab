@@ -161,12 +161,6 @@ Games for Coders CSS
 .divText{
     color: red;
 }
-.helpButton{
-    margin: 2px auto;
-}
-.link{
-    margin: 2px auto;
-}
 .codeStr{
     font-family: "Courier New","Andale Mono",monospace;
 }
@@ -333,5 +327,37 @@ body{
     .innerContainer{
         margin: 100px 0;
     }
-    
+}
+
+.helpButton{
+    margin: 2px auto;
+}
+.link{
+    margin: 2px auto;
+}
+.personTalking {
+    color: #fcd732;
+}
+blockquote {
+    font-style: italic;
+    font-family: 'Monda', sans-serif;
+    background-color: rgba(0,0,0,0.3);
+    text-align: justify;
+}
+blockquote:before {
+    content: '“';
+    left: 10px;
+    top: 30px;
+    position: absolute;
+    font-size: 2em;
+}
+blockquote:after {
+    content: '”';
+    right: 20px;
+    bottom: 0px;
+    position: absolute;
+    font-size: 2em;
+}
+.ui-widget, .ui-widget button {
+    font-family: 'Nunito', sans-serif;
 }
