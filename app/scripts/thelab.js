@@ -1,7 +1,9 @@
-define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gameframework/pubsub'], function ($, constants, GameManager, pubSub) {
+define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gameframework/pubsub', 'thelab/bugterium', 'thelab/spore'], function ($, constants, GameManager, pubSub, Bugterium, Spore) {
     'use strict';
 
     /* Private variables */
+    var _divIdField = 'field';
+    
     var _gameManager = null;
     var _gameScope = null;
 
@@ -17,7 +19,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         function _addLabCommands() {
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
             _gameScope.addCommand('addSpore', function (dna) {
-                // TODO
+                new Spore(_divIdField);
             });
             _gameScope.addCommand('cleanDish', function () {
                 // TODO
