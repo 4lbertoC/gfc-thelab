@@ -1,19 +1,24 @@
-define([], fuction() {
-  
+define(['gameframework/pubsub'], function (pubSub) {
+
   /* Private variables */
   var _baseDna = {
     'onCreate': {
-      
+
     },
     'onRemove': {
-      
+
     },
     'replicationSpeed': 10000
   };
-  
-  var Bugterium = function(){};
+
+  /* PubSub */
+  pubSub.subscribe('Bugterium/hatch', function(refDomNode, dna) {
+    // Add bugteria to dish
+  });
+
+  var Bugterium = function () {};
   Bugterium.prototype = {
-    getBaseDna: function() {
+    getBaseDna: function () {
       return _baseDna;
     }
   };

@@ -1,27 +1,30 @@
-define(['gameframework/pubsub'], fuction(pubSub) {
-  
+define(['gameframework/pubsub'], function (pubSub) {
+  'use strict';
+
   /* Private variables */
   var _hatchTimeout = 3000;
-  
-  /* Private methods */
-  var _addToDom = function(refNode) {
-    var sporeNode = document.createElement('div');
-    sporeNode.classList.add('spore');
-    if(refNode instanceof HTMLElement) {
-      refNode.appendChild(sporeNode)
-    }
-  };
-  
-  var Spore = function(refNode) {
+
+  var Spore = function (refNode, dna) {
     this.refNode = refNode;
-    
-    setTimeout((function(that) {
-      that._hatch.call(that);
-    })(this), _hatchTimeout);
+    this.dna = dna;
+
+    this._hatch(dna);
   };
   Spore.prototype = {
-    _hatch: function() {
-      _addToDom(this.refNode)
+    _hatch: function (dna) {
+      var refDomNode = document.getElementById(this.refNode);
+      if(refDomNode instanceof HTMLElement) {
+        var sporeNode = document.createElement('div');
+        sporeNode.classList.add('spore');
+        refDomNode.appendChild(sporeNode);
+
+        setTimeout(function () {
+          pubSub.publish('Bugterium/hatch', [refDomNode, dna]);
+          if(sporeNode.parentElement === refDomNode) {
+            refDomNode.removeChild(sporeNode);
+          }
+        }, _hatchTimeout);
+      }
     }
   };
   return Spore;
