@@ -2,12 +2,14 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"  itemscope itemtype="http://schema.org/WebApplication"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Games for Coders - The Lab</title>
-        <meta name="description" content="">
+        <meta itemprop="name" content="Game for Coders - The Lab">
+        <meta itemprop="description" content="Games for Coders is a framework for videogames that must be solved by coding through a terminal. The Lab is a demo game of this framework.">
+        <meta itemprop="image" content="images/1359505997_test_tube.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -93,6 +95,19 @@
                     <div id="soundToggle"></div>
                     </p>
                 </div>
+                <h3>Share!</h3>
+                <div>
+                    <p>
+                    <div class="g-plusone" data-size="medium" data-annotation="inline" data-width="300" data-href="http://gfc-thelab.herokuapp.com/"></div>
+                    <script type="text/javascript">
+                      (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/plusone.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                      })();
+                    </script>
+                    </p>
+                </div>
                 <h3>Credits</h3>
                 <div>
                     <p>
@@ -109,6 +124,7 @@
                     <br>success-1 by <span class="link" onclick="window.open('http://www.freesound.org/people/fins/')" target="_blank">fins</span>
                     <br>tom by <span class="link" onclick="window.open('http://www.freesound.org/people/Suicidity/')" target="_blank">Suicidity</span>
                     <br>cartoon-bing-low by <span class="link" onclick="window.open('http://www.freesound.org/people/kantouth/')" target="_blank">kantouth</span>
+                    <br>MedICO icon set by <span class="link" onclick="window.open('http://banzaitokyo.com/')" target="_blank">BanzaiTokyo</span>
                     </p>
                 </div>
                 <h3 class="spoiler">I AM STUCK! (SPOILER -10pts)</h3>
@@ -131,7 +147,7 @@
 
         <script type="text/javascript">
           var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-37908292-1']);
+          _gaq.push(['_setAccount', 'UA-38068947-1']);
           _gaq.push(['_setDomainName', 'altervista.org']);
           _gaq.push(['_trackPageview']);
           (function() {

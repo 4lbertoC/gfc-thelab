@@ -1,7 +1,13 @@
 {
-  "author": "Alberto Congiu",
-  "name": "Games for Coders - The Lab",
-  "version": "0.1.0",
-  "dependencies": {},
-  "devDependencies": {}
+    "author": "Alberto Congiu",
+    "name": "gfc-thelab",
+    "version": "0.1.0",
+    "dependencies": {
+        "gzippo" : "0.2.0",
+        "express" : "2.x"
+    },
+    "devDependencies": {},
+    "engines": {
+        "node": ">= 0.6.0 < 0.7.0"
+    }
 }
