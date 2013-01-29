@@ -9,14 +9,22 @@ h1{
     color: #333;
 }
 .bug{
-    width: 20px;
-    height: 20px;
-    border-width: 1px;
-    background: #ff0;
+    width: 0;
+    height: 0;
     position: absolute;
-    border-radius: 4px;
-    font-family: Arial;
     z-index: 10;
+    -webkit-transition: 250ms;
+    -moz-transition: 250ms;
+    -o-transition: 250ms;
+    -ms-transition: 250ms;
+    transition: 250ms;
+    -webkit-transform-origin: center;
+    -moz-transform-origin: center;
+    -o-transform-origin: center;
+    -ms-transform-origin: center;
+    transform-origin: center;
+    -webkit-filter: saturate(20);
+    filter: saturate(20);
 }
 .mother{
     width: 50px;

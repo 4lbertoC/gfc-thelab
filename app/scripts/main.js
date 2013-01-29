@@ -6,6 +6,9 @@ require.config({
     'buzz': {
         deps: ['buzz-wrapped']
     },
+    'prefixfree': {
+        deps: ['prefixfree-wrapped']
+    },
     'codeMirror-js': {
         deps: ['codeMirror']
     },
@@ -45,13 +48,15 @@ require.config({
     'codeMirror-formatting': 'codemirror/formatting',
     'buzz': 'wrappers/buzz',
     'buzz-wrapped': 'buzz/buzz',
-    'mutationSummary': 'mutation_summary/mutation_summary'
+    'mutationSummary': 'mutation_summary/mutation_summary',
+    'prefixfree': 'wrappers/prefixfree',
+    'prefixfree-wrapped': 'prefixfree/prefixfree.min'
   }
 });
  
 require(['app', 'config', 'gamestrings',
     'jquery', 'jquery-ui', 'jquery-terminal', 'jquery-mousewheel', 'jquery-customScrollbar',
-    'jquery-tinyPubSub', 'jquery-mutationSummary', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz-wrapped', 'buzz', 'mutationSummary'],
+    'jquery-tinyPubSub', 'jquery-mutationSummary', 'codeMirror', 'codeMirror-js', 'codeMirror-formatting', 'buzz-wrapped', 'buzz', 'mutationSummary', 'prefixfree'],
     function(app) {
         'use strict';
   // use app here

@@ -76,7 +76,7 @@ define(['./bugterium', 'gameframework/pubsub'], function (Bugterium, pubSub) {
             }
             var numBugteria = _getNumberOfCreatedBugteria();
             while(numBugteria > 0) {
-              new Bugterium(refDomNode, dna);
+              new Bugterium(refDomNode, dna, dimensions);
               --numBugteria;
             }
           }, _hatchTimeout);
