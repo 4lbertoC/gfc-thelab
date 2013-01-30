@@ -1,4 +1,4 @@
-define(['./entity', 'gameframework/pubsub', 'gameframework/cssutils'], function (Entity, pubSub, cssUtils) {
+define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubSub) {
   'use strict';
 
   /* Private variables */
@@ -33,8 +33,15 @@ define(['./entity', 'gameframework/pubsub', 'gameframework/cssutils'], function 
       bugDomNode.classList.add('bug');
       bugDomNode.style.width = dimensions[0] + 'px';
       bugDomNode.style.height = dimensions[1] + 'px';
+      $(bugDomNode).show('scale');
       bugDomNode.style.background = 'url(' + dna['aspect'] + ') center no-repeat';
       this.entity.addToParent(bugDomNode, refDomNode, dimensions);
+
+      setTimeout(function () {
+        $(bugDomNode).css({
+          'transform': $(bugDomNode).css('transform') + ' rotateZ(' + (500 + Math.random() * 360) + 'deg)'
+        });
+      }, 100);
     }
   };
   Bugterium.prototype = {};

@@ -1,4 +1,4 @@
-define(['./bugterium', './entity', 'gameframework/pubsub'], function (Bugterium, Entity, pubSub) {
+define(['jquery', './bugterium', './entity', 'gameframework/pubsub'], function ($, Bugterium, Entity, pubSub) {
   'use strict';
 
   /* Private variables */
@@ -63,7 +63,7 @@ define(['./bugterium', './entity', 'gameframework/pubsub'], function (Bugterium,
     // }
     // var sporeStyle = getStyle('spore');
     // _sporeDimension = [parseInt(sporeStyle.width), parseInt(sporeStyle.height)];
-    })();
+  })();
 
   var Spore = function (refDomNode, dna) {
     this.entity = new Entity();
@@ -79,7 +79,9 @@ define(['./bugterium', './entity', 'gameframework/pubsub'], function (Bugterium,
       if(refDomNode instanceof HTMLElement) {
         var sporeNode = document.createElement('div');
         sporeNode.classList.add('spore');
+        sporeNode.style.display = 'none';
         this.entity.addToParent(sporeNode, refDomNode, [64, 64]);
+        $(sporeNode).show('scale');
 
         _preloadImage(dna['aspect'], function (status, dimensions) {
           if(status === 'error') {
@@ -89,12 +91,17 @@ define(['./bugterium', './entity', 'gameframework/pubsub'], function (Bugterium,
           setTimeout(function () {
             pubSub.publish('Bugterium/hatch', []);
             if(sporeNode.parentElement === refDomNode) {
-              refDomNode.removeChild(sporeNode);
-            }
-            var numBugteria = _getNumberOfCreatedBugteria();
-            while(numBugteria > 0) {
-              new Bugterium(refDomNode, dna, dimensions);
-              --numBugteria;
+              $(sporeNode).hide({
+                effect: 'expode',
+                complete: function () {
+                  refDomNode.removeChild(sporeNode);
+                }
+              });
+              var numBugteria = _getNumberOfCreatedBugteria();
+              while(numBugteria > 0) {
+                new Bugterium(refDomNode, dna, dimensions);
+                --numBugteria;
+              }
             }
           }, _hatchTimeout);
         });
@@ -102,4 +109,4 @@ define(['./bugterium', './entity', 'gameframework/pubsub'], function (Bugterium,
     }
   };
   return Spore;
-  });
+});

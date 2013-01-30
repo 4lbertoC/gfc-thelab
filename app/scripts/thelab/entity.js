@@ -1,4 +1,4 @@
-define([], function () {
+define(['jquery'], function ($) {
 	'use strict';
 	/**
 	 *	Base class for objects that have a representation on the DOM.
@@ -6,9 +6,9 @@ define([], function () {
 
 	/* Private variables */
 	var _marginLeft = 45;
-	var _marginTop = 30;
-	var _marginRight = 50;
-	var _marginBottom = 35;
+	var _marginTop = 20;
+	var _marginRight = 120;
+	var _marginBottom = 55;
 	var _margins = [_marginTop, _marginRight, _marginBottom, _marginLeft];
 
 	var Entity = function () {
@@ -25,8 +25,11 @@ define([], function () {
 			if((refDomNode instanceof HTMLElement) && (entityDomNode instanceof HTMLElement) && (dimensions instanceof Array) && (dimensions.length > 1)) {
 				var position = this.calculatePositionInParent(refDomNode, dimensions);
 				if(position.length > 1) {
-					entityDomNode.style.left = position[0] + 'px';
-					entityDomNode.style.top = position[1] + 'px';
+					$(entityDomNode).css({
+						'transform': 'translate3d(' + position[0] + 'px,' + position[1] + 'px,0)'
+					});
+					// entityDomNode.style.left = position[0] + 'px';
+					// entityDomNode.style.top = position[1] + 'px';
 				}
 				refDomNode.appendChild(entityDomNode);
 			}
