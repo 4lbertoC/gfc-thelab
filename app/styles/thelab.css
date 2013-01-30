@@ -51,7 +51,7 @@ h1{
 }
 .spore{
     position: absolute;
-    z-index: 7;
+    z-index: 11;
     width: 64px;
     height: 64px;
     background: url(http://bdogames.altervista.org/gfc-jsbugslab-static/1359507106_pill.png) center no-repeat;

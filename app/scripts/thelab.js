@@ -3,11 +3,12 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
     /* Private variables */
     var _divIdField = 'field';
-    
+
     var _gameManager = null;
     var _gameScope = null;
 
     var _hintsPersonName = 'Someone in the dark';
+    var _isGlassBroken = constants.JQ_GLASS.hasClass(constants.CLASS_BROKEN);
 
     var _showHints = true;
 
@@ -18,11 +19,16 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
         function _addLabCommands() {
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
+
+            var _cleanDish = function () {
+                constants.JQ_GLASS.addClass(constants.CLASS_BROKEN);
+            };
+
             _gameScope.addCommand('addSpore', function (dna) {
                 new Spore(_divIdField);
             });
             _gameScope.addCommand('cleanDish', function () {
-                // TODO
+                _cleanDish();
             });
             _gameScope.addCommand('getBaseDna', function () {
                 // TODO
@@ -45,10 +51,44 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             // TODO Also display = none or width = 0 or height = 0 would work
         }
 
+        function _glassRemovalMutationObserverCallback(summaries) {
+            var isGlassRemoved = (summaries && (typeof summaries === 'object') && (typeof summaries[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && summaries[0].removed[0]['id'] === 'glass');
+            if(isGlassRemoved) {
+                pubSub.publish('GameEvent/glassRemoved');
+                pubSub.publish('UI/talk', ['Uh oh...', _hintsPersonName, constants.Text.GLASS_REMOVED]);
+                // TODO Play alarm sound
+                // TODO Connect terminal to the event, that has to lock itself. Put the password in the html?
+            }
+        }
+
+        function _glassBrokenMutationObserverCallback(summaries) {
+            var isGlassBroken = constants.JQ_GLASS.hasClass(constants.CLASS_BROKEN);
+            if(isGlassBroken && !_isGlassBroken) {
+                pubSub.publish('GameEvent/glassBroken');
+                pubSub.publish('UI/talk', ['Uh oh...', _hintsPersonName, constants.Text.GLASS_BROKEN]);
+                // TODO Play glass broken sound
+            } else if(!isGlassBroken && _isGlassBroken) {
+                pubSub.publish('AchievementManager/achieve', ['glass_repaired']);
+                pubSub.publish('GameEvent/glassRepaired');
+                pubSub.publish('UI/talk', ['Phew!', _hintsPersonName, constants.Text.GLASS_REPAIRED]);
+            }
+            _isGlassBroken = isGlassBroken;
+        }
+
         pubSub.publish('MutationObserver/add', [constants.JQ_DARKNESS.parent(), _darknessMutationObserverCallback, [{
             'element': '#darkness'
         }], function (id) {
             _callbackId = id;
+        }]);
+        pubSub.publish('MutationObserver/add', [constants.JQ_GLASS.parent(), _glassRemovalMutationObserverCallback, [{
+            'element': '#glass'
+        }], function (id) {
+
+        }]);
+        pubSub.publish('MutationObserver/add', [constants.JQ_GLASS, _glassBrokenMutationObserverCallback, [{
+            'attribute': 'class'
+        }], function (id) {
+
         }]);
     };
 
