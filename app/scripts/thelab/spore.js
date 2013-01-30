@@ -1,4 +1,4 @@
-define(['./bugterium', 'gameframework/pubsub'], function (Bugterium, pubSub) {
+define(['./bugterium', './entity', 'gameframework/pubsub'], function (Bugterium, Entity, pubSub) {
   'use strict';
 
   /* Private variables */
@@ -7,6 +7,7 @@ define(['./bugterium', 'gameframework/pubsub'], function (Bugterium, pubSub) {
   var _baseDna = Bugterium.getBaseDna();
   var _baseDnaImageSize = null;
   var _preloadedImages = {};
+  var _sporeDimension = null;
 
   /* Private methods */
   var _getNumberOfCreatedBugteria = function () {
@@ -46,11 +47,27 @@ define(['./bugterium', 'gameframework/pubsub'], function (Bugterium, pubSub) {
   };
 
   /* Initialization */
-  _preloadImage(_baseDna['aspect'], function(status, dimensions) {
+  (function () {
+    _preloadImage(_baseDna['aspect'], function (status, dimensions) {
       _baseDnaImageSize = (status === 'ok') ? dimensions : [64, 64];
-  });
+    });
+
+    // function getStyle(className) {
+    //   var classes = document.styleSheets[0].rules || document.styleSheets[0].cssRules;
+    //   var theClass = null;
+    //   for(var x = 0; x < classes.length; x++) {
+    //     if(classes[x].selectorText === className) {
+    //       theClass = (classes[x].cssText) ? alertclasses[x].cssText) : alert(classes[x].style.cssText);
+    //     }
+    //   }
+    // }
+    // var sporeStyle = getStyle('spore');
+    // _sporeDimension = [parseInt(sporeStyle.width), parseInt(sporeStyle.height)];
+    })();
 
   var Spore = function (refDomNode, dna) {
+    this.entity = new Entity();
+
     this.refDomNode = refDomNode;
     this.dna = dna || _baseDna;
 
@@ -62,7 +79,7 @@ define(['./bugterium', 'gameframework/pubsub'], function (Bugterium, pubSub) {
       if(refDomNode instanceof HTMLElement) {
         var sporeNode = document.createElement('div');
         sporeNode.classList.add('spore');
-        refDomNode.appendChild(sporeNode);
+        this.entity.addToParent(sporeNode, refDomNode, [64, 64]);
 
         _preloadImage(dna['aspect'], function (status, dimensions) {
           if(status === 'error') {
@@ -85,4 +102,4 @@ define(['./bugterium', 'gameframework/pubsub'], function (Bugterium, pubSub) {
     }
   };
   return Spore;
-});
+  });
