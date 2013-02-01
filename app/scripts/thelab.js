@@ -24,6 +24,10 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 constants.JQ_GLASS.addClass(constants.CLASS_BROKEN);
             };
 
+            var _moveToFlask = function(bugId) {
+                
+            };
+
             _gameScope.addCommand('addSpore', function (dna) {
                 new Spore(_divIdField);
             });
@@ -33,7 +37,9 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             _gameScope.addCommand('getBaseDna', function () {
                 // TODO
             });
-
+            _gameScope.addCommand('moveToFlask', function(bugId) {
+                _moveToFlask();
+            });
             if(_callbackId) {
                 pubSub.publish('MutationObserver/remove', [_callbackId]);
             }

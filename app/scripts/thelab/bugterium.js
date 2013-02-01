@@ -35,6 +35,11 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
       bugDomNode.style.height = dimensions[1] + 'px';
       $(bugDomNode).show('scale');
       bugDomNode.style.background = 'url(' + dna['aspect'] + ') center no-repeat';
+
+      var tag = document.createElement('span');
+      tag.classList.add('bugTag');
+      $(tag).text(this.id);
+      bugDomNode.appendChild(tag);
       this.entity.addToParent(bugDomNode, refDomNode, dimensions);
 
       setTimeout(function () {

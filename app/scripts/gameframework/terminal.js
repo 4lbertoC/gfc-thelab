@@ -190,8 +190,8 @@ function(obj) {
     
         Parameters:
            obj: Object|Function|null
-            _editCode(obj);
     */
+            _editCode(obj);
 });
 _scope.addCommand('printCommands',
 

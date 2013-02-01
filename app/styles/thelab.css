@@ -364,10 +364,25 @@ blockquote:before {
 blockquote:after {
     content: '”';
     right: 20px;
-    bottom: 0px;
+    bottom: 0;
     position: absolute;
     font-size: 2em;
 }
 .ui-widget, .ui-widget button {
     font-family: 'Nunito', sans-serif;
+}
+
+.bugTag {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    background: white;
+    border-radius: 15px;
+    border: 1px solid black;
+    -webkit-transform: rotateZ(48deg) translate(9px,31px);
+    -moz-transform: rotateZ(48deg) translate(9px,31px);
+    -o-transform: rotateZ(48deg) translate(9px,31px);
+    -ms-transform: rotateZ(48deg) translate(9px,31px);
+    transform: rotateZ(48deg) translate(9px,31px);
 }
