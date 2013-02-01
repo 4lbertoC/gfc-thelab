@@ -186,12 +186,12 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
 
 function(obj) {
     /*
-        [[g;#0ff;transparent]editCode] lets you edit the piece of javascript code provided as input, and stores the result in the global variable 'result'. The parameter obj can be null.
-
+        [[g;#0ff;transparent]editCode] lets you edit the piece of javascript code provided as input, and stores the result in the global variable \'result\'. The parameter obj can be null.
+    
         Parameters:
-        obj: Object|Function|null
+           obj: Object|Function|null
+            _editCode(obj);
     */
-    _editCode(obj);
 });
 _scope.addCommand('printCommands',
 

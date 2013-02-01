@@ -3,7 +3,7 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
 
   /* Private variables */
   var _baseDna = {
-    'aspect': 'http://bdogames.altervista.org/gfc-jsbugslab-static/1359505963_bacteria.png',
+    'aspect': 'http://res.cloudinary.com/albertoc/image/upload/w_64,h_64/bacteria.png',
     'onCreate': {
 
     },

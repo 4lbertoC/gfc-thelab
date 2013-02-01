@@ -54,7 +54,7 @@ h1{
     z-index: 11;
     width: 64px;
     height: 64px;
-    background: url(http://bdogames.altervista.org/gfc-jsbugslab-static/1359507106_pill.png) center no-repeat;
+    background: url(http://res.cloudinary.com/albertoc/image/upload/v1359756143/pill.png) center no-repeat;
     background-size: contain;
 }
 .submitbutton{

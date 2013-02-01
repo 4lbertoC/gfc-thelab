@@ -81,19 +81,19 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.HINT_LOGIN = '<p>Uh-oh! It looks like you need to enter the credentials to log into the terminal.';
 
-    constants.Text.HINT_JSTERMINAL = '<p>You just entered the JavaScript terminal. You can see the available commands ' +
-        'listed above the prompt, or type <span class="funcStr">printCommands()</span> to show them again.' +
+    constants.Text.HINT_JSTERMINAL = '<p>You just entered the JavaScript terminal. One the first line you can see the available commands, ' +
+        'type <span class="funcStr">printCommands()</span> to show them again.' +
         '<p>All these commands are in fact JavaScript functions, so if you write their name without the ending parenthesis you will see their body.' +
-        '<p>The <span class="funcStr">editCode()</span> function is a tool you can use to compose new functions and objects more easily.' +
-        '<p>Use <span class="funcStr">addCommand()</span> and <span class="funcStr">removeCommand()</span> to create your custom commands ' +
-        '(and again, type without parenthesis to see how to use them).' +
+        '<p>The <span class="funcStr">editCode(\'command-name\')</span> function is a tool you can use to compose new functions and objects more easily.' +
+        '<p>Use <span class="funcStr">addCommand(\'name\', command)</span> and <span class="funcStr">removeCommand(\'command\')</span> to create your custom commands.' +
+        '<p>Use <span class="funcStr">help(\'name\')</span> to get information on how to use a command.' +
         '<p><span onclick="window.open(\'https://developer.mozilla.org/docs/JavaScript/Guide/Functions\')"' +
         'target="_blank" class="helpButton">Functions</span>' +
         '<p><div class="anAccordion"><h3>Example</h3><div>' +
         '<p>Call <span class="funcStr">editCode()</span>, and the edit window will appear. Here write the following code:<p>' +
         '<div class="code codeStr">function() { alert("hi"); }</div><p>Then press Ok. If you now call <span class="funcStr">result()</span>' +
         ' you will see the dialog appear.<br>' +
-        'You can then type <span class="funcStr">addCommand("sayHello", result)</span> to save the result into the commands.' +
+        'You can then type <span class="funcStr">addCommand(\'sayHello\', result)</span> to save the result object as a command.' +
         '</div></div><p>';
 
     constants.Text.TUTORIAL_INTRO = '<p>Welcome to Games for Coders - ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
@@ -156,7 +156,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
             }
         };
         return btn;
-    }
+    };
 
     return constants;
 });
