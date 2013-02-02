@@ -122,7 +122,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.LIGHTS_ON_TERMINAL = '[[;#fff;transparent]LIGHTS TURNED ON, ACTIVATING LAB...]\n[[g;#0ff;transparent]addSpore(dna)][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]' +
         '\n[[g;#0ff;transparent]cleanDish()][[;#fff;transparent].....] [[g;#f00;transparent]BROKEN]' +
-        '\n[[g;#0ff;transparent]getBaseDna()][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]';
+        '\n[[g;#0ff;transparent]getBaseDna()][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]' +
+        '\n[[g;#0ff;transparent]moveToFlask(bugId)][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]';
 
     constants.Text.LIGHTS_ON_ALERT = '<p>You did it! Now it\'s easier for me to explain what we have here and what we need you to do.</p>' +
         '<p>We are in a <b>Bugterium Laboratory</b>.</p><p>Here we study <b>bugteria</b>, an interesting new form of digital microorganism that has been recently discovered. ' +
