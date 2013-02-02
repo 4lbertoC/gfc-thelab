@@ -28,7 +28,8 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
     var _jsInterpreter = {
         interpreter: function (command, term) {
             _evaluateJs(command, function (result) {
-                term.echo(_objectToString(result));
+                var resultString = typeof result === 'object' ? _objectToString(result) : result.toString();
+                term.echo(resultString);
             }, function (error) {
                 term.error('Error: ' + error);
             });
@@ -128,7 +129,7 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
                 if(_o.hasOwnProperty(p)) {
                     t = _o[p];
                     if(t && typeof t === 'object') {
-                        a[a.length] = p + ':{ ' + arguments.callee(t).join(', ') + '}';
+                        a[a.length] = p + ':{ ' + parse(t).join(', ') + '}';
                     } else {
                         if(typeof t === 'string') {
 
