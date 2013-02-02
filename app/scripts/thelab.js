@@ -31,7 +31,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             var _moveToFlask = function(bugId) {
                 var bugNode = document.getElementById('bugterium_' + bugId);
                 if(bugNode) {
-                    if(bugNode.offsetWidth > 50 || bugNode.offsetHeight > 50) {
+                    if(bugNode.offsetWidth > 32 || bugNode.offsetHeight > 32) {
                         pubSub.publish('UI/talk', ['The bugterium is too big', _hintsPersonName, constants.Text.BUGTERIUM_TOO_BIG]);
                         return;
                     }
