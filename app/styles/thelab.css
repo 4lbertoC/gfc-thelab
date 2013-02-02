@@ -96,6 +96,8 @@ Games for Coders CSS
 .gfcTerminal{
     width: 500px;
     height: 300px;
+    max-height: 100%;
+    max-width: 100%;
     text-align: center;
     position: fixed;
     bottom: 5px;
@@ -441,4 +443,92 @@ blockquote:after {
     -o-transform: rotateZ(48deg) translate(9px,31px);
     -ms-transform: rotateZ(48deg) translate(9px,31px);
     transform: rotateZ(48deg) translate(9px,31px);
+}
+#loadCurtain {
+    position: fixed;
+    background: black;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    -webkit-transition: 5s;
+    -moz-transition: 5s;
+    -o-transition: 5s;
+    -ms-transition: 5s;
+    transition: 5s;
+    border-right: 2px dashed greenyellow;
+}
+@-webkit-keyframes curtainBug {
+    0% {
+        -webkit-transform: rotateZ(240deg);
+    }
+    50% {
+        -webkit-transform: rotateZ(210deg);
+    }
+    100% {
+        -webkit-transform: rotateZ(240deg);
+    }
+}
+@-moz-keyframes curtainBug {
+    0% {
+        -moz-transform: rotateZ(240deg);
+    }
+    50% {
+        -moz-transform: rotateZ(210deg);
+    }
+    100% {
+        -moz-transform: rotateZ(240deg);
+    }
+}
+@keyframes curtainBug {
+    0% {
+        -webkit-transform: rotateZ(240deg);
+        -moz-transform: rotateZ(240deg);
+        -o-transform: rotateZ(240deg);
+        -ms-transform: rotateZ(240deg);
+        transform: rotateZ(240deg);
+    }
+    50% {
+        -webkit-transform: rotateZ(210deg);
+        -moz-transform: rotateZ(210deg);
+        -o-transform: rotateZ(210deg);
+        -ms-transform: rotateZ(210deg);
+        transform: rotateZ(210deg);
+    }
+    100% {
+        -webkit-transform: rotateZ(240deg);
+        -moz-transform: rotateZ(240deg);
+        -o-transform: rotateZ(240deg);
+        -ms-transform: rotateZ(240deg);
+        transform: rotateZ(240deg);
+    }
+}
+#loadCurtain:after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: -75px;
+    background: url(https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359755516/bacteria.png);
+    width: 64px;
+    height: 64px;
+    -webkit-animation: curtainBug 500ms infinite;
+    -moz-animation: curtainBug 500ms infinite;
+    -ms-animation: curtainBug 500ms infinite;
+    -o-animation: curtainBug 500ms infinite;
+    animation: curtainBug 500ms infinite;
+}
+#loadText {
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    font-size: 1.5em;
+    color: greenyellow;
+    font-family: courier;
+    -webkit-transition: 2s;
+    -moz-transition: 2s;
+    -o-transition: 2s;
+    -ms-transition: 2s;
+    transition: 2s;
+    text-shadow: 0px 0px 10px greenyellow;
 }

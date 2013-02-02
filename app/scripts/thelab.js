@@ -204,7 +204,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     };
 
     var TheLabGame = {
-        start: function () {
+        start: function (callback) {
             _initVars();
             // TODO
             // Create dish and flask here or create them in the html
@@ -214,6 +214,12 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             constants.JQ_MENU_BUTTON.click(_prepareAndShowMenu);
 
             _showStartDialog();
+
+            if(callback) {
+                setTimeout(function() {
+                    callback();
+                }, 1000);
+            }
         }
     };
     return TheLabGame;
