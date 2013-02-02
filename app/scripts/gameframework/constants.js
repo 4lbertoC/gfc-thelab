@@ -146,6 +146,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.GLASS_REPAIRED = 'Wow, the glass is repaired!';
 
+    constants.Text.BUGTERIUM_TOO_BIG = 'It looks like that bugterium is too big to fit into the flask. You should find a way to make it smaller.';
+
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {
         var btn = {

@@ -28,9 +28,9 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
     var _jsInterpreter = {
         interpreter: function (command, term) {
             _evaluateJs(command, function (result) {
-                term.echo(new String(result));
+                term.echo(_objectToString(result));
             }, function (error) {
-                term.error(new String('Error: ' + error));
+                term.error('Error: ' + error);
             });
         },
         params: {

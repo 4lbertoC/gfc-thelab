@@ -31,6 +31,7 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
 
       var bugDomNode = document.createElement('div');
       bugDomNode.classList.add('bug');
+      bugDomNode.id = 'bugterium_' + this.id;
       bugDomNode.style.width = dimensions[0] + 'px';
       bugDomNode.style.height = dimensions[1] + 'px';
       $(bugDomNode).show('scale');

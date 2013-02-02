@@ -20,25 +20,39 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         function _addLabCommands() {
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
 
+            var _addSpore = function(dna) {
+                new Spore(_divIdField, dna);
+            };
+
             var _cleanDish = function () {
                 constants.JQ_GLASS.addClass(constants.CLASS_BROKEN);
             };
 
             var _moveToFlask = function(bugId) {
-                
+                var bugNode = document.getElementById('bugterium_' + bugId);
+                if(bugNode) {
+                    if(bugNode.offsetWidth > 50 || bugNode.offsetHeight > 50) {
+                        pubSub.publish('UI/talk', ['The bugterium is too big', _hintsPersonName, constants.Text.BUGTERIUM_TOO_BIG]);
+                        return;
+                    }
+                    else
+                    {
+                        pubSub.publish('AchievementManager/achieve', ['bug_captured']);
+                    }
+                }
             };
 
             _gameScope.addCommand('addSpore', function (dna) {
-                new Spore(_divIdField);
+                _addSpore(dna);
             });
             _gameScope.addCommand('cleanDish', function () {
                 _cleanDish();
             });
             _gameScope.addCommand('getBaseDna', function () {
-                // TODO
+                return Bugterium.getBaseDna();
             });
             _gameScope.addCommand('moveToFlask', function(bugId) {
-                _moveToFlask();
+                _moveToFlask(bugId);
             });
             if(_callbackId) {
                 pubSub.publish('MutationObserver/remove', [_callbackId]);
