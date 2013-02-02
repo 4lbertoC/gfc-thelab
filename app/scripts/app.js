@@ -16,6 +16,7 @@ define(['jquery', 'gameframework/gamemanager', 'thelab'], function ($, GameManag
 				loadCurtain.remove();
 			});
 			TheLab.start(function () {
+				loadText.text('Done!');
 				loadText.css({
 					transform: 'translate3d(0%,100px,0)'
 				});
