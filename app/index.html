@@ -1,4 +1,22 @@
 <!DOCTYPE html>
+<!--
+
+Note: You can directly modify this code to solve some puzzles!
+Scroll down to the div with id gameContainer.
+
+//////////////////////////
+
+Games for Coders - The Lab 0.3.0
+
+Copyright (c) 2013, Alberto Congiu
+
+Source on GitHub:
+https://github.com/4lbertoC/gfc-thelab
+
+License:
+http://opensource.org/licenses/bsd-license.php
+
+-->
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -15,8 +33,6 @@
         <meta name="image" content="images/1359505997_test_tube.png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
         <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
         
@@ -32,6 +48,7 @@
     <body>
         <div id="loadCurtain"><span id="loadText">Loading...</span></div>
         <script type="text/javascript" src="scripts/loadtext.min.js"></script>
+        <a class="ghRibbon" href="https://github.com/4lbertoC/gfc-thelab" target="_blank"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"><div></div></a>
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
@@ -40,6 +57,12 @@
           js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
+<!-- 
+
++++GAME CONTAINER STARTS HERE+++
+You can "almost" do what you want here (just avoid deleting everything, it doesn't make much sense!)
+
+-->
         <div id="gameContainer" class="fullSizeDiv">
             <div id="desk">
                 <div id="fieldContainer" class="innerContainer"><div id="field"></div></div>
@@ -48,6 +71,11 @@
             <div id="glass" class="fullSizeDiv"></div>
             <div id="darkness" class="fullSizeDiv"></div>
         </div>
+<!-- 
+
++++GAME CONTAINER ENDS HERE+++
+
+-->
         <div class="gfcTerminal" style="display: none;">
             <div class="code"></div>
         </div>
@@ -129,8 +157,8 @@
                 <h3>Credits</h3>
                 <div>
                     <p>
-                    Games for Coders - The Lab uses jQuery, jQuery UI, jQuery Terminal Plugin, Malihu Custum Scrollbar jQuery Plugin, MutationSummary and its jQuery plugin, -prefix-free and its jQuery plugin, CodeMirror and Buzz.</p>
-                    <p>Built with Yeoman <img src="images/yeoman.ico" style="width: 15px;"></p>
+                    Games for Coders - The Lab 0.3.0 uses jQuery, jQuery UI, jQuery Terminal Plugin, Malihu Custum Scrollbar jQuery Plugin, MutationSummary and its jQuery plugin, -prefix-free and its jQuery plugin, CodeMirror and Buzz.</p>
+                    <p>Built with Yeoman <img src="images/yeoman.ico" style="width: 15px; height: 15px;"></p>
                     <p>Written by <span class="link" onclick="window.open('https://github.com/4lbertoC')" target="_blank">Alberto Congiu</span></p>
                     <p>Music by <span class="link" onclick="window.open('http://www.incompetech.com')" target="_blank">Kevin MacLeod</span><p>
                     <p>Keyboard sounds by <span class="link" onclick="window.open('http://www.freesound.org/people/ballana/')" target="_blank">ballana</span>
@@ -154,15 +182,10 @@
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
-        
-
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="scripts/vendor/jquery.min.js"><\/script>')</script>
         <script>window.buzz || document.write('<script src="scripts/buzz/buzz.js"><\/script>')</script>
         
-        
-
         <script type="text/javascript">
 
           var _gaq = _gaq || [];

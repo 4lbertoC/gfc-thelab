@@ -1,7 +1,6 @@
-/**
-* Game created by Alberto Congiu
-*
-*/
+body {
+    overflow: hidden;
+}
 
 h1{
     text-align: center;
@@ -531,4 +530,31 @@ blockquote:after {
     -ms-transition: 2s;
     transition: 2s;
     text-shadow: 0px 0px 10px greenyellow;
+}
+
+.ghRibbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    z-index: 100;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    -ms-transition: 1s;
+    transition: 1s;
+    -webkit-transform: translate3d(120px,0px,0px);
+    -moz-transform: translate3d(120px,0px,0px);
+    -o-transform: translate3d(120px,0px,0px);
+    -ms-transform: translate3d(120px,0px,0px);
+    transform: translate3d(120px,0px,0px);
+    -webkit-filter: saturate(0);
+}
+.ghRibbon:hover{
+    -webkit-transform: translate3d(0px,0px,0px);
+    -moz-transform: translate3d(0px,0px,0px);
+    -o-transform: translate3d(0px,0px,0px);
+    -ms-transform: translate3d(0px,0px,0px);
+    transform: translate3d(0px,0px,0px);
+    -webkit-filter: saturate(1);
 }
