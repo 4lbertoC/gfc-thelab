@@ -21,6 +21,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.CLASS_BROKEN = 'broken';
 
+    constants.ID_DISH = 'dish';
+
     constants.JQ_TERMINAL = $('.gfcTerminal');
 
     constants.JQ_CODE = $('.code');
@@ -110,7 +112,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.HINT_DARKNESS = '<p>The first thing you should do in order to play is remove the <span class="divText">darkness</span>.</p>' +
         '<p>As I said, this is not a game like others you see around, you\'ll have to CODE if you want to go on. For example, ' +
         'there is no button that turns on the lights!' +
-        '<p>When you see a name colored in red in these messages, like <span class="divText">glass</span>, we are referring to a ' +
+        '<p>When you see a name colored like <span class="divText">glass</span>, we are referring to a ' +
         '<span onclick="window.open(\'https://developer.mozilla.org/docs/DOM/HTMLElement\')"' +
         'target="_blank" class="helpButton">HTMLElement</span> ID. You will find yourself playing with ' +
         'JavaScript and the DOM, so if you are new to the topic you\'d better keep some ' +

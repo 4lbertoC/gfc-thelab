@@ -170,7 +170,7 @@ Games for Coders CSS
     left: inherit !important;
 }
 .divText{
-    color: red;
+    color: #f0f;
 }
 .codeStr{
     font-family: "Courier New","Andale Mono",monospace;
@@ -237,7 +237,7 @@ body{
     box-shadow: inset 0px 0px 10px 5px;
     content: " ";
 }
-#field{
+#dish{
     width: 400px;
     height: 300px;
     max-height: 100%;
@@ -329,7 +329,7 @@ body{
     -ms-transform: rotateZ(24deg) rotateY(160deg) translateX(0px) translateY(0px) skewX(-11deg) skewY(0deg);
     transform: rotateZ(24deg) rotateY(160deg) translateX(0px) translateY(0px) skewX(-11deg) skewY(0deg);
 }
-#fieldContainer{
+#dishContainer{
     width: 70%;
 }
 #flaskContainer{
@@ -374,13 +374,13 @@ body{
         height: 46%;
         margin: 2% 0;
     }
-    #fieldContainer{
+    #dishContainer{
         width: 100%;
     }
     #flaskContainer{
         width: 100%;
     }
-    #field{
+    #dish{
         max-width: 100%;
         max-height: 100%;
     }

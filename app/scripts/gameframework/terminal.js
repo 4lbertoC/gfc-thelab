@@ -39,7 +39,7 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
             prompt: 'js> ',
             onStart: function () {
                 _instance.clear();
-                _instance.echo('[ JS Interpreter ]\n\n').css('color', '#0e0');
+                _instance.echo('[ JS Interpreter ]\n\nType [[g;#0ff;transparent]exit] to go back to menu.').css('color', '#0e0');
                 _printCommands();
                 pubSub.publish('GameManager/showJsTerminalHint');
             },
@@ -180,42 +180,29 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
         init: function () {
             _scope = new GameScope();
             window['result'] = null;
-            _scope.addCommand('editCode',
 
-// <NO-INDENT>
-// This region is kept with minimal indentation so that it's easier to read the functions on the terminal
+            _scope.addCommand('editCode', function (cmdName) {
+                _editCode(cmdName);
+            }, '\n[[g;#0ff;transparent]editCode(cmdName)]\n\nOpens the code editor.\nIf called without parameters, the JavaScript written in the editor will be evaluated ' +
+            'and the result stored in a variable called [[g;#ff0;transparent]result].' +
+            '\n\nThe name of a command can be passed as parameter to edit its code.' +
+            '\n\n' +
+            'Parameters:\n' +
+            '   [[g;#ff0;transparent]cmdName]: {string} the optional command name\n');
+            _scope.addCommand('printCommands',
 
-function(obj) {
-    /*
-        [[g;#0ff;transparent]editCode] lets you edit the piece of javascript code provided as input, and stores the result in the global variable \'result\'. The parameter obj can be null.
-    
-        Parameters:
-           obj: Object|Function|null
-    */
-            _editCode(obj);
-});
-_scope.addCommand('printCommands',
+            function () {
+                _printCommands();
+            }, '\n[[g;#0ff;transparent]printCommands()]\n\nShows the available commands.\n\n' +
+            'Parameters:\n' +
+            '   - none -\n');
 
-function(obj) {
-    /*
-        [[g;#0ff;transparent]printCommands] shows the available commands.
+            _scope.addCommand('light',
 
-        Parameters:
-        - none -
-    */
-    _printCommands();
-});
-_scope.addCommand('light',
-
-function() {
-    /*
-        ERROR INITIALIZING METHOD
-    */
-    var _ = doc*m3%T.g3tE13m3n73y1d('darkness');
-    _.p42en7E1&wEnt.re3ovecHi1D(_);
-});
-
-// </NO-INDENT>
+            function () {
+                var _ = doc * m3 % T.g3tE13m3n73y1d('darkness');
+                _.p42en7E1 & wEnt.re3ovecHi1D(_);
+            }, '\n[[g;#0ff;transparent]lig%t()]\n\nT?rns 0n th3 lBZZZZZZZZ [[g;#f00;transparent]ERROR].\n');
 
             var params = {
                 greetings: constants.Text.GREETINGS,

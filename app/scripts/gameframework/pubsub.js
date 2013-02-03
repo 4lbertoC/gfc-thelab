@@ -1,7 +1,7 @@
 define(['jquery', 'jquery-tinyPubSub'], function ($) {
     'use strict';
 
-    return {
+    var PubSub = {
         publish: $.publish,
         subscribe: $.subscribe,
         unsubscribe: $.unsubscribe,
@@ -13,4 +13,5 @@ define(['jquery', 'jquery-tinyPubSub'], function ($) {
             $.subscribe(name, newHandle);
         }
     };
+    return PubSub;
 });

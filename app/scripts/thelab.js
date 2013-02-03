@@ -2,7 +2,6 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     'use strict';
 
     /* Private variables */
-    var _divIdField = 'field';
 
     var _gameManager = null;
     var _gameScope = null;
@@ -21,7 +20,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
 
             var _addSpore = function(dna) {
-                new Spore(_divIdField, dna);
+                new Spore(constants.ID_DISH, dna);
             };
 
             var _cleanDish = function () {
@@ -44,16 +43,26 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
             _gameScope.addCommand('addSpore', function (dna) {
                 _addSpore(dna);
-            });
+            },'\n[[g;#0ff;transparent]addSpore(dna)]\n\nAdds a spore to the [[g;#f0f;transparent]dish], from which one or more bugteria will spawn.' +
+            '\n\n' +
+            'Parameters:\n' +
+            '   [[g;#ff0;transparent]dna]: {Object} the optional DNA of the bugteria\n');
             _gameScope.addCommand('cleanDish', function () {
                 _cleanDish();
-            });
+            },'\n[[g;#0ff;transparent]cleanDish()]\n\nCl3anz t%e d111sSSSSHHHHHH [[g;#f00;transparent]ERR][[bg;#fff;#f00]O][[g;#f00;transparent]R].' +
+            '\n');
             _gameScope.addCommand('getBaseDna', function () {
                 return Bugterium.getBaseDna();
-            });
+            },'\n[[g;#0ff;transparent]getBaseDna()]\n\nReturns the stock bugterium DNA.' +
+            '\n\n' +
+            'Parameters:\n' +
+            '   - none -\n');
             _gameScope.addCommand('moveToFlask', function(bugId) {
                 _moveToFlask(bugId);
-            });
+            },'\n[[g;#0ff;transparent]moveToFlask(bugId)]\n\nMoves a bugterium to the flask.' +
+            '\n\n' +
+            'Parameters:\n' +
+            '   [[g;#ff0;transparent]bugId]: {number} the id of the bugterium to move\n');
             if(_callbackId) {
                 pubSub.publish('MutationObserver/remove', [_callbackId]);
             }

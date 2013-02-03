@@ -1,4 +1,4 @@
-define(['jquery', './bugterium', './entity', 'gameframework/pubsub'], function ($, Bugterium, Entity, pubSub) {
+define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframework/utils'], function ($, Bugterium, Entity, pubSub, utils) {
   'use strict';
 
   /* Private variables */
@@ -6,7 +6,6 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub'], function (
   var _minMaxBugteriaCreated = [1, 4];
   var _baseDna = Bugterium.getBaseDna();
   var _baseDnaImageSize = null;
-  var _preloadedImages = {};
   var _sporeDimension = null;
 
   /* Private methods */
@@ -14,41 +13,9 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub'], function (
     return Math.ceil((_minMaxBugteriaCreated[0] - 1) + (Math.random() * (_minMaxBugteriaCreated[1] - (_minMaxBugteriaCreated[0] - 1))));
   };
 
-  var _preloadImage = function (imageUrl, callback) {
-    var preloadedImage = _preloadedImages[imageUrl];
-    if(preloadedImage instanceof Array) {
-      callback('ok', preloadedImage);
-    } else if(typeof imageUrl === 'string') {
-      var imgDomNode = document.createElement('img');
-      imgDomNode.style.display = 'none';
-      imgDomNode.onload = function () {
-        var dimensions = [imgDomNode.naturalWidth, imgDomNode.naturalHeight];
-        _preloadedImages[imageUrl] = dimensions;
-        var refDomNode = imgDomNode.parentElement;
-        if(refDomNode instanceof HTMLElement) {
-          refDomNode.removeChild(imgDomNode);
-        }
-        if(typeof callback === 'function') {
-          callback('ok', dimensions);
-        }
-      };
-      imgDomNode.onerror = function () {
-        var refDomNode = imgDomNode.parentElement;
-        if(refDomNode instanceof HTMLElement) {
-          refDomNode.removeChild(imgDomNode);
-        }
-        if(typeof callback === 'function') {
-          callback('error');
-        }
-      };
-      imgDomNode.src = imageUrl;
-      document.body.appendChild(imgDomNode);
-    }
-  };
-
   /* Initialization */
   (function () {
-    _preloadImage(_baseDna['aspect'], function (status, dimensions) {
+    utils.preloadImage(_baseDna['aspect'], function (status, dimensions) {
       _baseDnaImageSize = (status === 'ok') ? dimensions : [64, 64];
     });
 
@@ -83,7 +50,7 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub'], function (
         this.entity.addToParent(sporeNode, refDomNode, [64, 64]);
         $(sporeNode).show('scale');
 
-        _preloadImage(dna['aspect'], function (status, dimensions) {
+        utils.preloadImage(dna['aspect'], function (status, dimensions) {
           if(status === 'error') {
             dna['aspect'] = _baseDna['aspect'];
             dimensions = _baseDnaImageSize;
