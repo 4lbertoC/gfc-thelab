@@ -15,15 +15,17 @@ define(['jquery'], function ($) {
 
 	};
 	Entity.prototype = {
-		addToParent: function (entityDomNode, refDomNode, dimensions) {
+		addToParent: function (entityDomNode, refDomNode, dimensions, optMargins) {
 			/**
 			 *	Adds the entity to the parent at a random position.
 			 *  @param entityDomNode {HTMLElement} The entity's DOM node.
 			 *  @param refDomNode {HTMLElement} The parent's DOM node.
 			 *  @param dimensions {Array.<number>} The size of the entity expressed as [width, height].
+			 *	@param optMargins {Array.<number>=} The margins of the parent element, expressed as:
+			 *		[marginTop, marginRight, marginBottom, marginLeft]. If not given, uses default.
 			 */
 			if((refDomNode instanceof HTMLElement) && (entityDomNode instanceof HTMLElement) && (dimensions instanceof Array) && (dimensions.length > 1)) {
-				var position = this.calculatePositionInParent(refDomNode, dimensions);
+				var position = this.calculatePositionInParent(refDomNode, dimensions, optMargins);
 				if(position.length > 1) {
 					$(entityDomNode).css({
 						'transform': 'translate3d(' + position[0] + 'px,' + position[1] + 'px,0)'

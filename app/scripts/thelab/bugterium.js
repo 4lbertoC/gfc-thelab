@@ -13,6 +13,9 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
     'replicationSpeed': 10000
   };
   var _idCounter = 0;
+  var _idPrefix = 'bugterium_';
+
+  var s_instances = {};
 
   /* Private methods */
 
@@ -26,12 +29,14 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
     if(refDomNode instanceof HTMLElement) {
       this.entity = new Entity();
 
-      this.id = _idCounter++;
+      var idNum = _idCounter++;
+      this.id = _idPrefix + idNum;
       this.dna = dna;
+      this.dimensions = dimensions;
 
       var bugDomNode = document.createElement('div');
       bugDomNode.classList.add('bug');
-      bugDomNode.id = 'bugterium_' + this.id;
+      bugDomNode.id = this.id;
       bugDomNode.style.width = dimensions[0] + 'px';
       bugDomNode.style.height = dimensions[1] + 'px';
       $(bugDomNode).show('scale');
@@ -39,7 +44,7 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
 
       var tag = document.createElement('span');
       tag.classList.add('bugTag');
-      $(tag).text(this.id);
+      $(tag).text(idNum);
       bugDomNode.appendChild(tag);
       this.entity.addToParent(bugDomNode, refDomNode, dimensions);
 
@@ -48,13 +53,49 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
           'transform': $(bugDomNode).css('transform') + ' rotateZ(' + (500 + Math.random() * 360) + 'deg)'
         });
       }, 100);
+      this.domNode = bugDomNode;
+
+      s_instances[this.id] = this;
     }
   };
-  Bugterium.prototype = {};
+  Bugterium.prototype = {
+    getId: function () {
+      return this.id;
+    },
+    moveTo: function (refDomNodeId, margins, callback) {
+      var bugNode = this.domNode;
+      var refDomNode = document.getElementById(refDomNodeId);
+      var thisBug = this;
+      if(bugNode && (bugNode.parentElement instanceof HTMLElement)) {
+        var futurePosition = this.entity.calculatePositionInParent(refDomNode, thisBug.dimensions, margins);
+        if(futurePosition[0] === -1) {
+          callback && callback('failure');
+          return;
+        } else {
+          var jqBugNode = $(bugNode);
+          jqBugNode.hide('puff', {
+            complete: function () {
+              jqBugNode.remove();
+              thisBug.entity.addToParent(bugNode, refDomNode, thisBug.dimensions, margins);
+              jqBugNode.show('drop', {
+                direction: 'top',
+                complete: function() {
+                  callback && callback('success');
+                }
+              });
+            }
+          });
+        }
+      }
+    }
+  };
 
   /* Static */
   Bugterium.getBaseDna = function () {
     return _baseDna;
+  };
+  Bugterium.getById = function (bugId) {
+    return s_instances[_idPrefix + bugId];
   };
 
   return Bugterium;

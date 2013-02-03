@@ -8,6 +8,8 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
   var _baseDnaImageSize = null;
   var _sporeDimension = null;
 
+  var s_bugInstances = {};
+
   /* Private methods */
   var _getNumberOfCreatedBugteria = function () {
     return Math.ceil((_minMaxBugteriaCreated[0] - 1) + (Math.random() * (_minMaxBugteriaCreated[1] - (_minMaxBugteriaCreated[0] - 1))));

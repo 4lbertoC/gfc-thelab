@@ -23,11 +23,15 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.ID_DISH = 'dish';
 
+    constants.ID_FLASK = 'flask';
+
     constants.JQ_TERMINAL = $('.gfcTerminal');
 
     constants.JQ_CODE = $('.code');
 
     constants.JQ_DARKNESS = $('#darkness');
+
+    constants.JQ_FLASK = $('#' + constants.ID_FLASK);
 
     constants.JQ_GLASS = $('#glass');
 
@@ -150,6 +154,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.GLASS_REPAIRED = 'Wow, the glass is repaired!';
 
     constants.Text.BUGTERIUM_TOO_BIG = 'It looks like that bugterium is too big to fit into the flask. You should find a way to make it smaller.';
+
+    constants.Text.COLLECT_10_BUGS = '<p>YOU DID IT!</p><p>You collected 10 bugs, shall we proceed with the analysis?';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {

@@ -10,6 +10,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     var _isGlassBroken = constants.JQ_GLASS.hasClass(constants.CLASS_BROKEN);
 
     var _showHints = true;
+    var _goalBugCount = 10;
 
     /* Private methods */
     var _addDarknessCallback = function () {
@@ -19,7 +20,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         function _addLabCommands() {
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
 
-            var _addSpore = function(dna) {
+            var _addSpore = function (dna) {
                 new Spore(constants.ID_DISH, dna);
             };
 
@@ -27,42 +28,29 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 constants.JQ_GLASS.addClass(constants.CLASS_BROKEN);
             };
 
-            var _moveToFlask = function(bugId) {
-                var bugNode = document.getElementById('bugterium_' + bugId);
-                if(bugNode) {
-                    if(bugNode.offsetWidth > 32 || bugNode.offsetHeight > 32) {
-                        pubSub.publish('UI/talk', ['The bugterium is too big', _hintsPersonName, constants.Text.BUGTERIUM_TOO_BIG]);
-                        return;
-                    }
-                    else
-                    {
+            var _moveToFlask = function (bugId) {
+                var theBug = Bugterium.getById(bugId);
+                theBug.moveTo(constants.ID_FLASK, [5, 40, 50, 10], function (status) {
+                    if(status === 'success') {
                         pubSub.publish('AchievementManager/achieve', ['bug_captured']);
+                    } else {
+                        pubSub.publish('UI/talk', ['The bugterium is too big', _hintsPersonName, constants.Text.BUGTERIUM_TOO_BIG]);
                     }
-                }
+                });
             };
 
             _gameScope.addCommand('addSpore', function (dna) {
                 _addSpore(dna);
-            },'\n[[g;#0ff;transparent]addSpore(dna)]\n\nAdds a spore to the [[g;#f0f;transparent]dish], from which one or more bugteria will spawn.' +
-            '\n\n' +
-            'Parameters:\n' +
-            '   [[g;#ff0;transparent]dna]: {Object} the optional DNA of the bugteria\n');
+            }, '\n[[g;#0ff;transparent]addSpore(dna)]\n\nAdds a spore to the [[g;#f0f;transparent]dish], from which one or more bugteria will spawn.' + '\n\n' + 'Parameters:\n' + '   [[g;#ff0;transparent]dna]: {Object} the optional DNA of the bugteria\n');
             _gameScope.addCommand('cleanDish', function () {
                 _cleanDish();
-            },'\n[[g;#0ff;transparent]cleanDish()]\n\nCl3anz t%e d111sSSSSHHHHHH [[g;#f00;transparent]ERR][[bg;#fff;#f00]O][[g;#f00;transparent]R].' +
-            '\n');
+            }, '\n[[g;#0ff;transparent]cleanDish()]\n\nCl3anz t%e d111sSSSSHHHHHH [[g;#f00;transparent]ERR][[bg;#fff;#f00]O][[g;#f00;transparent]R].' + '\n');
             _gameScope.addCommand('getBaseDna', function () {
                 return Bugterium.getBaseDna();
-            },'\n[[g;#0ff;transparent]getBaseDna()]\n\nReturns the stock bugterium DNA.' +
-            '\n\n' +
-            'Parameters:\n' +
-            '   - none -\n');
-            _gameScope.addCommand('moveToFlask', function(bugId) {
+            }, '\n[[g;#0ff;transparent]getBaseDna()]\n\nReturns the stock bugterium DNA.' + '\n\n' + 'Parameters:\n' + '   - none -\n');
+            _gameScope.addCommand('moveToFlask', function (bugId) {
                 _moveToFlask(bugId);
-            },'\n[[g;#0ff;transparent]moveToFlask(bugId)]\n\nMoves a bugterium to the flask.' +
-            '\n\n' +
-            'Parameters:\n' +
-            '   [[g;#ff0;transparent]bugId]: {number} the id of the bugterium to move\n');
+            }, '\n[[g;#0ff;transparent]moveToFlask(bugId)]\n\nMoves a bugterium to the flask.' + '\n\n' + 'Parameters:\n' + '   [[g;#ff0;transparent]bugId]: {number} the id of the bugterium to move\n');
             if(_callbackId) {
                 pubSub.publish('MutationObserver/remove', [_callbackId]);
             }
@@ -104,6 +92,30 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             _isGlassBroken = isGlassBroken;
         }
 
+        function _flaskAddMutationObserver(summaries) {
+            var children = constants.JQ_FLASK.children();
+            var okBugs = [];
+            $.each(children, function (idx, child) {
+                while(true) {
+                    if(child.classList.contains('bug')) {
+                        okBugs.push(child);
+                        break;
+                    } else {
+                        var c = $(child).children();
+                        if(c.length > 0) {
+                            child = c[0];
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            });
+            if(okBugs.length >= _goalBugCount) {
+                pubSub.publish('AchievementManager/achieve', ['collect_10_bugs']);
+                pubSub.publish('UI/talk', ['Great job!', _hintsPersonName, constants.Text.COLLECT_10_BUGS]);
+            }
+        }
+
         pubSub.publish('MutationObserver/add', [constants.JQ_DARKNESS.parent(), _darknessMutationObserverCallback, [{
             'element': '#darkness'
         }], function (id) {
@@ -116,6 +128,11 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         }]);
         pubSub.publish('MutationObserver/add', [constants.JQ_GLASS, _glassBrokenMutationObserverCallback, [{
             'attribute': 'class'
+        }], function (id) {
+
+        }]);
+        pubSub.publish('MutationObserver/add', [constants.JQ_FLASK, _flaskAddMutationObserver, [{
+            'element': '.bug'
         }], function (id) {
 
         }]);
@@ -225,7 +242,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             _showStartDialog();
 
             if(callback) {
-                setTimeout(function() {
+                setTimeout(function () {
                     callback();
                 }, 1000);
             }
