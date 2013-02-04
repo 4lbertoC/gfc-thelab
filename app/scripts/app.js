@@ -17,7 +17,7 @@ define(['jquery', 'gameframework/utils', 'thelab'], function ($, utils, TheLab) 
 			});
 			utils.preloadImages([
 				'http://res.cloudinary.com/albertoc/image/upload/v1359756143/pill.png',
-				'https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359755516/bacteria.png'
+				'http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359755516/bacteria.png'
 				], function () {
 				TheLab.start(function () {
 					loadText.text('Done!');

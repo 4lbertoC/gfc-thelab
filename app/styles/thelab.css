@@ -214,7 +214,7 @@ body{
 }
 
 #desk{
-    background: url(https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359813117/bg_desk.jpg);
+    background: url(http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359813117/bg_desk.jpg);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -226,7 +226,7 @@ body{
     left: 0;
 }
 #desk:after{
-    background: url(https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359813590/bg_desk2.jpg);
+    background: url(http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359813590/bg_desk2.jpg);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -458,57 +458,57 @@ blockquote:after {
 }
 @-webkit-keyframes curtainBug {
     0% {
-        -webkit-transform: rotateZ(240deg);
+        -webkit-transform: rotateZ(10deg);
     }
     50% {
-        -webkit-transform: rotateZ(210deg);
+        -webkit-transform: rotateZ(-10deg);
     }
     100% {
-        -webkit-transform: rotateZ(240deg);
+        -webkit-transform: rotateZ(10deg);
     }
 }
 @-moz-keyframes curtainBug {
     0% {
-        -moz-transform: rotateZ(240deg);
+        -moz-transform: rotateZ(10deg);
     }
     50% {
-        -moz-transform: rotateZ(210deg);
+        -moz-transform: rotateZ(-10deg);
     }
     100% {
-        -moz-transform: rotateZ(240deg);
+        -moz-transform: rotateZ(10deg);
     }
 }
 @keyframes curtainBug {
     0% {
-        -webkit-transform: rotateZ(240deg);
-        -moz-transform: rotateZ(240deg);
-        -o-transform: rotateZ(240deg);
-        -ms-transform: rotateZ(240deg);
-        transform: rotateZ(240deg);
+        -webkit-transform: rotateZ(10deg);
+        -moz-transform: rotateZ(10deg);
+        -o-transform: rotateZ(10deg);
+        -ms-transform: rotateZ(10deg);
+        transform: rotateZ(10deg);
     }
     50% {
-        -webkit-transform: rotateZ(210deg);
-        -moz-transform: rotateZ(210deg);
-        -o-transform: rotateZ(210deg);
-        -ms-transform: rotateZ(210deg);
-        transform: rotateZ(210deg);
+        -webkit-transform: rotateZ(-10deg);
+        -moz-transform: rotateZ(-10deg);
+        -o-transform: rotateZ(-10deg);
+        -ms-transform: rotateZ(-10deg);
+        transform: rotateZ(-10deg);
     }
     100% {
-        -webkit-transform: rotateZ(240deg);
-        -moz-transform: rotateZ(240deg);
-        -o-transform: rotateZ(240deg);
-        -ms-transform: rotateZ(240deg);
-        transform: rotateZ(240deg);
+        -webkit-transform: rotateZ(10deg);
+        -moz-transform: rotateZ(10deg);
+        -o-transform: rotateZ(10deg);
+        -ms-transform: rotateZ(10deg);
+        transform: rotateZ(10deg);
     }
 }
 #loadCurtain:after {
     content: " ";
     position: absolute;
     top: 50%;
-    right: -75px;
-    background: url(https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359755516/bacteria.png);
-    width: 64px;
-    height: 64px;
+    right: -90px;
+    background: url(http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/a_-135/bacteria.png);
+    width: 91px;
+    height: 91px;
     -webkit-animation: curtainBug 500ms infinite;
     -moz-animation: curtainBug 500ms infinite;
     -ms-animation: curtainBug 500ms infinite;
