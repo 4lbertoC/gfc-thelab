@@ -6,7 +6,6 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     var _gameManager = null;
     var _gameScope = null;
 
-    var _hintsPersonName = 'Someone in the dark';
     var _isGlassBroken = constants.JQ_GLASS.hasClass(constants.CLASS_BROKEN);
 
     var _showHints = true;
@@ -34,7 +33,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                     if(status === 'success') {
                         pubSub.publish('AchievementManager/achieve', ['bug_captured']);
                     } else {
-                        pubSub.publish('UI/talk', ['The bugterium is too big', _hintsPersonName, constants.Text.BUGTERIUM_TOO_BIG]);
+                        pubSub.publish('UI/talk', ['The bugterium is too big', constants.Text.HINTS_PERSON_NAME, constants.Text.BUGTERIUM_TOO_BIG]);
                     }
                 });
             };
@@ -59,11 +58,10 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         function _darknessMutationObserverCallback(summaries) {
             var isDarknessRemoved = (summaries && (typeof summaries === 'object') && (typeof summaries[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && summaries[0].removed[0]['id'] === 'darkness');
             if(isDarknessRemoved) {
-                _hintsPersonName = 'Doctor Div';
+                constants.Text.HINTS_PERSON_NAME = 'Doctor Div';
                 _addLabCommands();
                 pubSub.publish('AchievementManager/achieve', ['darkness_removed']);
                 pubSub.publish('GameEvent/darknessRemoved');
-                pubSub.publish('UI/talk', ['Great job!', _hintsPersonName, constants.Text.LIGHTS_ON_ALERT]);
             }
             // TODO Also display = none or width = 0 or height = 0 would work
         }
@@ -72,7 +70,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             var isGlassRemoved = (summaries && (typeof summaries === 'object') && (typeof summaries[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && (typeof summaries[0].removed[0] === 'object') && summaries[0].removed[0]['id'] === 'glass');
             if(isGlassRemoved) {
                 pubSub.publish('GameEvent/glassRemoved');
-                pubSub.publish('UI/talk', ['Uh oh...', _hintsPersonName, constants.Text.GLASS_REMOVED]);
+                pubSub.publish('UI/talk', ['Uh oh...', constants.Text.HINTS_PERSON_NAME, constants.Text.GLASS_REMOVED]);
                 // TODO Play alarm sound
                 // TODO Connect terminal to the event, that has to lock itself. Put the password in the html?
             }
@@ -82,14 +80,40 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             var isGlassBroken = constants.JQ_GLASS.hasClass(constants.CLASS_BROKEN);
             if(isGlassBroken && !_isGlassBroken) {
                 pubSub.publish('GameEvent/glassBroken');
-                pubSub.publish('UI/talk', ['Uh oh...', _hintsPersonName, constants.Text.GLASS_BROKEN]);
+                pubSub.publish('UI/talk', ['Uh oh...', constants.Text.HINTS_PERSON_NAME, constants.Text.GLASS_BROKEN]);
                 // TODO Play glass broken sound
             } else if(!isGlassBroken && _isGlassBroken) {
                 pubSub.publish('AchievementManager/achieve', ['glass_repaired']);
                 pubSub.publish('GameEvent/glassRepaired');
-                pubSub.publish('UI/talk', ['Phew!', _hintsPersonName, constants.Text.GLASS_REPAIRED]);
+                pubSub.publish('UI/talk', ['Phew!', constants.Text.HINTS_PERSON_NAME, constants.Text.GLASS_REPAIRED]);
             }
             _isGlassBroken = isGlassBroken;
+        }
+
+        function _getCapturedBugsFeedback(bugNodeArray) {
+            var bugKinds = {};
+            var _addOfType = function(type) {
+                bugKinds[type] ? bugKinds[type]++ : (bugKinds[type] = 1);
+            };
+            $.each(bugNodeArray, function(idx, bugNode) {
+                var bug = Bugterium.getById(bugNode.id);
+                if(bugNode.classList.contains('virus')){
+                    _addOfType('virus');
+                }
+                else if(bug.dna.aspect === '' || bugNode.style.visibility === 'hidden' || bugNode.style.display === 'none') {
+                    _addOfType('invisible');
+                }
+                else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
+                    _addOfType('bigger');
+                }
+                else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
+                    _addOfType('mutated');
+                }
+                else {
+                    _addOfType('normal');
+                }
+            });
+            return bugKinds;
         }
 
         function _flaskAddMutationObserver(summaries) {
@@ -111,8 +135,10 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 }
             });
             if(okBugs.length >= _goalBugCount) {
+                var bugTypes = _getCapturedBugsFeedback(okBugs);
+                console.log(bugTypes);
                 pubSub.publish('AchievementManager/achieve', ['collect_10_bugs']);
-                pubSub.publish('UI/talk', ['Great job!', _hintsPersonName, constants.Text.COLLECT_10_BUGS]);
+                pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.COLLECT_10_BUGS]);
             }
         }
 
@@ -181,7 +207,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             constants.JQ_TERMINAL_TOGGLE.toggle('fade', 2000);
             constants.JQ_MENU_BUTTON.toggle('fade', 2000);
         };
-        pubSub.publish('UI/talk', ['Message', _hintsPersonName, constants.Text.ISANYONETHERE_MESSAGE, undefined,
+        pubSub.publish('UI/talk', ['Message', constants.Text.HINTS_PERSON_NAME, constants.Text.ISANYONETHERE_MESSAGE, undefined,
         {
             beforeClose: function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
@@ -213,13 +239,13 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     /* PubSub */
     pubSub.subscribeOnce('GameManager/showLoginHint', function () {
         if(_showHints) {
-            pubSub.publish('UI/talk', ['Info', _hintsPersonName, constants.Text.HINT_LOGIN]);
+            pubSub.publish('UI/talk', ['Info', constants.Text.HINTS_PERSON_NAME, constants.Text.HINT_LOGIN]);
         }
     });
 
     pubSub.subscribeOnce('GameManager/showJsTerminalHint', function () {
         if(_showHints) {
-            pubSub.publish('UI/talk', ['Info', _hintsPersonName, constants.Text.HINT_JSTERMINAL]);
+            pubSub.publish('UI/talk', ['Info', constants.Text.HINTS_PERSON_NAME, constants.Text.HINT_JSTERMINAL]);
         }
     });
 

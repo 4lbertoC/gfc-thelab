@@ -4,13 +4,7 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
   /* Private variables */
   var _baseDna = {
     'aspect': 'http://res.cloudinary.com/albertoc/image/upload/w_64,h_64/bacteria.png',
-    'onCreate': {
-
-    },
-    'onRemove': {
-
-    },
-    'replicationSpeed': 10000
+    'replicationSpeed': 5000
   };
   var _idCounter = 0;
   var _idPrefix = 'bugterium_';
@@ -62,12 +56,17 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
     getId: function () {
       return this.id;
     },
+    getDimensions: function () {
+      var w = this.domNode.offsetWidth;
+      var h = this.domNode.offsetHeight;
+      return [w, h];
+    },
     moveTo: function (refDomNodeId, margins, callback) {
       var bugNode = this.domNode;
       var refDomNode = document.getElementById(refDomNodeId);
       var thisBug = this;
       if(bugNode && (bugNode.parentElement instanceof HTMLElement)) {
-        var futurePosition = this.entity.calculatePositionInParent(refDomNode, thisBug.dimensions, margins);
+        var futurePosition = this.entity.calculatePositionInParent(refDomNode, thisBug.getDimensions(), margins);
         if(futurePosition[0] === -1) {
           callback && callback('failure');
           return;
@@ -76,10 +75,10 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
           jqBugNode.hide('puff', {
             complete: function () {
               jqBugNode.remove();
-              thisBug.entity.addToParent(bugNode, refDomNode, thisBug.dimensions, margins);
+              thisBug.entity.addToParent(bugNode, refDomNode, thisBug.getDimensions(), margins);
               jqBugNode.show('drop', {
                 direction: 'top',
-                complete: function() {
+                complete: function () {
                   callback && callback('success');
                 }
               });
@@ -95,6 +94,9 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
     return _baseDna;
   };
   Bugterium.getById = function (bugId) {
+    if(typeof bugId === 'string' && bugId.indexOf(_idPrefix) > -1) {
+      return s_instances[bugId];
+    }
     return s_instances[_idPrefix + bugId];
   };
 

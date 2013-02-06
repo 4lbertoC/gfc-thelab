@@ -15,6 +15,25 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
     return Math.ceil((_minMaxBugteriaCreated[0] - 1) + (Math.random() * (_minMaxBugteriaCreated[1] - (_minMaxBugteriaCreated[0] - 1))));
   };
 
+  var _innerHatch = function (sporeNode, refDomNode, dna, dimensions) {
+    setTimeout(function () {
+      pubSub.publish('Bugterium/hatch', []);
+      if(sporeNode.parentElement === refDomNode) {
+        $(sporeNode).hide({
+          effect: 'expode',
+          complete: function () {
+            refDomNode.removeChild(sporeNode);
+          }
+        });
+        var numBugteria = _getNumberOfCreatedBugteria();
+        while(numBugteria > 0) {
+          new Bugterium(refDomNode, dna, dimensions);
+          --numBugteria;
+        }
+      }
+    }, _hatchTimeout);
+  };
+
   /* Initialization */
   (function () {
     utils.preloadImage(_baseDna['aspect'], function (status, dimensions) {
@@ -52,28 +71,18 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
         this.entity.addToParent(sporeNode, refDomNode, [64, 64]);
         $(sporeNode).show('scale');
 
-        utils.preloadImage(dna['aspect'], function (status, dimensions) {
-          if(status === 'error') {
-            dna['aspect'] = _baseDna['aspect'];
-            dimensions = _baseDnaImageSize;
-          }
-          setTimeout(function () {
-            pubSub.publish('Bugterium/hatch', []);
-            if(sporeNode.parentElement === refDomNode) {
-              $(sporeNode).hide({
-                effect: 'expode',
-                complete: function () {
-                  refDomNode.removeChild(sporeNode);
-                }
-              });
-              var numBugteria = _getNumberOfCreatedBugteria();
-              while(numBugteria > 0) {
-                new Bugterium(refDomNode, dna, dimensions);
-                --numBugteria;
-              }
+        if(dna['aspect']) {
+          utils.preloadImage(dna['aspect'], function (status, dimensions) {
+            if(status === 'error') {
+              dna['aspect'] = '';
+              dimensions = [1, 1];
             }
-          }, _hatchTimeout);
-        });
+            _innerHatch(sporeNode, refDomNode, dna, dimensions);
+          });
+        }
+        else {
+          _innerHatch(sporeNode, refDomNode, dna, [1,1]);
+        }
       }
     }
   };

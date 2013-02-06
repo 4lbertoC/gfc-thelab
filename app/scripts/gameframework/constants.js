@@ -157,6 +157,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.COLLECT_10_BUGS = '<p>YOU DID IT!</p><p>You collected 10 bugs, shall we proceed with the analysis?';
 
+    constants.Text.HINTS_PERSON_NAME = 'Someone in the dark';
+
+    constants.Text.BUG_CAPTURED = 'Well done, you collected your fist bug!';
+
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {
         var btn = {
