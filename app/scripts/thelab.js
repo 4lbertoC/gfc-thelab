@@ -20,7 +20,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
 
             var _addSpore = function (dna) {
-                if((dna instanceof Object) && (typeof dna.aspect === 'string')) {
+                if((dna === undefined) || (dna instanceof Object) && (typeof dna.aspect === 'string')) {
                     new Spore(constants.ID_DISH, dna);
                 } else {
                     pubSub.publish('UI/alert', [constants.Text.WRONG_PARAMS_ADDSPORE]);
