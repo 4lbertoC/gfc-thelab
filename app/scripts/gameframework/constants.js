@@ -103,9 +103,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '</div></div><p>';
 
     constants.Text.TUTORIAL_INTRO = '<p>Welcome to Games for Coders - ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
-        'you will have to code in JavaScript and manipulate the DOM to solve it.</p><p style="color: orange">WARNING2: This game is still a prototype and some features could be broken or not implemented.</p>' +
+        'you will have to code in JavaScript and manipulate the DOM to solve it.</p><p style="color: orange">' +
+        'WARNING2: This game is still a prototype and some features could be broken or not implemented.</p>' +
         '<p>Select the game mode!</p>' +
-        '<p><i>Beginner</i> mode is not implemented yet.</p>' +
+        '<p><i>Beginner</i> mode is not implemented yet, sorry :(</p>' +
         '<p><i>Intermediate</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
         'Choose this mode also if you don\'t like situations in which you have no idea what to do: JavaScript has a lot of functions and rules, ' +
         'and if you are not used to them, the solution might not be very straightforward.' +
@@ -123,8 +124,24 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '<span onclick="window.open(\'https://developer.mozilla.org/\')"' +
         'target="_blank" class="helpButton">documentation</span> at your side.</p>';
 
-    constants.Text.EDITCODE_WRONG_PARAMS = '<p>You are calling editCode() with the wrong parameters. The function takes as input the name of the command that you want to edit, ' +
+    constants.Text.HINT_GROW_BUGTERIA = '<p>Now that you can see the <span class="divText">dish</span> and the <span class="divText">flask</span>, you can ' +
+        'use the commands that crete the bugteria.</p><p>The command <span class="funcStr">addSpore()</span> will add a spore on the dish, from which one or more bugteria will spawn. ' +
+        'Take a look also at <span class="funcStr">getBaseDna()</span> too, as it is a place you can use to modify the bugteria before creating them.</p>' +
+        '<p>You can pass the modified dna as input to the spore creation, calling <span class="funcStr">addSpore(dna)</span></p>';
+
+    constants.Text.HINT_BUGTERIUM_TOO_BIG = '<p>If you have problems moving the bugteria to the flask, try modifying their dna. As you can see, an url to an image is ' +
+    'provided as the <i>aspect</i> parameter. Try to modify the dna by passing a smaller image.</p>';
+
+    constants.Text.HINT_BUGTERIUM_IN_FLASK = '<p>Well done, you successfully moved a bugterium to the flask. Now you just have to collect 10 of them.';
+
+    constants.Text.WRONG_PARAMS_EDITCODE = '<p>You are calling <span class="funcStr">editCode()</span> with the wrong parameters. The function takes as input the name of the command that you want to edit, ' +
         'or nothing if you want to create a new function that will be stored in the variable called <i>result</i>.</p>';
+
+    constants.Text.WRONG_PARAMS_ADDSPORE = '<p>You are calling <span class="funcStr">addSpore()</span> with the wrong parameters. You should either call it without parameters or' +
+    'provide a dna as first parameter.</p><p>Use <span class="funcStr">help(\'commandName\')</span> to get more help.</p>';
+
+    constants.Text.WRONG_PARAMS_MOVETOFLASK = '<p>The bug with the given id cannot be found.</p><p>You are probably calling <span class="funcStr">moveToFlask()</span> with the wrong parameters. You should provide the ' +
+    'bugterium\'s id, which you can see on the tag on top of it.</p><p>Use <span class="funcStr">help(\'commandName\')</span> to get more help.</p>';
 
     constants.Text.LIGHTS_ON_TERMINAL = '[[;#fff;transparent]LIGHTS TURNED ON, ACTIVATING LAB...]\n[[g;#0ff;transparent]addSpore(dna)][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]' +
         '\n[[g;#0ff;transparent]cleanDish()][[;#fff;transparent].....] [[g;#f00;transparent]BROKEN]' +
@@ -160,6 +177,11 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.HINTS_PERSON_NAME = 'Someone in the dark';
 
     constants.Text.BUG_CAPTURED = 'Well done, you collected your fist bug!';
+
+    constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_DARKNESS;
+
+    constants.Text.CLEAN_DISH_BROKEN = '<p>Watch out, the <span class="funcStr">cleanDish()</span> command is broken! You should try editing its code ' +
+    'with <span class="funcStr">editCode()</span> so that it in fact clears the dish.';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {

@@ -9,9 +9,14 @@ define(['./constants', './pubsub'], function (constants, pubSub) {
     var _achievementCallbacks = {
         'bug_captured': function () {
             pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.BUG_CAPTURED]);
+            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_IN_FLASK;
         },
         'darkness_removed': function() {
             pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.LIGHTS_ON_ALERT]);
+            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_GROW_BUGTERIA;
+        },
+        'bug_grown': function() {
+            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_TOO_BIG;
         }
     };
 

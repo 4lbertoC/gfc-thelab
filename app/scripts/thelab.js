@@ -20,15 +20,24 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             pubSub.publish('Terminal/write', [constants.Text.LIGHTS_ON_TERMINAL]);
 
             var _addSpore = function (dna) {
-                new Spore(constants.ID_DISH, dna);
+                if((dna instanceof Object) && (typeof dna.aspect === 'string')) {
+                    new Spore(constants.ID_DISH, dna);
+                } else {
+                    pubSub.publish('UI/alert', [constants.Text.WRONG_PARAMS_ADDSPORE]);
+                }
             };
 
             var _cleanDish = function () {
                 constants.JQ_GLASS.addClass(constants.CLASS_BROKEN);
+                pubSub.publish('UI/talk', ['Command broken', constants.Text.HINTS_PERSON_NAME, constants.Text.CLEAN_DISH_BROKEN]);
             };
 
             var _moveToFlask = function (bugId) {
                 var theBug = Bugterium.getById(bugId);
+                if(!theBug) {
+                    pubSub.publish('UI/alert', [constants.Text.WRONG_PARAMS_MOVETOFLASK]);
+                    return;
+                }
                 theBug.moveTo(constants.ID_FLASK, [5, 40, 50, 10], function (status) {
                     if(status === 'success') {
                         pubSub.publish('AchievementManager/achieve', ['bug_captured']);
@@ -92,27 +101,22 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
         function _getCapturedBugsFeedback(bugNodeArray) {
             var bugKinds = {};
-            var _addOfType = function(type) {
+            var _addOfType = function (type) {
                 bugKinds[type] ? bugKinds[type]++ : (bugKinds[type] = 1);
             };
-            $.each(bugNodeArray, function(idx, bugNode) {
+            $.each(bugNodeArray, function (idx, bugNode) {
                 var bug = Bugterium.getById(bugNode.id);
-                if(bugNode.classList.contains('virus')){
+                if(bugNode.classList.contains('virus')) {
                     _addOfType('virus');
-                }
-                else if(bug.dna.aspect === '' || bugNode.style.visibility === 'hidden' || bugNode.style.display === 'none') {
+                } else if(bug.dna.aspect === '' || bugNode.style.visibility === 'hidden' || bugNode.style.display === 'none') {
                     _addOfType('invisible');
-                }
-                else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
+                } else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
                     _addOfType('bigger');
-                }
-                else if(!bug.dna.replicationSpeed) {
+                } else if(!bug.dna.replicationSpeed) {
                     _addOfType('inhibited');
-                }
-                else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
+                } else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
                     _addOfType('mutated');
-                }
-                else {
+                } else {
                     _addOfType('normal');
                 }
             });
@@ -145,6 +149,10 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             }
         }
 
+        function _dishOverflowMutationObserver(summaries) {
+            // TODO
+        }
+
         pubSub.publish('MutationObserver/add', [constants.JQ_DARKNESS.parent(), _darknessMutationObserverCallback, [{
             'element': '#darkness'
         }], function (id) {
@@ -170,7 +178,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     /* Private methods */
     var _prepareAndShowMenu = function () {
         if(constants.JQ_DARKNESS.parent()) {
-            constants.JQ_I_AM_STUCK.html(constants.Text.HINT_DARKNESS);
+            constants.JQ_I_AM_STUCK.html(constants.Text.I_AM_STUCK_TEXT);
         }
         _gameManager.showMenu();
     };

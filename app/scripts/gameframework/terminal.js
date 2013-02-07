@@ -84,7 +84,7 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
     /* Private methods */
     var _editCode = function (str) {
         if(str && typeof str != 'string') {
-            pubSub.publish('UI/alert', [constants.Text.EDITCODE_WRONG_PARAMS]);
+            pubSub.publish('UI/alert', [constants.Text.WRONG_PARAMS_EDITCODE]);
         } else {
             var codeContent = '';
             var cmd = _scope.getCommand(str);

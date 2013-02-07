@@ -28,6 +28,7 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
         var numBugteria = _getNumberOfCreatedBugteria();
         while(numBugteria > 0) {
           new Bugterium(refDomNode, dna, dimensions);
+          pubSub.publish('AchievementManager/achieve', ['bug_grown']);
           --numBugteria;
         }
       }
