@@ -106,6 +106,9 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
                     _addOfType('bigger');
                 }
+                else if(!bug.dna.replicationSpeed) {
+                    _addOfType('inhibited');
+                }
                 else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
                     _addOfType('mutated');
                 }
@@ -210,8 +213,6 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         pubSub.publish('UI/talk', ['Message', constants.Text.HINTS_PERSON_NAME, constants.Text.ISANYONETHERE_MESSAGE, undefined,
         {
             beforeClose: function () {
-                pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
-                pubSub.publish('Dialog/close');
                 showUI();
                 if(_showHints) {
                     _showFirstTooltip();

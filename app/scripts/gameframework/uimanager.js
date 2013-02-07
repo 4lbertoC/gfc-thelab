@@ -1,6 +1,10 @@
 define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     'use strict';
 
+    /* Private variables */
+    var _dialogQueue = [];
+    var _isDialogShown = false;
+
     var UiManager = function () {};
     UiManager.prototype = {
         init: function () {
@@ -47,6 +51,13 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
 
         showDialog: function (title, text, buttons, optParams) {
             var thisUiManager = this;
+            if(_isDialogShown) {
+                _dialogQueue.push(function () {
+                    thisUiManager.showDialog(title, text, buttons, optParams);
+                })
+                return;
+            }
+            _isDialogShown = true;
             pubSub.publish('Dialog/open');
             constants.JQ_MSGDIALOG.removeClass('dialogHidden');
             constants.JQ_MSGDIALOG.html(text);
@@ -67,11 +78,28 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
                 beforeClose: function () {
                     pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_SHOW]);
                     pubSub.publish('Dialog/close');
+                },
+                close: function() {
+                    _isDialogShown = false;
+                    if(_dialogQueue.length > 0) {
+                        var nextDialog = _dialogQueue.shift();
+                        nextDialog();
+                    }
                 }
             };
             if(optParams && typeof optParams === 'object') {
+                var appendOptFunc = function(baseFunc, optFunc) {
+                    return function() {
+                        baseFunc();
+                        optFunc();
+                    };
+                };
                 for(var p in optParams) {
-                    defaultParams[p] = optParams[p];
+                    if(typeof defaultParams[p] === 'function') {
+                        defaultParams[p] = appendOptFunc(defaultParams[p], optParams[p]);
+                    } else {
+                        defaultParams[p] = optParams[p];
+                    }
                 }
             }
             constants.JQ_MSGDIALOG.dialog(defaultParams).mCustomScrollbar();
