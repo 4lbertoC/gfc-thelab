@@ -1,4 +1,4 @@
-define(['jquery', './achievementmanager', './audiomanager', './codeeditor', './constants', './pubsub', './terminal', './uimanager', './mutationobserver'], function ($, achievementManager, AudioManager, CodeEditor, constants, pubSub, Terminal, UiManager, MutationObserver) {
+define(['jquery', './achievementmanager', './audiomanager', './codeeditor', './constants', './pubsub', './terminal', './uimanager', './mutationobserver'], function ($, AchievementManager, AudioManager, CodeEditor, constants, pubSub, Terminal, UiManager, MutationObserver) {
     'use strict';
 
     /* Private variables */
@@ -25,12 +25,14 @@ define(['jquery', './achievementmanager', './audiomanager', './codeeditor', './c
             _gameModules.audioManager = new AudioManager();
             _gameModules.terminal = new Terminal();
             _gameModules.uiManager = new UiManager();
+            _gameModules.achievementManager = new AchievementManager();
 
             _gameModules.codeEditor.init();
             _gameModules.mutationObserver.init();
             _gameModules.audioManager.init();
             _gameModules.uiManager.init();
             _gameModules.terminal.init();
+            _gameModules.achievementManager.init();
 
             constants.JQ_TERMINAL_TOGGLE.click(function () {
                 _gameModules.terminal.toggleShow.apply(_gameModules.terminal, arguments);

@@ -1,4 +1,4 @@
-define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframework/utils'], function ($, Bugterium, Entity, pubSub, utils) {
+define(['jquery', './bugterium', './entity', 'gameframework/constants', 'gameframework/pubsub', 'gameframework/utils'], function ($, Bugterium, Entity, constants, pubSub, utils) {
   'use strict';
 
   /* Private variables */
@@ -29,6 +29,7 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
         while(numBugteria > 0) {
           new Bugterium(refDomNode, dna, dimensions);
           pubSub.publish('AchievementManager/achieve', ['bug_grown']);
+          pubSub.publish('AudioManager/playSound', [constants.Sound.BUG]);
           --numBugteria;
         }
       }
@@ -71,6 +72,7 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
         sporeNode.style.display = 'none';
         this.entity.addToParent(sporeNode, refDomNode, [64, 64]);
         $(sporeNode).show('scale');
+        pubSub.publish('AudioManager/playSound', [constants.Sound.SPORE]);
 
         if(dna['aspect']) {
           utils.preloadImage(dna['aspect'], function (status, dimensions) {
@@ -80,9 +82,8 @@ define(['jquery', './bugterium', './entity', 'gameframework/pubsub', 'gameframew
             }
             _innerHatch(sporeNode, refDomNode, dna, dimensions);
           });
-        }
-        else {
-          _innerHatch(sporeNode, refDomNode, dna, [1,1]);
+        } else {
+          _innerHatch(sporeNode, refDomNode, dna, [1, 1]);
         }
       }
     }

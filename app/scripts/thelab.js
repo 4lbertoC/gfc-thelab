@@ -29,6 +29,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
             var _cleanDish = function () {
                 constants.JQ_GLASS.addClass(constants.CLASS_BROKEN);
+                pubSub.publish('AudioManager/playSound', [constants.Sound.GLASS_BREAK]);
                 pubSub.publish('UI/talk', ['Command broken', constants.Text.HINTS_PERSON_NAME, constants.Text.CLEAN_DISH_BROKEN]);
             };
 

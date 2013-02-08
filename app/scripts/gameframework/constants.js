@@ -73,6 +73,14 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Sound.TERMINAL_OFF = 'terminal_off';
 
+    constants.Sound.BUG = 'bug';
+
+    constants.Sound.SPORE = 'spore';
+
+    constants.Sound.VIRUS = 'virus';
+
+    constants.Sound.GLASS_BREAK = 'glass_broken';
+
     constants.Text = {};
 
     constants.Text.LIGHTS_BROKEN = '[[g;#f00;transparent]ERROR: light() function seems to be broken. Please use Javascript interpreter to fix it.]';

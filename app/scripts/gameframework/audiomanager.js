@@ -40,6 +40,16 @@ define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, co
     var _soundFailure = new buzz.sound(SOUND_DIR + 'cartoon-bing-low.ogg');
     var _soundSpoiler = new buzz.sound(SOUND_DIR + 'tom.ogg');
     var _soundSuccess = new buzz.sound(SOUND_DIR + 'success-1.ogg');
+    var _soundGlassBreak = new buzz.sound(SOUND_DIR + 'mp-glass-break.ogg');
+    var _soundBug = new buzz.group([
+        new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0001.ogg'),
+        new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0002.ogg'),
+        new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0003.ogg'),
+        new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0004.ogg'),
+        new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0005.ogg'),
+        ]).setPlaybackMode('random');
+    var _soundSpore = new buzz.sound(SOUND_DIR + 'jaw-harp9.ogg');
+    var _soundVirus = new buzz.sound(SOUND_DIR + 'cartoon-bubbles.ogg');
 
     /* PubSub */
     pubSub.subscribe('AudioManager/playSound', function (evt, soundName) {
@@ -64,6 +74,14 @@ define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, co
             _soundFailure.play();
         } else if(soundName === constants.Sound.SPOILER) {
             _soundSpoiler.play();
+        } else if(soundName === constants.Sound.BUG) {
+            _soundBug.play();
+        } else if(soundName === constants.Sound.SPORE) {
+            _soundSpore.play();
+        } else if(soundName === constants.Sound.VIRUS) {
+            _soundVirus.play();
+        } else if(soundName === constants.Sound.GLASS_BREAK) {
+            _soundGlassBreak.play();
         }
     });
 

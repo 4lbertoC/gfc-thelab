@@ -1,4 +1,4 @@
-define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubSub) {
+define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub'], function ($, Entity, constants, pubSub) {
   'use strict';
 
   /* Private variables */
@@ -79,6 +79,7 @@ define(['jquery', './entity', 'gameframework/pubsub'], function ($, Entity, pubS
               jqBugNode.show('drop', {
                 direction: 'top',
                 complete: function () {
+                  pubSub.publish('AudioManager/playSound', [constants.Sound.BUG]);
                   callback && callback('success');
                 }
               });
