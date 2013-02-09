@@ -9,6 +9,7 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
   var _idCounter = 0;
   var _idPrefix = 'bugterium_';
   var _replicationProbability = 0.3;
+  var _virusSeen = false;
 
   var s_instances = {};
 
@@ -75,6 +76,10 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
               if(parentNode.classList.contains('veryDangerousNodeThatWillCauseYouALotOfTroubles')) {
                 isVirus = true;
                 this.dna.aspect = constants.Assets.VIRUS;
+                if(!_virusSeen) {
+                  _virusSeen = true;
+                  pubSub.publish('UI/talk', ['The hell is that?', constants.Text.HINTS_PERSON_NAME, constants.Text.VIRUS_APPEARED]);
+                }
               }
               new Bugterium(parentNode, this.dna, this.dimensions, isVirus);
             }

@@ -97,9 +97,19 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
                 function (newObj) {
                 if(newObj) {
                     _evaluateJs(newObj, function (ret) {
-                        cmd ? _scope.addCommand(str, ret) : window['result'] = ret;
+                        if(cmd) {
+                            _scope.addCommand(str, ret);
+                            _instance.echo('Command [[g;#0ff;transparent]' + str + '] saved.');
+                            console.log('Command ' + str + ' saved');
+                        } else {
+                            window['result'] = ret;
+                            _instance.echo('Returned value saved to [[g;#ff0;transparent]result]');
+                            console.log('Returned value saved to result variable');
+                        }
+
                     }, function (error) {
                         _instance.error('Error: ' + error);
+                        console.error('Error' + error);
                     });
                 }
             }
@@ -155,6 +165,7 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
             commandList += c + ' ';
         };
         _instance.echo('[[g;#0ff;transparent]' + commandList + ']\n');
+        console.log(commandList);
     };
 
     var Terminal = function () {};
@@ -183,19 +194,12 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
 
             _scope.addCommand('editCode', function (cmdName) {
                 _editCode(cmdName);
-            }, '\n[[g;#0ff;transparent]editCode(cmdName)]\n\nOpens the code editor.\nIf called without parameters, the JavaScript written in the editor will be evaluated ' +
-            'and the result stored in a variable called [[g;#ff0;transparent]result].' +
-            '\n\nThe name of a command can be passed as parameter to edit its code.' +
-            '\n\n' +
-            'Parameters:\n' +
-            '   [[g;#ff0;transparent]cmdName]: {string} the optional command name\n');
+            }, '\n[[g;#0ff;transparent]editCode(cmdName)]\n\nOpens the code editor.\nIf called without parameters, the JavaScript written in the editor will be evaluated ' + 'and the result stored in a variable called [[g;#ff0;transparent]result].' + '\n\nThe name of a command can be passed as parameter to edit its code.' + '\n\n' + 'Parameters:\n' + '   [[g;#ff0;transparent]cmdName]: {string} the optional command name\n');
             _scope.addCommand('printCommands',
 
             function () {
                 _printCommands();
-            }, '\n[[g;#0ff;transparent]printCommands()]\n\nShows the available commands.\n\n' +
-            'Parameters:\n' +
-            '   - none -\n');
+            }, '\n[[g;#0ff;transparent]printCommands()]\n\nShows the available commands.\n\n' + 'Parameters:\n' + '   - none -\n');
 
             _scope.addCommand('light',
 

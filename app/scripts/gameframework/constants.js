@@ -128,22 +128,16 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.TUTORIAL_INTRO = '<p>Welcome to Games for Coders - ' + constants.APP_NAME + '!<p style="color: red;">WARNING: This is not a common videogame: ' +
         'you will have to code in JavaScript and manipulate the DOM to solve it.</p><p style="color: orange">' +
-        'WARNING2: This game is still a prototype and some features could be broken or not implemented.</p>' +
-        '<p>Select the game mode!</p>' +
-        '<p><i>Beginner</i> mode is not implemented yet, sorry :(</p>' +
-        '<p><i>Intermediate</i> mode is preferred if you have some knowledge of JavaScript and programming in general. If you have none, it could be VERY difficult. ' +
-        'Choose this mode also if you don\'t like situations in which you have no idea what to do: JavaScript has a lot of functions and rules, ' +
-        'and if you are not used to them, the solution might not be very straightforward.' +
-        '<p><i>Difficult</i> mode won\'t display any advice at all. Choose this if you have been playing around with the browser\'s developer tools for a while, ' +
-        'and if you feel like racking your brains on the game code.' +
-        '<p>So, what mode do you prefer?';
+        'WARNING2: It is still a prototype and some features could be broken or not implemented.</p>' +
+        '<p>In order to play, you can either use the in-game terminal or your browser\'s developer tools.</p>' +
+        '<p>If you are stuck at some point, you can find some hints by going into the game menu.</p>';
 
     constants.Text.HINT_DARKNESS = '<p>The first thing you should do in order to play is remove the <span class="divText">darkness</span>.</p>' +
         '<p>As I said, this is not a game like others you see around, you\'ll have to CODE if you want to go on. For example, ' +
         'there is no button that turns on the lights!' +
-        '<p>When you see a name colored like <span class="divText">glass</span>, we are referring to a ' +
+        '<p>When you see a name colored like <span class="divText">glass</span>, I am referring to a ' +
         '<span onclick="window.open(\'https://developer.mozilla.org/docs/DOM/HTMLElement\')"' +
-        'target="_blank" class="helpButton">HTMLElement</span> ID. You will find yourself playing with ' +
+        'target="_blank" class="helpButton">HTMLElement</span> ID. You will have to put your hands on ' +
         'JavaScript and the DOM, so if you are new to the topic you\'d better keep some ' +
         '<span onclick="window.open(\'https://developer.mozilla.org/\')"' +
         'target="_blank" class="helpButton">documentation</span> at your side.</p>';
@@ -217,6 +211,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Assets.VIRUS = 'https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1360409934/virus.png';
 
     constants.Text.BUG_PREVIOUSLY_ESCAPED = '<p>Hello again! Please, this time try to be more careful, and I\'ll pretend that nothing happened.</p>';
+
+    constants.Text.BUG_ON_DESK = '<p>Please be careful, a bugterium just came out of the dish. You can recognise that from the yellow circle that appeared around it.</p>';
+
+    constants.Text.VIRUS_APPEARED = '<p>The situation is getting critical, the bugteria are mutating into something else!!!</p>';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {

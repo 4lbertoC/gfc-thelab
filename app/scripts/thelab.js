@@ -12,6 +12,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     var _goalBugCount = 10;
     var _dishOverflowWarningGiven = false;
     var _deskOverflowWarningGiven = false;
+    var _bugOnDeskWarningGiven = false;
 
     /* Private methods */
     var _addDarknessCallback = function () {
@@ -174,8 +175,12 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         }
 
         function _deskOverflowMutationObserver(summaries) {
-            var children = constants.JQ_DESK.children();
-            if(children.length >= 20 && !_deskOverflowWarningGiven && (!$('#' + constants.ID_GLASS).length || $('#' + constants.ID_GLASS).hasClass('broken'))) {
+            var children = $('#desk>.bug');
+            if(children.length > 0 && !_bugOnDeskWarningGiven) {
+                _bugOnDeskWarningGiven = true;
+                pubSub.publish('UI/talk', ['I\'m a bit worried.', constants.Text.HINTS_PERSON_NAME, constants.Text.BUG_ON_DESK]);
+            }
+            else if(children.length >= 20 && !_deskOverflowWarningGiven && (!$('#' + constants.ID_GLASS).length || $('#' + constants.ID_GLASS).hasClass('broken'))) {
                 _deskOverflowWarningGiven = true;
                 if(window.localStorage) {
                     window.localStorage.setItem('bugEscaped', true);
@@ -244,24 +249,10 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
     var _showStartDialog = function () {
         pubSub.publish('UI/dialog', ['Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [
-            {
-            text: 'Beginner',
-            click: function (evt) {
-                pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-            }
-        },
-            {
-            text: 'Intermediate',
+        {
+            text: 'Play',
             click: function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-                $(this).dialog('close');
-            }
-        },
-            {
-            text: 'Difficult',
-            click: function () {
-                pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
-                _showHints = false;
                 $(this).dialog('close');
             }
         }],
