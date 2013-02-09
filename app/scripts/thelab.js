@@ -197,8 +197,19 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                         backgroundColor: 'black',
                         width: '100%',
                         height: '100%',
-                        zIndex: 3999
+                        zIndex: 3999,
+                        color: 'white',
+                        textAlign: 'center',
+                        fontFamily: 'courier'
                     });
+                    var b = document.createElement('span');
+                    $(b).css({
+                        position: 'absolute',
+                        top: '50%',
+                        left: '0',
+                        width: '100%'
+                    }).text('Game over, reload the page.');
+                    $(a).append(b);
                     $(document.body).append(a);
                     pubSub.publish('AudioManager/playSound', [constants.Sound.SCREAM]);
                     pubSub.publish('AchievementManager/achieve', ['game_over. yes, this is an achievement']);
