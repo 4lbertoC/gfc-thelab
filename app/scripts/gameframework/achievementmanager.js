@@ -39,6 +39,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
         },
         'game_over. yes, this is an achievement': function() {
             _showTooltip('<b>+49</b> Game over...?');
+            _points += 49;
         }
     };
 
