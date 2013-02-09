@@ -195,7 +195,8 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                         zIndex: 100000
                     });
                     $(document.body).append(a);
-                }, 10000);
+                    pubSub.publish('AudioManager/playSound', [constants.Sound.SCREAM]);
+                }, 5000);
             }
         }
 

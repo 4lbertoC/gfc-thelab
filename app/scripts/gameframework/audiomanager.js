@@ -42,6 +42,7 @@ define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, co
     var _soundSpoiler = new buzz.sound(SOUND_DIR + 'tom.ogg');
     var _soundSuccess = new buzz.sound(SOUND_DIR + 'success-1.ogg');
     var _soundGlassBreak = new buzz.sound(SOUND_DIR + 'mp-glass-break.ogg');
+    var _soundScream = new buzz.sound(SOUND_DIR + 'male.ogg');
     var _soundBug = new buzz.group([
         new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0001.ogg'),
         new buzz.sound(SOUND_DIR + 'cartoon-poppyup-appearances-0002.ogg'),
@@ -83,7 +84,9 @@ define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, co
             _soundVirus.play();
         } else if(soundName === constants.Sound.GLASS_BREAK) {
             _soundGlassBreak.play();
-        }else if(soundName === constants.Sound.GAME_OVER) {
+        } else if(soundName === constants.Sound.SCREAM) {
+            _soundScream.play();
+        } else if(soundName === constants.Sound.GAME_OVER) {
             _musicLoop.stop();
             _musicGameOver.play();
         }

@@ -91,6 +91,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Sound.GAME_OVER = 'game_over';
 
+    constants.Sound.SCREAM = 'scream';
+
     constants.Text = {};
 
     constants.Text.LIGHTS_BROKEN = '[[g;#f00;transparent]ERROR: light() function seems to be broken. Please use Javascript interpreter to fix it.]';
