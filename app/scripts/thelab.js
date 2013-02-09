@@ -175,7 +175,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
         function _deskOverflowMutationObserver(summaries) {
             var children = constants.JQ_DESK.children();
-            if(children.length >= 20 && !_deskOverflowWarningGiven && !$(constants.ID_GLASS).length || $(constants.ID_GLASS).hasClass('broken')) {
+            if(children.length >= 20 && !_deskOverflowWarningGiven && (!$('#' + constants.ID_GLASS).length || $('#' + constants.ID_GLASS).hasClass('broken'))) {
                 _deskOverflowWarningGiven = true;
                 if(window.localStorage) {
                     window.localStorage.setItem('bugEscaped', true);

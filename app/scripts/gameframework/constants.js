@@ -188,11 +188,11 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.ISANYONETHERE_MESSAGE = '<p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
         '<p>I tried using the terminal but it is broken, could you give a look? Maybe you know more javascript than me...</p>';
 
-    constants.Text.GLASS_REMOVED = 'Oh no! The glass is not covering the desk anymore and the bugteria can escape!!!';
+    constants.Text.GLASS_REMOVED = 'Oh no! The <span class="divText">glass</span> is not covering the desk anymore and the bugteria can escape!!!';
 
-    constants.Text.GLASS_BROKEN = 'Oooops... the glass is broken, it looks dangerous...';
+    constants.Text.GLASS_BROKEN = 'Oooops... the <span class="divText">glass</span> is broken, it looks dangerous...';
 
-    constants.Text.GLASS_REPAIRED = 'Wow, the glass is repaired!';
+    constants.Text.GLASS_REPAIRED = 'Wow, the <span class="divText">glass</span> is repaired!';
 
     constants.Text.BUGTERIUM_TOO_BIG = 'It looks like that bugterium is too big to fit into the flask. You should find a way to make it smaller.';
 
