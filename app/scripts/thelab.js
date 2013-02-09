@@ -175,7 +175,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
         function _deskOverflowMutationObserver(summaries) {
             var children = constants.JQ_DESK.children();
-            if(children.length >= 20 && !_deskOverflowWarningGiven && !$(constants.ID_GLASS).length) {
+            if(children.length >= 20 && !_deskOverflowWarningGiven && !$(constants.ID_GLASS).length || $(constants.ID_GLASS).hasClass('broken')) {
                 _deskOverflowWarningGiven = true;
                 if(window.localStorage) {
                     window.localStorage.setItem('bugEscaped', true);
@@ -192,10 +192,11 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                         backgroundColor: 'black',
                         width: '100%',
                         height: '100%',
-                        zIndex: 100000
+                        zIndex: 3999
                     });
                     $(document.body).append(a);
                     pubSub.publish('AudioManager/playSound', [constants.Sound.SCREAM]);
+                    pubSub.publish('AchievementManager/achieve', ['game_over. yes, this is an achievement']);
                 }, 5000);
             }
         }
@@ -237,6 +238,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         if(constants.JQ_DARKNESS.parent()) {
             constants.JQ_I_AM_STUCK.html(constants.Text.I_AM_STUCK_TEXT);
         }
+        pubSub.publish('AchievementManager/update', []);
         _gameManager.showMenu();
     };
 

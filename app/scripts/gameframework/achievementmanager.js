@@ -7,6 +7,41 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     var _points = 0;
     var _achievementDomNode = null;
 
+    var _achievementCallbacks = {
+        'bug_captured': function () {
+            _showTooltip('<b>+50</b> Gotcha!');
+            pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.BUG_CAPTURED]);
+            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_IN_FLASK;
+            _points += 50;
+        },
+        'darkness_removed': function () {
+            _showTooltip('<b>+50</b> Lights on');
+            pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.LIGHTS_ON_ALERT]);
+            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_GROW_BUGTERIA;
+            _points += 50;
+        },
+        'bug_grown': function () {
+            _showTooltip('<b>+50</b> firstChild');
+            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_TOO_BIG;
+            _points += 50;
+        },
+        'glass_repaired': function () {
+            _showTooltip('<b>+50</b> Disaster prevented');
+            _points += 50;
+        },
+        'collect_10_bugs': function () {
+            _showTooltip('<b>+100</b> Mission accomplished');
+            _points += 100;
+        },
+        'logged_in': function () {
+            _showTooltip('<b>+50</b> Inside the system');
+            _points += 50;
+        },
+        'game_over. yes, this is an achievement': function() {
+            _showTooltip('<b>+49</b> Game over...?');
+        }
+    };
+
     /* Private methods */
     var _showTooltip = function (text) {
         var jqNode = $(_achievementDomNode);
@@ -27,33 +62,23 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
         }, 1);
     };
 
-    var _achievementCallbacks = {
-        'bug_captured': function () {
-            _showTooltip('<b>+50</b> Gotcha!');
-            pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.BUG_CAPTURED]);
-            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_IN_FLASK;
-        },
-        'darkness_removed': function () {
-            _showTooltip('<b>+50</b> Lights on');
-            pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.LIGHTS_ON_ALERT]);
-            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_GROW_BUGTERIA;
-        },
-        'bug_grown': function () {
-            _showTooltip('<b>+50</b> firstChild');
-            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_TOO_BIG;
-        },
-        'glass_repaired': function () {
-            _showTooltip('<b>+50</b> Disaster prevented');
-        },
-        'collect_10_bugs': function () {
-            _showTooltip('<b>+100</b> Mission accomplished');
-        },
-        'logged_in': function () {
-            _showTooltip('<b>+50</b> Inside the system');
+    var _update = function () {
+        var achievementTxt = '';
+        var achievementCount = 0;
+        for(var a in _achievements) {
+            achievementTxt += a + '<br />';
+            achievementCount++;
         }
+        var totAchievementCount = 0;
+        for(var b in _achievementCallbacks) {
+            totAchievementCount++;
+        }
+        for(var i = totAchievementCount - achievementCount; i > 0; i--) {
+            achievementTxt += '??? <br />';
+        }
+        constants.JQ_ACHIEVEMENT_LIST.html(achievementTxt);
+        constants.JQ_POINTS.html('' + _points);
     };
-
-    _achievements[constants.Achievement.LOGGED_IN] = false;
 
     /* PubSub */
     pubSub.subscribe('AchievementManager/achieve', function (evt, name) {
@@ -63,19 +88,37 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             if(_achievementCallbacks[name]) {
                 _achievementCallbacks[name]();
             }
+            if(window.localStorage) {
+                window.localStorage.setItem('achievements', JSON.stringify(_achievements));
+                window.localStorage.setItem('points', JSON.stringify(_points));
+            }
+            _update();
         }
     });
 
     pubSub.subscribe('AchievementManager/openSpoiler', function () {
         _points -= 10;
         pubSub.publish('AudioManager/playSound', [constants.Sound.FAILURE]);
+        _update();
     });
+
+    pubSub.subscribe('AchievementManager/update', _update);
 
     var AchievementManager = function () {};
     AchievementManager.prototype = {
         init: function () {
             _achievementDomNode = document.createElement('div');
             _achievementDomNode.classList.add('achievementNode');
+
+            var tmpAchievements, tmpPoints;
+            if(window.localStorage) {
+                if(tmpAchievements = window.localStorage.getItem('achievements')) {
+                    _achievements = JSON.parse(tmpAchievements);
+                }
+                if(tmpPoints = window.localStorage.getItem('points')) {
+                    _points = parseInt(tmpPoints);
+                }
+            }
         }
     };
     return AchievementManager;

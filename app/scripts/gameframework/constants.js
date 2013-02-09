@@ -29,6 +29,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.ID_GLASS = 'glass';
 
+    constants.JQ_ACHIEVEMENT_LIST = $('#achievementList');
+
+    constants.JQ_POINTS = $('#points');
+
     constants.JQ_TERMINAL = $('.gfcTerminal');
 
     constants.JQ_CODE = $('.code');
