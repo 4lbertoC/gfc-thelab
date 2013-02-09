@@ -1,6 +1,6 @@
 define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, constants, pubSub) {
     'use strict';
-    
+
     /* Constants */
     var MUSIC_DIR = 'music/';
     var SOUND_DIR = 'sound/';
@@ -12,6 +12,7 @@ define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, co
     var _musicLoop = new buzz.group([
         new buzz.sound(MUSIC_DIR + 'Hidden%20Agenda.ogg'),
         new buzz.sound(MUSIC_DIR + 'Smoking%20Gun.ogg')]).setPlaybackMode('chain');
+    var _musicGameOver = new buzz.sound(MUSIC_DIR + 'Danse Macabre - Low Strings Finale.ogg');
     var _soundDialogShow = new buzz.sound(SOUND_DIR + 'swosh.ogg');
     var _soundDialogButton = new buzz.sound(SOUND_DIR + 'button-12.ogg');
     var _soundAccordion = new buzz.sound(SOUND_DIR + 'bird-1-a.ogg');
@@ -82,6 +83,9 @@ define(['module', 'buzz', './constants', './pubsub'], function (module, buzz, co
             _soundVirus.play();
         } else if(soundName === constants.Sound.GLASS_BREAK) {
             _soundGlassBreak.play();
+        }else if(soundName === constants.Sound.GAME_OVER) {
+            _musicLoop.stop();
+            _musicGameOver.play();
         }
     });
 

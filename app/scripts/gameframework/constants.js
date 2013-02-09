@@ -21,9 +21,13 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.CLASS_BROKEN = 'broken';
 
+    constants.ID_DESK = 'desk';
+
     constants.ID_DISH = 'dish';
 
     constants.ID_FLASK = 'flask';
+
+    constants.ID_GLASS = 'glass';
 
     constants.JQ_TERMINAL = $('.gfcTerminal');
 
@@ -31,9 +35,13 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.JQ_DARKNESS = $('#darkness');
 
+    constants.JQ_DESK = $('#' + constants.ID_DESK);
+
+    constants.JQ_DISH = $('#' + constants.ID_DISH);
+
     constants.JQ_FLASK = $('#' + constants.ID_FLASK);
 
-    constants.JQ_GLASS = $('#glass');
+    constants.JQ_GLASS = $('#' + constants.ID_GLASS);
 
     constants.JQ_MENU = $('.menu');
 
@@ -80,6 +88,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Sound.VIRUS = 'virus';
 
     constants.Sound.GLASS_BREAK = 'glass_broken';
+
+    constants.Sound.GAME_OVER = 'game_over';
 
     constants.Text = {};
 
@@ -190,6 +200,17 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.CLEAN_DISH_BROKEN = '<p>Watch out, the <span class="funcStr">cleanDish()</span> command is broken! You should try editing its code ' +
     'with <span class="funcStr">editCode()</span> so that it in fact clears the dish.';
+
+    constants.Text.DISH_OVERFLOW_WARNING = '<p>Be careful, the dish is getting overcrowded. You should remove some of the bugteria from the dish. ' +
+        '</p><p>I think this is a good time to fix the <span class="funcStr">cleanDish()</span> command, unless you know some other way to remove them...</p>';
+
+    constants.Text.INVASION_WARNING = '<p>OMG, WE CANNOT STOP THEM!!! QUICK, REFRESH THE PAGE!!!</p>';
+
+    constants.Assets = {};
+
+    constants.Assets.VIRUS = 'https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1360409934/virus.png';
+
+    constants.Text.BUG_PREVIOUSLY_ESCAPED = '<p>Hello again! Please, this time try to be more careful, and I\'ll pretend that nothing happened.</p>';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {

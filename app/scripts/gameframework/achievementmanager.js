@@ -42,13 +42,13 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             _showTooltip('<b>+50</b> firstChild');
             constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_TOO_BIG;
         },
-        'glass_repaired': function() {
+        'glass_repaired': function () {
             _showTooltip('<b>+50</b> Disaster prevented');
         },
-        'collect_10_bugs': function() {
+        'collect_10_bugs': function () {
             _showTooltip('<b>+100</b> Mission accomplished');
         },
-        'logged_in': function() {
+        'logged_in': function () {
             _showTooltip('<b>+50</b> Inside the system');
         }
     };

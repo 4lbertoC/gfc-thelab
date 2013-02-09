@@ -29,7 +29,6 @@ define(['jquery', './bugterium', './entity', 'gameframework/constants', 'gamefra
         while(numBugteria > 0) {
           new Bugterium(refDomNode, dna, dimensions);
           pubSub.publish('AchievementManager/achieve', ['bug_grown']);
-          pubSub.publish('AudioManager/playSound', [constants.Sound.BUG]);
           --numBugteria;
         }
       }

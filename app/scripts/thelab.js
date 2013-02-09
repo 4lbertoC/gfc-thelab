@@ -10,6 +10,8 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
     var _showHints = true;
     var _goalBugCount = 10;
+    var _dishOverflowWarningGiven = false;
+    var _deskOverflowWarningGiven = false;
 
     /* Private methods */
     var _addDarknessCallback = function () {
@@ -107,18 +109,20 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             };
             $.each(bugNodeArray, function (idx, bugNode) {
                 var bug = Bugterium.getById(bugNode.id);
-                if(bugNode.classList.contains('virus')) {
-                    _addOfType('virus');
-                } else if(bug.dna.aspect === '' || bugNode.style.visibility === 'hidden' || bugNode.style.display === 'none') {
-                    _addOfType('invisible');
-                } else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
-                    _addOfType('bigger');
-                } else if(!bug.dna.replicationSpeed) {
-                    _addOfType('inhibited');
-                } else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
-                    _addOfType('mutated');
-                } else {
-                    _addOfType('normal');
+                if(bug) {
+                    if(bug.isVirus()) {
+                        _addOfType('virus');
+                    } else if(bug.dna.aspect === '' || bugNode.style.visibility === 'hidden' || bugNode.style.display === 'none') {
+                        _addOfType('invisible');
+                    } else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
+                        _addOfType('bigger');
+                    } else if(!bug.dna.replicationSpeed || ((typeof bug.dna.replicationSpeed === 'number') && bug.dna.replicationSpeed <= 0)) {
+                        _addOfType('inhibited');
+                    } else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
+                        _addOfType('mutated');
+                    } else {
+                        _addOfType('normal');
+                    }
                 }
             });
             return bugKinds;
@@ -130,6 +134,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             $.each(children, function (idx, child) {
                 while(true) {
                     if(child.classList.contains('bug')) {
+                        pubSub.publish('AchievementManager/achieve', ['bug_captured']);
                         okBugs.push(child);
                         break;
                     } else {
@@ -151,7 +156,47 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         }
 
         function _dishOverflowMutationObserver(summaries) {
-            // TODO
+            var children = constants.JQ_DISH.children();
+            if(children.length >= 15 && !_dishOverflowWarningGiven) {
+                _dishOverflowWarningGiven = true;
+                pubSub.publish('UI/talk', ['Too many bugteria!', constants.Text.HINTS_PERSON_NAME, constants.Text.DISH_OVERFLOW_WARNING]);
+            } else if(children.length >= 20) {
+                var rand = Math.ceil(Math.random() * 2);
+                while(rand-- > 0) {
+                    children = constants.JQ_DISH.children();
+                    var escapedBug = children.first();
+                    var theBug = Bugterium.getById(escapedBug.prop('id'));
+                    if(theBug) {
+                        theBug.moveTo(constants.ID_DESK, [0, 0, 0, 0], null, true);
+                    }
+                }
+            }
+        }
+
+        function _deskOverflowMutationObserver(summaries) {
+            var children = constants.JQ_DESK.children();
+            if(children.length >= 20 && !_deskOverflowWarningGiven && !$(constants.ID_GLASS).length) {
+                _deskOverflowWarningGiven = true;
+                if(window.localStorage) {
+                    window.localStorage.setItem('bugEscaped', true);
+                }
+                $('.bug').addClass('invader');
+                pubSub.publish('AudioManager/playSound', [constants.Sound.GAME_OVER]);
+                pubSub.publish('UI/talk', ['OMGWTFBBQ!', constants.Text.HINTS_PERSON_NAME, constants.Text.INVASION_WARNING]);
+                setTimeout(function () {
+                    var a = document.createElement('div');
+                    $(a).css({
+                        top: '0',
+                        left: '0',
+                        position: 'fixed',
+                        backgroundColor: 'black',
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 100000
+                    });
+                    $(document.body).append(a);
+                }, 10000);
+            }
         }
 
         pubSub.publish('MutationObserver/add', [constants.JQ_DARKNESS.parent(), _darknessMutationObserverCallback, [{
@@ -170,6 +215,16 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
         }]);
         pubSub.publish('MutationObserver/add', [constants.JQ_FLASK, _flaskAddMutationObserver, [{
+            'element': '.bug'
+        }], function (id) {
+
+        }]);
+        pubSub.publish('MutationObserver/add', [constants.JQ_DISH, _dishOverflowMutationObserver, [{
+            'element': '.bug'
+        }], function (id) {
+
+        }]);
+        pubSub.publish('MutationObserver/add', [constants.JQ_DESK, _deskOverflowMutationObserver, [{
             'element': '.bug'
         }], function (id) {
 
@@ -219,7 +274,12 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             constants.JQ_TERMINAL_TOGGLE.toggle('fade', 2000);
             constants.JQ_MENU_BUTTON.toggle('fade', 2000);
         };
-        pubSub.publish('UI/talk', ['Message', constants.Text.HINTS_PERSON_NAME, constants.Text.ISANYONETHERE_MESSAGE, undefined,
+        var msg = constants.Text.ISANYONETHERE_MESSAGE;
+        if(window.localStorage && window.localStorage.getItem('bugEscaped')) {
+            msg = constants.Text.BUG_PREVIOUSLY_ESCAPED;
+            window.localStorage.clear();
+        }
+        pubSub.publish('UI/talk', ['Message', constants.Text.HINTS_PERSON_NAME, msg, undefined,
         {
             beforeClose: function () {
                 showUI();
@@ -272,6 +332,56 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             // Create dish and flask here or create them in the html
             // Create bacteria's classes
             _addDarknessCallback();
+
+            var dropFunc = function (event, ui) {
+                var bug = ui.draggable;
+                bug.detach();
+                var jqThis = $(this);
+                var jqThisOffset = jqThis.offset();
+                var bugOffset = ui.offset;
+                bug.css({
+                    left: 0,
+                    top: 0,
+                    transform: 'translate(' + (bugOffset.left - jqThisOffset.left) + 'px,' + (bugOffset.top - jqThisOffset.top) + 'px)'
+                });
+                jqThis.append(bug);
+            };
+            constants.JQ_DESK.droppable({
+                accept: '.bug',
+                drop: dropFunc
+            });
+            constants.JQ_DISH.droppable({
+                accept: '.bug',
+                greedy: true,
+                drop: dropFunc
+            });
+
+            constants.JQ_FLASK.droppable({
+                accept: '.bug',
+                greedy: true,
+                drop: function (event, ui) {
+                    var theBug = Bugterium.getById(ui.draggable.prop('id'));
+                    if(theBug) {
+                        theBug.moveTo(constants.ID_FLASK, [5, 40, 50, 10], function (status) {
+                            if(status === 'success') {
+                                pubSub.publish('AchievementManager/achieve', ['bug_captured']);
+                                ui.draggable.css({
+                                    left: 0,
+                                    top: 0
+                                });
+                            } else {
+                                pubSub.publish('UI/talk', ['The bugterium is too big', constants.Text.HINTS_PERSON_NAME, constants.Text.BUGTERIUM_TOO_BIG]);
+                                ui.draggable.css({
+                                    left: 0,
+                                    top: 0,
+                                    transform: 'translate(50%, 50%)'
+                                });
+                            }
+                        });
+                    }
+                }
+            });
+
 
             constants.JQ_MENU_BUTTON.click(_prepareAndShowMenu);
 

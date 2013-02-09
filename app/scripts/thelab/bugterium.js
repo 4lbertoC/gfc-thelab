@@ -4,22 +4,25 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
   /* Private variables */
   var _baseDna = {
     'aspect': 'http://res.cloudinary.com/albertoc/image/upload/w_64,h_64/bacteria.png',
-    'replicationSpeed': 5000
+    'replicationSpeed': 20000
   };
   var _idCounter = 0;
   var _idPrefix = 'bugterium_';
+  var _replicationProbability = 0.3;
 
   var s_instances = {};
 
   /* Private methods */
-
+  var _getBaseDna = function() {
+    return $.extend({}, _baseDna);
+  };
 
   /* PubSub */
   pubSub.subscribe('Bugterium/hatch', function (refDomNode, dna) {
     // Add bugteria to dish
   });
 
-  var Bugterium = function (refDomNode, dna, dimensions) {
+  var Bugterium = function (refDomNode, dna, dimensions, isVirus) {
     if(refDomNode instanceof HTMLElement) {
       this.entity = new Entity();
 
@@ -27,6 +30,7 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
       this.id = _idPrefix + idNum;
       this.dna = dna;
       this.dimensions = dimensions;
+      this.isVirus = isVirus;
 
       var bugDomNode = document.createElement('div');
       bugDomNode.classList.add('bug');
@@ -48,8 +52,40 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
         });
       }, 100);
       this.domNode = bugDomNode;
+      var jqNode = $(bugDomNode);
+      jqNode.draggable({
+        cursor: 'move',
+        snap: true,
+        start: function () {
+          jqNode.css({
+            transform: 'translate(0,0)'
+          });
+        }
+      });
+
+      var replicationSpeed = this.dna.replicationSpeed;
+      if(typeof replicationSpeed === 'number' && replicationSpeed > 0) {
+        var intervalHandle = setInterval($.proxy(function () {
+          var domNode = this.domNode;
+          if(domNode && domNode.parentElement && !this.domNode.parentElement.classList.contains('noReplicate')) {
+            var parentNode = domNode.parentElement;
+            var randomDiceRoll = Math.random();
+            if(randomDiceRoll < _replicationProbability) {
+              var isVirus = false;
+              if(parentNode.classList.contains('veryDangerousNodeThatWillCauseYouALotOfTroubles')) {
+                isVirus = true;
+                this.dna.aspect = constants.Assets.VIRUS;
+              }
+              new Bugterium(parentNode, this.dna, this.dimensions, isVirus);
+            }
+          } else {
+            clearInterval(intervalHandle);
+          }
+        }, this), replicationSpeed);
+      }
 
       s_instances[this.id] = this;
+      pubSub.publish('AudioManager/playSound', [constants.Sound.BUG]);
     }
   };
   Bugterium.prototype = {
@@ -61,30 +97,36 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
       var h = this.domNode.offsetHeight;
       return [w, h];
     },
-    moveTo: function (refDomNodeId, margins, callback) {
+    moveTo: function (refDomNodeId, margins, callback, ignoreSize) {
       var bugNode = this.domNode;
       var refDomNode = document.getElementById(refDomNodeId);
       var thisBug = this;
+      var moveIt = function () {
+        var jqBugNode = $(bugNode);
+        jqBugNode.hide('puff', {
+          complete: function () {
+            jqBugNode.remove();
+            thisBug.entity.addToParent(bugNode, refDomNode, thisBug.getDimensions(), margins);
+            jqBugNode.show('drop', {
+              direction: 'top',
+              complete: function () {
+                pubSub.publish('AudioManager/playSound', [constants.Sound.BUG]);
+                callback && callback('success');
+              }
+            });
+          }
+        });
+      };
+      if(ignoreSize) {
+        moveIt();
+      }
       if(bugNode && (bugNode.parentElement instanceof HTMLElement)) {
         var futurePosition = this.entity.calculatePositionInParent(refDomNode, thisBug.getDimensions(), margins);
         if(futurePosition[0] === -1) {
           callback && callback('failure');
           return;
         } else {
-          var jqBugNode = $(bugNode);
-          jqBugNode.hide('puff', {
-            complete: function () {
-              jqBugNode.remove();
-              thisBug.entity.addToParent(bugNode, refDomNode, thisBug.getDimensions(), margins);
-              jqBugNode.show('drop', {
-                direction: 'top',
-                complete: function () {
-                  pubSub.publish('AudioManager/playSound', [constants.Sound.BUG]);
-                  callback && callback('success');
-                }
-              });
-            }
-          });
+          moveIt();
         }
       }
     }
@@ -92,7 +134,7 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
 
   /* Static */
   Bugterium.getBaseDna = function () {
-    return _baseDna;
+    return _getBaseDna();
   };
   Bugterium.getById = function (bugId) {
     if(typeof bugId === 'string' && bugId.indexOf(_idPrefix) > -1) {

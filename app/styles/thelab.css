@@ -26,7 +26,7 @@ h1{
     -webkit-filter: saturate(20);
     filter: saturate(20);
     background-size: contain !important;
-
+    cursor: pointer;
 }
 .mother{
     width: 50px;
@@ -226,6 +226,10 @@ body{
     top: 0;
     left: 0;
 }
+#desk > .bug {
+    box-shadow: 0 0 10px 10px yellow;
+    border-radius: 40px;
+}
 #dish{
     width: 400px;
     height: 300px;
@@ -424,6 +428,7 @@ blockquote:after {
     background: white;
     border-radius: 15px;
     border: 1px solid black;
+    text-align: center;
     -webkit-transform: rotateZ(48deg) translate(0,50%);
     -moz-transform: rotateZ(48deg) translate(0,50%);
     -o-transform: rotateZ(48deg) translate(0,50%);
@@ -585,4 +590,9 @@ blockquote:after {
     -o-transform: translateY(0px);
     -ms-transform: translateY(0px);
     transform: translateY(0px);
-};
+}
+
+.invader {
+    transition: 20s !important;
+    transform: scale(10) translate(50%, 50%) !important;
+}

@@ -1,7 +1,7 @@
 {
     "author": "Alberto Congiu",
     "name": "gfc-thelab",
-    "version": "0.3.0",
+    "version": "0.5.0",
     "dependencies": {
         "gzippo" : "0.2.0",
         "express" : "2.x"
