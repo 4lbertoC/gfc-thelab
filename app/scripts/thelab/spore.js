@@ -29,6 +29,7 @@ define(['jquery', './bugterium', './entity', 'gameframework/constants', 'gamefra
         while(numBugteria > 0) {
           new Bugterium(refDomNode, dna, dimensions);
           pubSub.publish('AchievementManager/achieve', ['bug_grown']);
+          constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_TOO_BIG;
           --numBugteria;
         }
       }

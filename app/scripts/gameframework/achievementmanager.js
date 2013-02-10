@@ -6,23 +6,21 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     var _achievementTooltipTimeout = 3000;
     var _points = 0;
     var _achievementDomNode = null;
+    var _hintsCount = 0;
 
     var _achievementCallbacks = {
         'bug_captured': function () {
             _showTooltip('<b>+50</b> Gotcha!');
             pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.BUG_CAPTURED]);
-            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_IN_FLASK;
             _points += 50;
         },
         'darkness_removed': function () {
             _showTooltip('<b>+50</b> Lights on');
             pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.LIGHTS_ON_ALERT]);
-            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_GROW_BUGTERIA;
             _points += 50;
         },
         'bug_grown': function () {
             _showTooltip('<b>+50</b> firstChild');
-            constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_TOO_BIG;
             _points += 50;
         },
         'glass_repaired': function () {
@@ -40,6 +38,21 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
         'game_over. yes, this is an achievement': function() {
             _showTooltip('<b>+49</b> Game over...?');
             _points += 49;
+        },
+        'invisible_bug': function () {
+            _points += 50;
+        },
+        'virus_bug': function () {
+            _points += 50;
+        },
+        'bigger_bug': function () {
+            _points += 50;
+        },
+        'inhibited_bug': function () {
+            _points += 50;
+        },
+        'mutated_bug': function () {
+            _points += 50;
         }
     };
 
@@ -98,6 +111,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     });
 
     pubSub.subscribe('AchievementManager/openSpoiler', function () {
+        _hintsCount++;
         _points -= 10;
         pubSub.publish('AudioManager/playSound', [constants.Sound.FAILURE]);
         _update();
@@ -107,6 +121,26 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
 
     var AchievementManager = function () {};
     AchievementManager.prototype = {
+        getAchievementCount: function() {
+            var i = 0;
+            for(var a in _achievements) {
+                i++;
+            }
+            return i;
+        },
+        getGivenHintsCount: function() {
+            return _hintsCount;
+        },
+        getPoints: function() {
+            return _points;
+        },
+        getTotalAchievementCount: function() {
+            var i = 0;
+            for(var a in _achievementCallbacks) {
+                i++;
+            }
+            return i;
+        },
         init: function () {
             _achievementDomNode = document.createElement('div');
             _achievementDomNode.classList.add('achievementNode');

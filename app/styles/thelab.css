@@ -28,27 +28,6 @@ h1{
     background-size: contain !important;
     cursor: pointer;
 }
-.mother{
-    width: 50px;
-    height: 50px;
-    border-width: 2px;
-    border-right-style: ridge;
-    border-bottom-style: ridge;
-    border-color: #fff;
-    background: #fc0;
-    position: absolute;
-    border-radius: 16px;
-    font-family: Arial;
-    vertical-align: middle;
-    z-index: 10;
-}
-.bugcursor{
-    cursor: pointer;
-}
-.safebug{
-    border-style: solid;
-    border-color: #00f;
-}
 .spore{
     position: absolute;
     z-index: 11;
@@ -56,9 +35,6 @@ h1{
     height: 64px;
     background: url(http://res.cloudinary.com/albertoc/image/upload/v1359756143/pill.png) center no-repeat;
     background-size: contain;
-}
-.submitbutton{
-    left: 0;
 }
 /************************
 
@@ -619,4 +595,10 @@ blockquote:after {
     linear-gradient(240deg, rgba(255,255,255,.4), rgba(255,255,255,.1) 20px, transparent 10px) !important;
     background-size: 250px 250px, 380px 150px, 370px 250px, 190px 200px !important; 
     background-position: 0 0, 50px 60px, 180px 210px, 120px 100px !important;
+}
+.finishButton {
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    z-index: 100;
 }

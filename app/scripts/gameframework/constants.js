@@ -191,7 +191,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.BUGTERIUM_TOO_BIG = 'It looks like that bugterium is too big to fit into the flask. You should find a way to make it smaller.';
 
-    constants.Text.COLLECT_10_BUGS = '<p>YOU DID IT!</p><p>You collected 10 bugs, shall we proceed with the analysis?';
+    constants.Text.COLLECT_10_BUGS = '<p>YOU DID IT!</p><p>You collected 10 bugs, shall we proceed with the analysis? Click the Finish button when you are done.';
 
     constants.Text.HINTS_PERSON_NAME = 'Someone in the dark';
 
@@ -216,6 +216,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.BUG_ON_DESK = '<p>Please be careful, a bugterium just came out of the dish. You can recognise that from the yellow circle that appeared around it.</p>';
 
     constants.Text.VIRUS_APPEARED = '<p>The situation is getting critical, the bugteria are mutating into something else!!!</p>';
+
+    constants.Text.LESS_THAN_10_BUGS = '<p>There are less than 10 bugteria in the flask!</p>';
 
     constants.Buttons = {};
     constants.Buttons.getDefaultCloseButton = function() {

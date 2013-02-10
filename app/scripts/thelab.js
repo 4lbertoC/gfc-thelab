@@ -13,6 +13,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
     var _dishOverflowWarningGiven = false;
     var _deskOverflowWarningGiven = false;
     var _bugOnDeskWarningGiven = false;
+    var _finishButtonShown = false;
 
     /* Private methods */
     var _addDarknessCallback = function () {
@@ -74,6 +75,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                 constants.Text.HINTS_PERSON_NAME = 'Doctor Div';
                 _addLabCommands();
                 pubSub.publish('AchievementManager/achieve', ['darkness_removed']);
+                constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_GROW_BUGTERIA;
                 pubSub.publish('GameEvent/darknessRemoved');
             }
             // TODO Also display = none or width = 0 or height = 0 would work
@@ -111,16 +113,22 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             $.each(bugNodeArray, function (idx, bugNode) {
                 var bug = Bugterium.getById(bugNode.id);
                 if(bug) {
-                    if(bug.isVirus()) {
+                    if(bug.isVirus) {
                         _addOfType('virus');
+                        pubSub.publish('AchievementManager/achieve', ['virus_bug']);
                     } else if(bug.dna.aspect === '' || bugNode.style.visibility === 'hidden' || bugNode.style.display === 'none') {
                         _addOfType('invisible');
+                        pubSub.publish('AchievementManager/achieve', ['invisible_bug']);
+                        pubSub.publish('AchievementManager/achieve', ['mutated_bug']);
                     } else if(bugNode.offsetWidth > 40 || bugNode.offsetHeight > 40) {
                         _addOfType('bigger');
+                        pubSub.publish('AchievementManager/achieve', ['bigger_bug']);
                     } else if(!bug.dna.replicationSpeed || ((typeof bug.dna.replicationSpeed === 'number') && bug.dna.replicationSpeed <= 0)) {
                         _addOfType('inhibited');
+                        pubSub.publish('AchievementManager/achieve', ['inhibited_bug']);
                     } else if(bug.dna.aspect !== Bugterium.getBaseDna().aspect) {
                         _addOfType('mutated');
+                        pubSub.publish('AchievementManager/achieve', ['mutated_bug']);
                     } else {
                         _addOfType('normal');
                     }
@@ -130,29 +138,51 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
         }
 
         function _flaskAddMutationObserver(summaries) {
-            var children = constants.JQ_FLASK.children();
-            var okBugs = [];
-            $.each(children, function (idx, child) {
-                while(true) {
-                    if(child.classList.contains('bug')) {
-                        pubSub.publish('AchievementManager/achieve', ['bug_captured']);
-                        okBugs.push(child);
-                        break;
-                    } else {
-                        var c = $(child).children();
-                        if(c.length > 0) {
-                            child = c[0];
-                        } else {
-                            break;
-                        }
-                    }
-                }
-            });
-            if(okBugs.length >= _goalBugCount) {
-                var bugTypes = _getCapturedBugsFeedback(okBugs);
-                console.log(bugTypes);
+            var okBugs = $('#flask>.bug');
+            if(okBugs.length > 0) {
+                pubSub.publish('AchievementManager/achieve', ['bug_captured']);
+            }
+            if(okBugs.length >= _goalBugCount && !_finishButtonShown) {
+                _finishButtonShown = true;
                 pubSub.publish('AchievementManager/achieve', ['collect_10_bugs']);
                 pubSub.publish('UI/talk', ['Great job!', constants.Text.HINTS_PERSON_NAME, constants.Text.COLLECT_10_BUGS]);
+                var finishButton = document.createElement('div');
+                finishButton.classList.add('finishButton');
+                var jqFinishButton = $(finishButton);
+                jqFinishButton.text('Finish');
+                document.body.appendChild(finishButton);
+                jqFinishButton.button().click(function () {
+                    var okBugs = $('#flask>.bug');
+                    if(okBugs.length >= _goalBugCount) {
+                        var bugTypes = _getCapturedBugsFeedback(okBugs);
+                        $('#gameContainer').remove();
+                        $('.terminalToggle').remove();
+                        jqFinishButton.remove();
+                        var finishMsg = '<p>Here are the results:</p><p>';
+                        for(var type in bugTypes) {
+                            finishMsg += '<br>' + type + ': ' + bugTypes[type];
+                        }
+                        var achievementManager = _gameManager.getGameModules().achievementManager;
+                        var achievementCount = achievementManager.getAchievementCount();
+                        var totalAchievementCount = achievementManager.getTotalAchievementCount();
+                        finishMsg += '</p><p>You completed ' + achievementCount + ' of ' +
+                            totalAchievementCount + ' achievements.</p>';
+                        finishMsg += '<p>You requested help ' + achievementManager.getGivenHintsCount() + ' times</p>';
+                        finishMsg += '<p>You gained a total of ' + achievementManager.getPoints() + ' points</p>';
+                        if(achievementCount <= 5) {
+                            finishMsg += '<p>Well... better than nothing.</p>';
+                        } else if(achievementCount <= 8) {
+                            finishMsg += '<p>You can do better than that, right?</p>';
+                        } else if(achievementCount === totalAchievementCount) {
+                            finishMsg += '<p>Impressive! You completed the game!';
+                        } else {
+                            finishMsg += '<p>Great job, but it\'s not over!</p>';
+                        }
+                        pubSub.publish('UI/talk', ['Mission accomplished!', constants.Text.HINTS_PERSON_NAME, finishMsg]);
+                    } else {
+                        pubSub.publish('UI/talk', ['Not enough bugteria!', constants.Text.HINTS_PERSON_NAME, constants.Text.LESS_THAN_10_BUGS]);
+                    }
+                });
             }
         }
 
@@ -168,7 +198,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                     var escapedBug = children.first();
                     var theBug = Bugterium.getById(escapedBug.prop('id'));
                     if(theBug) {
-                        theBug.moveTo(constants.ID_DESK, [0, 0, 0, 0], null, true);
+                        theBug.moveTo(constants.ID_DESK, [0, 40, 40, 0], null, true);
                     }
                 }
             }
@@ -179,8 +209,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
             if(children.length > 0 && !_bugOnDeskWarningGiven) {
                 _bugOnDeskWarningGiven = true;
                 pubSub.publish('UI/talk', ['I\'m a bit worried.', constants.Text.HINTS_PERSON_NAME, constants.Text.BUG_ON_DESK]);
-            }
-            else if(children.length >= 20 && !_deskOverflowWarningGiven && (!$('#' + constants.ID_GLASS).length || $('#' + constants.ID_GLASS).hasClass('broken'))) {
+            } else if(children.length >= 20 && !_deskOverflowWarningGiven && (!$('#' + constants.ID_GLASS).length || $('#' + constants.ID_GLASS).hasClass('broken'))) {
                 _deskOverflowWarningGiven = true;
                 if(window.localStorage) {
                     window.localStorage.setItem('bugEscaped', true);
@@ -260,7 +289,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
 
     var _showStartDialog = function () {
         pubSub.publish('UI/dialog', ['Games for Coders - ' + constants.APP_NAME, constants.Text.TUTORIAL_INTRO, [
-        {
+            {
             text: 'Play',
             click: function () {
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
@@ -370,6 +399,7 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                         theBug.moveTo(constants.ID_FLASK, [5, 40, 50, 10], function (status) {
                             if(status === 'success') {
                                 pubSub.publish('AchievementManager/achieve', ['bug_captured']);
+                                constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_BUGTERIUM_IN_FLASK;
                                 ui.draggable.css({
                                     left: 0,
                                     top: 0

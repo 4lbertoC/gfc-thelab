@@ -29,7 +29,7 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
 
       var idNum = _idCounter++;
       this.id = _idPrefix + idNum;
-      this.dna = dna;
+      this.dna = $.extend({}, dna);
       this.dimensions = dimensions;
       this.isVirus = isVirus;
 
