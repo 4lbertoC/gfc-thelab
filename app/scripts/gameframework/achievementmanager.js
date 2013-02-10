@@ -115,7 +115,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
                 window.localStorage.setItem('points', JSON.stringify(_points));
             }
             _update();
-            window._gaq.push(['_trackEvent', 'Game', 'Achievement', name, _getAchievementCount()]);
+            window._gaq && window._gaq.push(['_trackEvent', 'Game', 'Achievement', name, _getAchievementCount()]);
         }
     });
 
@@ -134,7 +134,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
         } else if(constants.Text.I_AM_STUCK_TEXT === constants.Text.HINT_BUGTERIUM_IN_FLASK) {
             hintRequested = 'cannot_collect_10_bugs';
         }
-        window._gaq.push(['_trackEvent', 'Menu', 'Hints', hintRequested, _getAchievementCount()]);
+        window._gaq && window._gaq.push(['_trackEvent', 'Menu', 'Hints', hintRequested, _getAchievementCount()]);
     });
 
     pubSub.subscribe('AchievementManager/update', _update);
