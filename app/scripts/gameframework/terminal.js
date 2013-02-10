@@ -132,14 +132,23 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
 
     var _objectToString = function (o) {
         // Source from http://www.davidpirek.com/blog/object-to-string-how-to-deserialize-json (edited)
+        var maxNestLevel = 1;
         var parse = function (_o) {
+            if(maxNestLevel <= 0) {
+                return [_o.toString()];
+            }
+            maxNestLevel--;
             var a = [],
                 t;
             for(var p in _o) {
                 if(_o.hasOwnProperty(p)) {
                     t = _o[p];
                     if(t && typeof t === 'object') {
-                        a[a.length] = p + ':{ ' + parse(t).join(', ') + '}';
+                        if(t instanceof Array) {
+                            a[a.length] = p + ':[ ' + parse(t).join(', ') + ']';
+                        } else {
+                            a[a.length] = p + ':{ ' + parse(t).join(', ') + '}';
+                        }
                     } else {
                         if(typeof t === 'string') {
 
@@ -163,7 +172,7 @@ define(['./constants', './gamescope', './pubsub'], function (constants, GameScop
         var commandList = '';
         for(var c in commands) {
             commandList += c + ' ';
-        };
+        }
         _instance.echo('[[g;#0ff;transparent]' + commandList + ']\n');
         console.log(commandList);
     };

@@ -172,12 +172,13 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         'broke it, and it cannot be fixed.</p><p>The only way to make it work is through the terminal using that javascript stuff, but we don\'t know how to use it. ' +
         'Do you think you could help us?</p>' +
         '<p>The big plate you see on the table is a ' +
-        '<span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Petri_dish\')" target="_blank">Petri dish</span>. Here is where <b>bugteria</b> should grow.</p>' +
-        '<p>The other small container is a <span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Laboratory_flask\')" target="_blank">flask</span>. ' +
+        '<span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Petri_dish\')" target="_blank">Petri <span class="divText">dish</span></span>. Here is where <b>bugteria</b> should grow.</p>' +
+        '<p>The other small container is a <span class="link" onclick="window.open(\'http://en.wikipedia.org/wiki/Laboratory_flask\')" target="_blank"><span class="divText">flask</span></span>. ' +
         'It\'s where bugterial specimen should be collected for analysis.</p>' +
         '' +
         '<p style="margin: 5px auto; text-align: center; color: red; font-size: 1.2em; font-weight: bold;">Collect 10 bugteria!</p>' +
-        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p>';
+        '<p>Feel free to experiment with their DNA, more variety for the analysis could give us more interesting results!</p>' +
+        '<p>Oh and, please, don\'t remove the <span class="divText">glass</span>. We don\'t want the bugteria to escape, right?</p>';
 
     constants.Text.ISANYONETHERE_MESSAGE = '<p>Hello, uhh... I know it\'s dark here, it can sound strange but I have no idea how to turn the lights on.</p>' +
         '<p>I tried using the terminal but it is broken, could you give a look? Maybe you know more javascript than me...</p>';

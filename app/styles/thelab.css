@@ -608,7 +608,15 @@ blockquote:after {
 }
 .broken {
     pointer-events: none;
-    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
-    filter: alpha(opacity=70);
-    opacity: 0.7;
+    background-image: -webkit-linear-gradient(130deg, white, rgba(255,255,255,.2) 30px, transparent 10px), -webkit-linear-gradient(30deg, white, rgba(255,255,255,.15) 20px, transparent 20px), -webkit-linear-gradient(150deg, white, rgba(255,255,255,.1) 15px, transparent 15px), -webkit-linear-gradient(240deg, rgba(255,255,255,.4), rgba(255,255,255,.1) 20px, transparent 10px) !important;
+    background-image: -moz-linear-gradient(130deg, white, rgba(255,255,255,.2) 30px, transparent 10px), -moz-linear-gradient(30deg, white, rgba(255,255,255,.15) 20px, transparent 20px), -moz-linear-gradient(150deg, white, rgba(255,255,255,.1) 15px, transparent 15px), -moz-linear-gradient(240deg, rgba(255,255,255,.4), rgba(255,255,255,.1) 20px, transparent 10px) !important;
+    background-image: -o-linear-gradient(130deg, white, rgba(255,255,255,.2) 30px, transparent 10px), -o-linear-gradient(30deg, white, rgba(255,255,255,.15) 20px, transparent 20px), -o-linear-gradient(150deg, white, rgba(255,255,255,.1) 15px, transparent 15px), -o-linear-gradient(240deg, rgba(255,255,255,.4), rgba(255,255,255,.1) 20px, transparent 10px) !important;
+    background-image: -ms-linear-gradient(130deg, white, rgba(255,255,255,.2) 30px, transparent 10px), -ms-linear-gradient(30deg, white, rgba(255,255,255,.15) 20px, transparent 20px), -ms-linear-gradient(150deg, white, rgba(255,255,255,.1) 15px, transparent 15px), -ms-linear-gradient(240deg, rgba(255,255,255,.4), rgba(255,255,255,.1) 20px, transparent 10px) !important;
+    background-image:
+    linear-gradient(130deg, white, rgba(255,255,255,.2) 30px, transparent 10px),
+    linear-gradient(30deg, white, rgba(255,255,255,.15) 20px, transparent 20px),
+    linear-gradient(150deg, white, rgba(255,255,255,.1) 15px, transparent 15px),
+    linear-gradient(240deg, rgba(255,255,255,.4), rgba(255,255,255,.1) 20px, transparent 10px) !important;
+    background-size: 250px 250px, 380px 150px, 370px 250px, 190px 200px !important; 
+    background-position: 0 0, 50px 60px, 180px 210px, 120px 100px !important;
 }
