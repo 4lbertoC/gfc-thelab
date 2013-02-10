@@ -35,7 +35,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
             _showTooltip('<b>+50</b> Inside the system');
             _points += 50;
         },
-        'game_over. yes, this is an achievement': function() {
+        'game_over. yes, this is an achievement': function () {
             _showTooltip('<b>+49</b> Game over...?');
             _points += 49;
         },
@@ -57,6 +57,14 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
     };
 
     /* Private methods */
+    var _getAchievementCount = function () {
+        var i = 0;
+        for(var a in _achievements) {
+            i++;
+        }
+        return i;
+    };
+
     var _showTooltip = function (text) {
         var jqNode = $(_achievementDomNode);
         jqNode.html(text);
@@ -107,6 +115,7 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
                 window.localStorage.setItem('points', JSON.stringify(_points));
             }
             _update();
+            window._gaq.push(['_trackEvent', 'Game', 'Achievement', name, _getAchievementCount()]);
         }
     });
 
@@ -115,26 +124,33 @@ define(['jquery', './constants', './pubsub'], function ($, constants, pubSub) {
         _points -= 10;
         pubSub.publish('AudioManager/playSound', [constants.Sound.FAILURE]);
         _update();
+        var hintRequested = '';
+        if(constants.Text.I_AM_STUCK_TEXT === constants.Text.HINT_DARKNESS) {
+            hintRequested = 'cannot_remove_darkness';
+        } else if(constants.Text.I_AM_STUCK_TEXT === constants.Text.HINT_GROW_BUGTERIA) {
+            hintRequested = 'cannot_grow_bug';
+        } else if(constants.Text.I_AM_STUCK_TEXT === constants.Text.HINT_BUGTERIUM_TOO_BIG) {
+            hintRequested = 'cannot_move_bug_to_flask';
+        } else if(constants.Text.I_AM_STUCK_TEXT === constants.Text.HINT_BUGTERIUM_IN_FLASK) {
+            hintRequested = 'cannot_collect_10_bugs';
+        }
+        window._gaq.push(['_trackEvent', 'Menu', 'Hints', hintRequested, _getAchievementCount()]);
     });
 
     pubSub.subscribe('AchievementManager/update', _update);
 
     var AchievementManager = function () {};
     AchievementManager.prototype = {
-        getAchievementCount: function() {
-            var i = 0;
-            for(var a in _achievements) {
-                i++;
-            }
-            return i;
+        getAchievementCount: function () {
+            return _getAchievementCount();
         },
-        getGivenHintsCount: function() {
+        getGivenHintsCount: function () {
             return _hintsCount;
         },
-        getPoints: function() {
+        getPoints: function () {
             return _points;
         },
-        getTotalAchievementCount: function() {
+        getTotalAchievementCount: function () {
             var i = 0;
             for(var a in _achievementCallbacks) {
                 i++;

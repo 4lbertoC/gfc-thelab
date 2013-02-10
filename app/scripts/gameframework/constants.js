@@ -152,6 +152,8 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Text.HINT_BUGTERIUM_IN_FLASK = '<p>Well done, you successfully moved a bugterium to the flask. Now you just have to collect 10 of them.';
 
+    constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_DARKNESS;
+
     constants.Text.WRONG_PARAMS_EDITCODE = '<p>You are calling <span class="funcStr">editCode()</span> with the wrong parameters. The function takes as input the name of the command that you want to edit, ' +
         'or nothing if you want to create a new function that will be stored in the variable called <i>result</i>.</p>';
 
@@ -196,8 +198,6 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.HINTS_PERSON_NAME = 'Someone in the dark';
 
     constants.Text.BUG_CAPTURED = 'Well done, you collected your fist bug!';
-
-    constants.Text.I_AM_STUCK_TEXT = constants.Text.HINT_DARKNESS;
 
     constants.Text.CLEAN_DISH_BROKEN = '<p>Watch out, the <span class="funcStr">cleanDish()</span> command is broken! You should try editing its code ' +
     'with <span class="funcStr">editCode()</span> so that it in fact clears the dish.';
