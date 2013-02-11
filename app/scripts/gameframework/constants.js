@@ -209,7 +209,9 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Assets = {};
 
-    constants.Assets.VIRUS = 'https://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1360409934/virus.png';
+    constants.Assets.BUGTERIUM = 'http://res.cloudinary.com/albertoc/image/upload/w_64,h_64/bugterium.png';
+
+    constants.Assets.VIRUS = 'http://res.cloudinary.com/albertoc/image/upload/v1360619103/bugvirus.png';
 
     constants.Text.BUG_PREVIOUSLY_ESCAPED = '<p>Hello again! Please, this time try to be more careful, and I\'ll pretend that nothing happened.</p>';
 

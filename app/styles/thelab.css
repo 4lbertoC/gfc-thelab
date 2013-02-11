@@ -23,8 +23,6 @@ h1{
     -o-transform-origin: center;
     -ms-transform-origin: center;
     transform-origin: center;
-    -webkit-filter: saturate(20);
-    filter: saturate(20);
     background-size: contain !important;
     cursor: pointer;
 }
@@ -258,6 +256,7 @@ body{
     -webkit-box-shadow: inset 0px 0px 50px 10px #white;
     -moz-box-shadow: inset 0px 0px 50px 10px white;
     box-shadow: inset 0px 0px 50px 10px white;
+    z-index: 20;
 }
 #flask:before {
     width: 88px;
@@ -412,8 +411,9 @@ blockquote:after {
     transform: rotateZ(48deg) translate(0,50%);
 }
 #loadCurtain {
+    background: url(http://res.cloudinary.com/albertoc/image/upload/v1360617380/theLab_title.jpg) center no-repeat, black;
+    background-size: auto;
     position: fixed;
-    background: black;
     width: 100%;
     height: 100%;
     top: 0;
@@ -426,6 +426,12 @@ blockquote:after {
     transition: 5s;
     border-right: 2px dashed greenyellow;
 }
+@media all and (max-width: 439px), (max-height: 335px) {
+    #loadCurtain {
+        background-size: contain;
+    }
+}
+
 @-webkit-keyframes curtainBug {
     0% {
         -webkit-transform: rotateZ(10deg);
@@ -476,7 +482,7 @@ blockquote:after {
     position: absolute;
     top: 50%;
     right: -90px;
-    background: url(http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/a_-135/bacteria.png);
+    background: url(http://res.cloudinary.com/albertoc/image/upload/a_-135/bugterium.png);
     width: 91px;
     height: 91px;
     -webkit-animation: curtainBug 500ms infinite;

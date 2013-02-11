@@ -3,7 +3,7 @@ define(['jquery', './entity', 'gameframework/constants', 'gameframework/pubsub']
 
   /* Private variables */
   var _baseDna = {
-    'aspect': 'http://res.cloudinary.com/albertoc/image/upload/w_64,h_64/bacteria.png',
+    'aspect': constants.Assets.BUGTERIUM,
     'replicationSpeed': 20000
   };
   var _idCounter = 0;

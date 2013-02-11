@@ -165,10 +165,12 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                         var achievementManager = _gameManager.getGameModules().achievementManager;
                         var achievementCount = achievementManager.getAchievementCount();
                         var totalAchievementCount = achievementManager.getTotalAchievementCount();
+                        var givenHintsCount = achievementManager.getGivenHintsCount();
+                        var totalPoints = achievementManager.getPoints();
                         finishMsg += '</p><p>You completed ' + achievementCount + ' of ' +
                             totalAchievementCount + ' achievements.</p>';
-                        finishMsg += '<p>You requested help ' + achievementManager.getGivenHintsCount() + ' times</p>';
-                        finishMsg += '<p>You gained a total of ' + achievementManager.getPoints() + ' points</p>';
+                        finishMsg += '<p>You requested help ' + givenHintsCount + ' times</p>';
+                        finishMsg += '<p>You gained a total of ' + totalPoints + ' points</p>';
                         if(achievementCount <= 5) {
                             finishMsg += '<p>Well... better than nothing.</p>';
                         } else if(achievementCount <= 8) {
@@ -179,6 +181,12 @@ define(['jquery', 'gameframework/constants', 'gameframework/gamemanager', 'gamef
                             finishMsg += '<p>Great job, but it\'s not over!</p>';
                         }
                         pubSub.publish('UI/talk', ['Mission accomplished!', constants.Text.HINTS_PERSON_NAME, finishMsg]);
+                        var ga = window._gaq;
+                        if(ga) {
+                            ga.push(['_trackEvent', 'Game', 'Finish', 'Count of Achievements', achievementCount]);
+                            ga.push(['_trackEvent', 'Game', 'Finish', 'Count of Given Hints', givenHintsCount]);
+                            ga.push(['_trackEvent', 'Game', 'Finish', 'Total Points', totalPoints]);
+                        }
                     } else {
                         pubSub.publish('UI/talk', ['Not enough bugteria!', constants.Text.HINTS_PERSON_NAME, constants.Text.LESS_THAN_10_BUGS]);
                     }

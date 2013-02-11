@@ -1,5 +1,5 @@
 'use strict';
-define(['jquery', 'gameframework/utils', 'thelab'], function ($, utils, TheLab) {
+define(['jquery', 'gameframework/constants', 'gameframework/utils', 'thelab'], function ($, constants, utils, TheLab) {
 	return {
 		init: function () {
 			var loadText = $('#loadText');
@@ -16,8 +16,8 @@ define(['jquery', 'gameframework/utils', 'thelab'], function ($, utils, TheLab) 
 				loadCurtain.remove();
 			});
 			utils.preloadImages([
-				'http://res.cloudinary.com/albertoc/image/upload/v1359756143/pill.png',
-				'http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359755516/bacteria.png'
+				constants.Assets.BUGTERIUM,
+				constants.Assets.VIRUS
 				], function () {
 				TheLab.start(function () {
 					loadText.text('Done!');
