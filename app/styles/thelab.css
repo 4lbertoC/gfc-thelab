@@ -411,7 +411,7 @@ blockquote:after {
     transform: rotateZ(48deg) translate(0,50%);
 }
 #loadCurtain {
-    background: url(http://res.cloudinary.com/albertoc/image/upload/v1360617380/theLab_title.jpg) center no-repeat, black;
+    background: url(http://res.cloudinary.com/albertoc/image/upload/v1361217296/theLab_title.jpg) center no-repeat, black;
     background-size: auto;
     position: fixed;
     width: 100%;
