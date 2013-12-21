@@ -148,7 +148,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         '<p>You can pass the modified dna as input to the spore creation, calling <span class="funcStr">addSpore(dna)</span></p>';
 
     constants.Text.HINT_BUGTERIUM_TOO_BIG = '<p>If you have problems moving the bugteria to the flask, try modifying their dna. As you can see, an url to an image is ' +
-    'provided as the <i>aspect</i> parameter. Try to modify the dna by passing a smaller image.</p>';
+        'provided as the <i>aspect</i> parameter. Try to modify the dna by passing a smaller image.</p>';
 
     constants.Text.HINT_BUGTERIUM_IN_FLASK = '<p>Well done, you successfully moved a bugterium to the flask. Now you just have to collect 10 of them.';
 
@@ -158,10 +158,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
         'or nothing if you want to create a new function that will be stored in the variable called <i>result</i>.</p>';
 
     constants.Text.WRONG_PARAMS_ADDSPORE = '<p>You are calling <span class="funcStr">addSpore()</span> with the wrong parameters. You should either call it without parameters or' +
-    'provide a dna as first parameter.</p><p>Use <span class="funcStr">help(\'commandName\')</span> to get more help.</p>';
+        'provide a dna as first parameter.</p><p>Use <span class="funcStr">help(\'commandName\')</span> to get more help.</p>';
 
     constants.Text.WRONG_PARAMS_MOVETOFLASK = '<p>The bug with the given id cannot be found.</p><p>You are probably calling <span class="funcStr">moveToFlask()</span> with the wrong parameters. You should provide the ' +
-    'bugterium\'s id, which you can see on the tag on top of it.</p><p>Use <span class="funcStr">help(\'commandName\')</span> to get more help.</p>';
+        'bugterium\'s id, which you can see on the tag on top of it.</p><p>Use <span class="funcStr">help(\'commandName\')</span> to get more help.</p>';
 
     constants.Text.LIGHTS_ON_TERMINAL = '[[;#fff;transparent]LIGHTS TURNED ON, ACTIVATING LAB...]\n[[g;#0ff;transparent]addSpore(dna)][[;#fff;transparent]...] [[g;#0f0;transparent]ACTIVE]' +
         '\n[[g;#0ff;transparent]cleanDish()][[;#fff;transparent].....] [[g;#f00;transparent]BROKEN]' +
@@ -200,7 +200,7 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.BUG_CAPTURED = 'Well done, you collected your fist bug!';
 
     constants.Text.CLEAN_DISH_BROKEN = '<p>Watch out, the <span class="funcStr">cleanDish()</span> command is broken! You should try editing its code ' +
-    'with <span class="funcStr">editCode()</span> so that it in fact clears the dish.';
+        'with <span class="funcStr">editCode()</span> so that it in fact clears the dish.';
 
     constants.Text.DISH_OVERFLOW_WARNING = '<p>Be careful, the dish is getting overcrowded. You should remove some of the bugteria from the dish. ' +
         '</p><p>I think this is a good time to fix the <span class="funcStr">cleanDish()</span> command, unless you know some other way to remove them...</p>';
@@ -209,9 +209,9 @@ define(['jquery', './pubsub'], function ($, pubSub) {
 
     constants.Assets = {};
 
-    constants.Assets.BUGTERIUM = 'http://res.cloudinary.com/albertoc/image/upload/w_64,h_64/bugterium.png';
+    constants.Assets.BUGTERIUM = 'images/bugterium_64x64.png';
 
-    constants.Assets.VIRUS = 'http://res.cloudinary.com/albertoc/image/upload/v1360619103/bugvirus.png';
+    constants.Assets.VIRUS = 'images/bugvirus.png';
 
     constants.Text.BUG_PREVIOUSLY_ESCAPED = '<p>Hello again! Please, this time try to be more careful, and I\'ll pretend that nothing happened.</p>';
 
@@ -222,10 +222,10 @@ define(['jquery', './pubsub'], function ($, pubSub) {
     constants.Text.LESS_THAN_10_BUGS = '<p>There are less than 10 bugteria in the flask!</p>';
 
     constants.Buttons = {};
-    constants.Buttons.getDefaultCloseButton = function() {
+    constants.Buttons.getDefaultCloseButton = function () {
         var btn = {
             text: 'Close',
-            click: function() {
+            click: function () {
                 $(this).dialog('close');
                 pubSub.publish('AudioManager/playSound', [constants.Sound.DIALOG_BUTTON]);
             }

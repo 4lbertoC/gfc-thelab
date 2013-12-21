@@ -31,7 +31,7 @@ h1{
     z-index: 11;
     width: 64px;
     height: 64px;
-    background: url(http://res.cloudinary.com/albertoc/image/upload/v1359756143/pill.png) center no-repeat;
+    background: url(../images/pill.png) center no-repeat;
     background-size: contain;
 }
 /************************
@@ -189,7 +189,7 @@ body{
 }
 
 #desk{
-    background: url(http://d3jpl91pxevbkh.cloudfront.net/albertoc/image/upload/v1359813117/bg_desk.jpg);
+    background: url(../images/bg_desk.jpg);
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -411,7 +411,7 @@ blockquote:after {
     transform: rotateZ(48deg) translate(0,50%);
 }
 #loadCurtain {
-    background: url(http://res.cloudinary.com/albertoc/image/upload/v1361217296/theLab_title.jpg) center no-repeat, black;
+    background: url(../images/theLab_title.jpg) center no-repeat, black;
     background-size: auto;
     position: fixed;
     width: 100%;
@@ -482,7 +482,7 @@ blockquote:after {
     position: absolute;
     top: 50%;
     right: -90px;
-    background: url(http://res.cloudinary.com/albertoc/image/upload/a_-135/bugterium.png);
+    background: url(../images/bugterium_135.png);
     width: 91px;
     height: 91px;
     -webkit-animation: curtainBug 500ms infinite;

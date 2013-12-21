@@ -37,6 +37,7 @@ http://opensource.org/licenses/bsd-license.php
         <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Monda' rel='stylesheet' type='text/css'>
 -->
+         <!-- build:css styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" type="text/css" href="styles/jquery-ui-1.9.2.custom.css"/>
         <link rel="stylesheet" type="text/css" href="styles/jquery.mCustomScrollbar.css"/>
@@ -44,7 +45,10 @@ http://opensource.org/licenses/bsd-license.php
         <link rel="stylesheet" href="styles/codemirror-ambiance.css">
         <link rel="stylesheet" type="text/css" href="styles/thelab.css"/>
         <link rel="stylesheet" type="text/css" href="styles/jquery.terminal.css"/>
+        <!-- endbuild -->
+        <!-- build:js scripts/vendor/modernizr.js -->
         <script src="scripts/vendor/modernizr.min.js"></script>
+        <!-- endbuild -->
     </head>
     <body>
         <!--<div id="fb-root"></div>
@@ -56,8 +60,9 @@ http://opensource.org/licenses/bsd-license.php
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script> -->
         <div id="loadCurtain"><span id="loadText">Loading...</span></div>
+        <!-- build:js scripts/loadtext.js -->
         <script type="text/javascript" src="scripts/loadtext.min.js"></script>
-        <a class="ghRibbon" href="https://github.com/4lbertoC/gfc-thelab" target="_blank"><img src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"><div></div></a>
+        <!-- endbuild -->
 <!-- 
 
 +++GAME CONTAINER STARTS HERE+++
@@ -200,9 +205,9 @@ You can "almost" do what you want here (just avoid deleting everything, it doesn
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="scripts/vendor/jquery.min.js"><\/script>')</script>
-        <script>window.buzz || document.write('<script src="scripts/buzz/buzz.js"><\/script>')</script>
+        <!-- build:js scripts/buzz.js -->
+        <script src="scripts/buzz/buzz.js"></script>
+        <!-- endbuild -->
         
         <script type="text/javascript">
 
